@@ -19,6 +19,3 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
-
-# Prisma config (contains database credentials)
-database/prisma.config.ts
