@@ -2,14 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { PrismaClient } from '@prisma/client';
 
 dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient({
-  url: process.env.DATABASE_URL
-});
 const PORT = process.env.PORT || 3000;
 
 import collegesRouter from './routes/colleges.js';
