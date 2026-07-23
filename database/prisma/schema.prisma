@@ -1,0 +1,178 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// ENUMS
+// ---------------------------------------------------------------------------
+enum Role {
+  STUDENT
+  ADMIN
+  MODERATOR
+}
+
+enum Tier {
+  TIER_1
+  TIER_2
+  TIER_3
+}
+
+enum Ownership {
+  GOVERNMENT
+  PRIVATE
+  SEMI_GOVERNMENT
+}
+
+enum ProgramType {
+  BTECH
+  MTECH
+  BBA
+  MBA
+  MBBS
+  BA
+  MA
+}
+
+// ---------------------------------------------------------------------------
+// CORE ENTITIES
+// ---------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String?
+  name          String
+  role          Role      @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  profile       Profile?
+  reviews       Review[]
+  bookmarks     Bookmark[]
+}
+
+model Profile {
+  id            String    @id @default(uuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  targetStream  String?
+  targetYear    Int?
+  city          String?
+  state         String?
+}
+
+model College {
+  id              String      @id @default(uuid())
+  name            String
+  shortName       String?
+  establishedYear Int?
+  city            String
+  state           String
+  tier            Tier
+  ownership       Ownership
+  campusSize      String?
+  facultyCount    Int?
+  website         String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  programs        Program[]
+  placements      Placement[]
+  reviews         Review[]
+  bookmarks       Bookmark[]
+  exams           CollegeExam[]
+  facilities      Facility[]
+
+  @@index([city, state])
+  @@index([tier])
+}
+
+model Program {
+  id          String      @id @default(uuid())
+  collegeId   String
+  college     College     @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  name        String
+  type        ProgramType
+  duration    Int         // in years
+  annualFee   Int         // in INR
+  intake      Int?
+
+  @@index([collegeId])
+}
+
+model Placement {
+  id              String   @id @default(uuid())
+  collegeId       String
+  college         College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  year            Int
+  avgPackageLpa   Float
+  highestPackage  Float?
+  placementRate   Float?   // percentage
+
+  @@index([collegeId, year])
+}
+
+model Review {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  rating      Int      // 1 to 5
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+
+  @@index([collegeId])
+  @@index([userId])
+}
+
+model Exam {
+  id          String        @id @default(uuid())
+  name        String        @unique // e.g., "JEE Advanced"
+  fullName    String?
+  level       String        // "National" | "State"
+
+  colleges    CollegeExam[]
+}
+
+model CollegeExam {
+  collegeId   String
+  college     College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  examId      String
+  exam        Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@id([collegeId, examId])
+}
+
+model Bookmark {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  category    String   @default("Target") // e.g., "Dream", "Target", "Safety"
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, collegeId])
+}
+
+model Facility {
+  id          String   @id @default(uuid())
+  collegeId   String
+  college     College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  
+  name        String   // e.g., "Boys Hostel", "Gym"
+  hasFacility Boolean  @default(true)
+  details     String?  @db.Text
+
+  @@index([collegeId])
+}
