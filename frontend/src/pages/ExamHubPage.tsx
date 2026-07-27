@@ -173,6 +173,7 @@ export default function ExamHubPage() {
  Design: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200',
  Law: 'bg-amber-50 text-amber-700 border-amber-200',
  General: 'bg-slate-100 text-slate-700 border-slate-200',
+ Scholarship: 'bg-violet-50 text-violet-700 border-violet-200',
  };
 
  const getEventBadgeColor = (type: string) => {
@@ -560,6 +561,7 @@ export default function ExamHubPage() {
  <option value="Medical">Medical</option>
  <option value="Design">Design</option>
  <option value="Law">Law</option>
+ <option value="Scholarship">Scholarships</option>
  </select>
  </div>
  </div>

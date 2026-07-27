@@ -26,8 +26,8 @@
  * ============================================================================
  */
 
-import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Search, Compass, Map as MapIcon, GitCompareArrows, User, Menu, X, GraduationCap, Bot, LayoutDashboard } from 'lucide-react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Search, Compass, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -41,6 +41,7 @@ export default function PageShell() {
 
  // Current URL location — used to highlight the active nav link
  const location = useLocation();
+ const navigate = useNavigate();
 
  // Check if the user is logged in; used to hide/show navigation
  const { isAuthenticated } = useAuth();
@@ -48,6 +49,7 @@ export default function PageShell() {
  // Hide the navigation on login and onboarding pages for a cleaner user experience
  const hideNav = ['/login', '/onboarding'].some(p => location.pathname.startsWith(p));
  const isLandingPage = location.pathname === '/';
+ const isAICounselorPage = location.pathname === '/counselor';
 
  return (
  <div className="min-h-screen bg-white font-sans text-[#0A2540] pb-20 lg:pb-0 transition-colors duration-200">
@@ -70,11 +72,11 @@ export default function PageShell() {
  {/* Desktop Navigation — hidden on small screens (hidden lg:flex) */}
  {isAuthenticated && !isLandingPage && (
  <nav className="hidden lg:flex items-center gap-1 ml-2">
- <NavLink to="/dashboard"icon={<LayoutDashboard size={17} />} label="Dashboard"active={location.pathname === '/dashboard'} />
- <NavLink to="/search"icon={<Search size={17} />} label="Colleges"active={location.pathname === '/search'} />
- <NavLink to="/careers"icon={<Compass size={17} />} label="Careers"active={location.pathname === '/careers'} />
- <NavLink to="/exams"icon={<GraduationCap size={17} />} label="Exams"active={location.pathname.startsWith('/exams')} />
- <NavLink to="/counselor"icon={<Bot size={17} />} label="AI Help"active={location.pathname === '/counselor'} />
+ <NavLink to="/dashboard" icon={<LayoutDashboard size={17} />} label="Dashboard" active={location.pathname === '/dashboard'} />
+ <NavLink to="/search" icon={<Search size={17} />} label="Colleges" active={location.pathname === '/search'} />
+ <NavLink to="/compare" icon={<GitCompareArrows size={17} />} label="Compare" active={location.pathname === '/compare'} />
+ <NavLink to="/careers" icon={<Compass size={17} />} label="Careers" active={location.pathname === '/careers'} />
+ <NavLink to="/exams" icon={<GraduationCap size={17} />} label="Exams" active={location.pathname.startsWith('/exams')} />
  </nav>
  )}
  </div>
@@ -107,13 +109,12 @@ export default function PageShell() {
  ------------------------------------------------------------------------------ */}
  {isMenuOpen && (
  <div className="lg:hidden bg-white border-t border-[#E3E8EF] px-4 py-4 space-y-1 animate-slide-up">
- {/* Array of mobile nav links — map over them to avoid repetitive JSX */}
  {[
  { to: '/dashboard', label: 'Dashboard' },
  { to: '/search', label: 'Colleges' },
+ { to: '/compare', label: 'Compare Colleges' },
  { to: '/careers', label: 'Careers' },
  { to: '/exams', label: 'Exams' },
- { to: '/counselor', label: 'AI Help' },
  { to: '/profile', label: 'Profile' },
  ].map(({ to, label }) => (
  <Link
@@ -122,8 +123,8 @@ export default function PageShell() {
  onClick={() => setIsMenuOpen(false)} // Close menu when a link is tapped
  className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
  location.pathname === to
- ? 'bg-[#EEF0FF] text-[#635BFF] '
- : 'text-[#425466] hover:bg-[#F6F7FB] :bg-slate-800'
+ ? 'bg-[#EEF0FF] text-[#635BFF]'
+ : 'text-[#425466] hover:bg-[#F6F7FB]'
  }`}
  >
  {label}
@@ -148,15 +149,26 @@ export default function PageShell() {
  Provides quick access to the 5 most important sections.
  ------------------------------------------------------------------------------ */}
  {isAuthenticated && !hideNav && (
- <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[#E3E8EF] z-[9999] pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.08)] _-4px_20px_rgba(0,0,0,0.3)]">
+ <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[#E3E8EF] z-[9999] pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
  <div className="flex items-center justify-around h-16">
- <MobileNavItem to="/dashboard"icon={<LayoutDashboard size={22} />} label="Home"active={location.pathname === '/dashboard'} />
- <MobileNavItem to="/search"icon={<Search size={22} />} label="Colleges"active={location.pathname === '/search'} />
- <MobileNavItem to="/map"icon={<MapIcon size={22} />} label="Map"active={location.pathname === '/map'} />
- <MobileNavItem to="/compare"icon={<GitCompareArrows size={22} />} label="Compare"active={location.pathname === '/compare'} />
- <MobileNavItem to="/profile"icon={<User size={22} />} label="Me"active={location.pathname === '/profile'} />
+ <MobileNavItem to="/dashboard" icon={<LayoutDashboard size={22} />} label="Home" active={location.pathname === '/dashboard'} />
+ <MobileNavItem to="/search" icon={<Search size={22} />} label="Colleges" active={location.pathname === '/search'} />
+ <MobileNavItem to="/compare" icon={<GitCompareArrows size={22} />} label="Compare" active={location.pathname === '/compare'} />
+ <MobileNavItem to="/exams" icon={<GraduationCap size={22} />} label="Exams" active={location.pathname.startsWith('/exams')} />
+ <MobileNavItem to="/profile" icon={<User size={22} />} label="Me" active={location.pathname === '/profile'} />
  </div>
  </nav>
+ )}
+
+ {/* Floating AI Counselor Button — always visible when logged in */}
+ {isAuthenticated && !hideNav && !isAICounselorPage && (
+ <button
+ onClick={() => navigate('/counselor')}
+ title="AI College Counselor"
+ className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-[9998] w-14 h-14 bg-gradient-to-br from-[#635BFF] to-[#4F46E5] rounded-2xl shadow-lg shadow-[#635BFF]/40 flex items-center justify-center hover:scale-110 hover:shadow-xl hover:shadow-[#635BFF]/50 transition-all duration-200 group"
+ >
+ <Sparkles size={22} className="text-white group-hover:rotate-12 transition-transform duration-200" />
+ </button>
  )}
  </div>
  );

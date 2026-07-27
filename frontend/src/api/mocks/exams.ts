@@ -543,5 +543,163 @@ export const exams: Exam[] = [
  },
  acceptedBy: ["IITs","IISc Bangalore","Other Design Institutes"],
  difficultyLevel: 4
+ },
+ {
+ id: "kvpy",
+ name: "KVPY",
+ fullName: "Kishore Vaigyanik Protsahan Yojana",
+ category: "Scholarship",
+ level: "National",
+ conductingBody: "Indian Institute of Science (IISc)",
+ officialWebsite: "https://kvpy.iisc.ernet.in/",
+ description: "Prestigious national scholarship to encourage students to pursue research careers in basic sciences. Offers monthly fellowship and contingency grant for SA/SX/SB streams.",
+ eligibility: ["Students in Class 11/12 or 1st year of UG science program", "Min 60% in Science & Math in 10th board (55% for SC/ST)"],
+ pattern: {
+ mode: "Computer Based Test (CBT)",
+ durationMinutes: 180,
+ totalMarks: 100,
+ totalQuestions: 80,
+ sections: [
+ { name: "Physics", questions: 20, marks: 25 },
+ { name: "Chemistry", questions: 20, marks: 25 },
+ { name: "Mathematics", questions: 20, marks: 25 },
+ { name: "Biology", questions: 20, marks: 25 }
+ ]
+ },
+ markingScheme: { correct: 1, incorrect: -0.25, unanswered: 0 },
+ syllabusOverview: "Class 11-12 level Physics, Chemistry, Mathematics, and Biology concepts.",
+ importantDates: {
+ registrationStart: "2025-07-01",
+ registrationEnd: "2025-08-31",
+ admitCard: "2025-10-15",
+ examStart: "2025-11-02",
+ resultExpected: "2026-01-20",
+ counselingStart: "2026-02-01"
+ },
+ acceptedBy: ["IISc Bangalore", "IITs", "NITs", "Central Universities"],
+ difficultyLevel: 4
+ },
+ {
+ id: "ntse",
+ name: "NTSE",
+ fullName: "National Talent Search Examination",
+ category: "Scholarship",
+ level: "National",
+ conductingBody: "NCERT",
+ officialWebsite: "https://ncert.nic.in/national-talent-examination.php",
+ description: "India's most prestigious scholarship at Class 10 level. Selects 2000 students annually for scholarship up to PhD level. Two-stage exam: State + National level.",
+ eligibility: ["Class 10 students in any recognised school", "Min 60% in Class 9 (55% for SC/ST/PH)"],
+ pattern: {
+ mode: "Pen & Paper",
+ durationMinutes: 270,
+ totalMarks: 200,
+ totalQuestions: 200,
+ sections: [
+ { name: "Mental Ability Test (MAT)", questions: 100, marks: 100 },
+ { name: "Scholastic Aptitude Test (SAT)", questions: 100, marks: 100 }
+ ]
+ },
+ markingScheme: { correct: 1, incorrect: 0, unanswered: 0 },
+ syllabusOverview: "Class 9-10 level Science, Social Science, Mathematics, Mental Ability, and Language.",
+ importantDates: {
+ registrationStart: "2025-08-01",
+ registrationEnd: "2025-09-30",
+ admitCard: "2025-10-20",
+ examStart: "2025-11-08",
+ resultExpected: "2026-03-01",
+ counselingStart: "2026-04-01"
+ },
+ acceptedBy: ["All Indian Universities and Institutions"],
+ difficultyLevel: 3
+ },
+ {
+ id: "inspire-scholarship",
+ name: "INSPIRE SHE",
+ fullName: "INSPIRE Scholarship for Higher Education",
+ category: "Scholarship",
+ level: "National",
+ conductingBody: "Department of Science & Technology (DST)",
+ officialWebsite: "https://online-inspire.gov.in/",
+ description: "Scholarship for students pursuing BSc / BS / Integrated MSc / MS in natural & basic sciences. Provides ₹80,000 per year plus mentorship from top scientists.",
+ eligibility: ["Top 1% in Class 12 board exams", "Admitted to BSc/BS/Integrated MSc in natural sciences", "KVPY or NTSE awardees also eligible"],
+ pattern: {
+ mode: "Merit-Based (No Entrance Test)",
+ durationMinutes: 0,
+ totalMarks: 0,
+ totalQuestions: 0,
+ sections: []
+ },
+ markingScheme: { correct: 0, incorrect: 0, unanswered: 0 },
+ syllabusOverview: "Merit-based selection from Class 12 board toppers. No written exam required.",
+ importantDates: {
+ registrationStart: "2025-07-01",
+ registrationEnd: "2025-10-31",
+ admitCard: "2025-11-01",
+ examStart: "2025-11-01",
+ resultExpected: "2026-01-15",
+ counselingStart: "2026-02-01"
+ },
+ acceptedBy: ["IITs", "IISc", "NITs", "Central Universities", "State Universities"],
+ difficultyLevel: 2
+ },
+ {
+ id: "pm-scholarship",
+ name: "PMSS",
+ fullName: "Prime Minister's Scholarship Scheme",
+ category: "Scholarship",
+ level: "National",
+ conductingBody: "Kendriya Sainik Board",
+ officialWebsite: "https://ksb.gov.in/",
+ description: "Scholarship for wards of ex-servicemen and ex-coast guard personnel pursuing professional degree programs. Provides ₹2500/month for boys and ₹3000/month for girls.",
+ eligibility: ["Ward/widow of ex-servicemen or ex-coast guard personnel", "Min 60% in Class 12", "Pursuing 1st year of degree/diploma professional course"],
+ pattern: {
+ mode: "Merit-Based (No Entrance Test)",
+ durationMinutes: 0,
+ totalMarks: 0,
+ totalQuestions: 0,
+ sections: []
+ },
+ markingScheme: { correct: 0, incorrect: 0, unanswered: 0 },
+ syllabusOverview: "No written exam. Selection based on Class 12 marks and eligibility criteria.",
+ importantDates: {
+ registrationStart: "2025-06-01",
+ registrationEnd: "2025-09-30",
+ admitCard: "2025-10-15",
+ examStart: "2025-10-15",
+ resultExpected: "2025-12-15",
+ counselingStart: "2026-01-01"
+ },
+ acceptedBy: ["All AICTE/UGC approved colleges in India"],
+ difficultyLevel: 1
+ },
+ {
+ id: "maulana-azad-fellowship",
+ name: "Maulana Azad Fellowship",
+ fullName: "Maulana Azad National Fellowship for Minority Students",
+ category: "Scholarship",
+ level: "National",
+ conductingBody: "University Grants Commission (UGC)",
+ officialWebsite: "https://maef.nic.in/",
+ description: "Five-year fellowship for minority community students pursuing MPhil and PhD. Covers JRF (₹31,000/month) and SRF (₹35,000/month) plus contingency and HRA.",
+ eligibility: ["Belong to notified minority community (Muslim, Christian, Sikh, Buddhist, Jain, Zoroastrian)", "Qualified UGC-NET/JRF", "Admitted to MPhil or PhD program"],
+ pattern: {
+ mode: "UGC-NET / JRF Qualified",
+ durationMinutes: 0,
+ totalMarks: 0,
+ totalQuestions: 0,
+ sections: []
+ },
+ markingScheme: { correct: 0, incorrect: 0, unanswered: 0 },
+ syllabusOverview: "No separate exam. Must have qualified UGC-NET with JRF. Selection based on merit.",
+ importantDates: {
+ registrationStart: "2025-09-01",
+ registrationEnd: "2025-11-30",
+ admitCard: "2026-01-01",
+ examStart: "2026-01-01",
+ resultExpected: "2026-03-15",
+ counselingStart: "2026-04-01"
+ },
+ acceptedBy: ["All UGC recognised universities in India"],
+ difficultyLevel: 2
  }
 ];

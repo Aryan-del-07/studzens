@@ -273,7 +273,7 @@ export default function DashboardPage() {
  <div>
  <p className="text-sm font-semibold text-[#635BFF] mb-1 font-sans">Exam Command Center</p>
  <h1 className="text-3xl font-bold text-[#0A2540] font-sans">
- Good morning, {user?.name?.split(' ')[0] || 'Student'} 👋
+ Hi, {user?.name?.split(' ')[0] || 'Student'} 👋
  </h1>
  <p className="text-[#697386] mt-1 font-sans text-sm">Here is your daily academic status and checklist.</p>
  </div>
@@ -579,16 +579,16 @@ export default function DashboardPage() {
  </div>
  </div>
 
- {/* Best Colleges For You Section */}
- <div className="space-y-4">
+ {/* Best Colleges For You Section — 3 categories */}
+ <div className="space-y-6">
  <div className="flex items-center justify-between">
  <div>
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
  <Star size={20} className="text-[#635BFF]"/> Best Colleges For You
  </h2>
- <p className="text-xs text-[#697386] font-sans">Personalized matches based on location, budget limits, and entrance exams.</p>
+ <p className="text-xs text-[#697386] font-sans">Personalized matches based on your profile, budget and exams.</p>
  </div>
- <Link to="/search"className="btn-ghost text-sm font-sans">View List <ArrowRight size={14} /></Link>
+ <Link to="/search" className="btn-ghost text-sm font-sans">View All <ArrowRight size={14} /></Link>
  </div>
 
  {!hasPreferences ? (
@@ -605,53 +605,69 @@ export default function DashboardPage() {
  </button>
  </div>
  ) : (
- <div className="grid md:grid-cols-2 gap-5">
- {recommendedColleges.slice(0, 4).map(({ college: c, matchType, reasons }) => {
+ <div className="grid md:grid-cols-3 gap-5">
+ {(['Safe Reach', 'Safe', 'Safe Backup'] as const).map((type) => {
+ const sectionMeta = {
+ 'Safe Reach': { label: 'Best Colleges', icon: '🏆', color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200', desc: 'Aspirational — strong effort needed' },
+ 'Safe': { label: 'Reliable Picks', icon: '✅', color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200', desc: 'Good match within your range' },
+ 'Safe Backup': { label: 'Safest Options', icon: '🛡️', color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', desc: 'High chance of admission' },
+ }[type];
+ const sectionColleges = recommendedColleges.filter(x => x.matchType === type).slice(0, 3);
+ return (
+ <div key={type} className="space-y-3">
+ <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${sectionMeta.bg} ${sectionMeta.border}`}>
+ <span className="text-base">{sectionMeta.icon}</span>
+ <div>
+ <div className={`font-bold text-sm ${sectionMeta.color} font-sans`}>{sectionMeta.label}</div>
+ <div className="text-[10px] text-[#697386] font-sans">{sectionMeta.desc}</div>
+ </div>
+ </div>
+ {sectionColleges.length === 0 ? (
+ <div className="studzens-card p-6 text-center text-xs text-[#9DA6B4] font-sans">
+ No {type.toLowerCase()} matches yet.
+ </div>
+ ) : (
+ sectionColleges.map(({ college: c, matchType, reasons }) => {
  const badge = matchBadge[matchType];
  return (
  <Link
  key={c.id}
  to={`/college/${c.id}`}
- className="studzens-card p-5 flex flex-col justify-between gap-4 group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+ className="studzens-card p-4 flex flex-col justify-between gap-3 group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
  >
- <div className="flex items-start justify-between gap-3">
- <div className="w-11 h-11 bg-[#F0F2F8] rounded-xl flex items-center justify-center shrink-0">
- <GraduationCap size={22} className="text-[#635BFF]"/>
+ <div className="flex items-start justify-between gap-2">
+ <div className="w-9 h-9 bg-[#F0F2F8] rounded-xl flex items-center justify-center shrink-0">
+ <GraduationCap size={18} className="text-[#635BFF]"/>
  </div>
- <span className={`px-2.5 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 ${badge.bg} ${badge.text} ${badge.border}`}>
- <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`}></span>
+ <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${badge.bg} ${badge.text} ${badge.border}`}>
+ <span className={`w-1 h-1 rounded-full ${badge.dot}`}></span>
  {matchType}
  </span>
  </div>
-
  <div>
- <h3 className="font-bold text-[#0A2540] text-sm leading-snug group-hover:text-[#635BFF] transition-colors line-clamp-1 font-sans">
+ <h3 className="font-bold text-[#0A2540] text-xs leading-snug group-hover:text-[#635BFF] transition-colors line-clamp-2 font-sans">
  {c.name}
  </h3>
- <p className="text-xs text-[#697386] mt-1 flex items-center gap-1 font-sans">
- <MapPin size={11} className="text-[#9DA6B4]"/> {c.city}, {c.state}
+ <p className="text-[10px] text-[#697386] mt-1 flex items-center gap-1 font-sans">
+ <MapPin size={9} className="text-[#9DA6B4]"/> {c.city}, {c.state}
  </p>
  </div>
-
- <div className="flex items-center gap-3 text-xs text-[#697386] font-sans">
- <span className="flex items-center gap-1">
- <Wallet size={11} className="text-[#635BFF]"/>
- ₹{c.annualFeeLpa}L/yr
- </span>
- <span className="flex items-center gap-1">
- <Shield size={11} className="text-emerald-500"/>
- {c.tier}
- </span>
+ <div className="flex items-center gap-2 text-[10px] text-[#697386] font-sans">
+ <span className="flex items-center gap-0.5"><Wallet size={9} className="text-[#635BFF]"/>₹{c.annualFeeLpa}L/yr</span>
+ <span className="flex items-center gap-0.5"><Shield size={9} className="text-emerald-500"/>{c.tier}</span>
  </div>
-
  {reasons.length > 0 && (
- <div className="flex flex-wrap gap-1.5">
- {reasons.slice(0, 2).map(r => (
- <span key={r} className="sz-chip-gray text-[10px] px-2 py-0.5">{r}</span>
+ <div className="flex flex-wrap gap-1">
+ {reasons.slice(0, 1).map(r => (
+ <span key={r} className="sz-chip-gray text-[9px] px-1.5 py-0.5">{r}</span>
  ))}
  </div>
  )}
  </Link>
+ );
+ })
+ )}
+ </div>
  );
  })}
  </div>
@@ -720,7 +736,7 @@ export default function DashboardPage() {
  { icon: GraduationCap, label: 'Explore Colleges', sub: `${colleges.length} colleges listed`, path: '/search', color: 'text-[#635BFF]', bg: 'bg-[#EEF0FF]' },
  { icon: Target, label: 'Exam Hub', sub: 'Track deadlines', path: '/exams', color: 'text-orange-600', bg: 'bg-orange-50' },
  { icon: BookOpen, label: 'Career Roadmaps', sub: 'Explore paths', path: '/careers', color: 'text-emerald-600', bg: 'bg-emerald-50' },
- { icon: MapPin, label: 'College Map', sub: 'Explore by location', path: '/map', color: 'text-blue-600', bg: 'bg-blue-50' },
+ { icon: MapPin, label: 'Compare Colleges', sub: 'Side-by-side analysis', path: '/compare', color: 'text-blue-600', bg: 'bg-blue-50' },
  ].map(({ icon: Icon, label, sub, path, color, bg }) => (
  <Link key={path} to={path} className="flex items-center gap-3 p-4 hover:bg-[#F6F7FB] transition-colors group">
  <div className={`w-9 h-9 ${bg} rounded-xl flex items-center justify-center shrink-0`}>

@@ -27,7 +27,7 @@ export interface Exam {
  id: string;
  name: string;
  fullName: string;
- category: 'Engineering' | 'Medical' | 'Law' | 'Design' | 'Architecture' | 'General';
+ category: 'Engineering' | 'Medical' | 'Law' | 'Design' | 'Architecture' | 'General' | 'Scholarship';
  level: 'National' | 'State' | 'University';
  conductingBody: string;
  officialWebsite: string;
