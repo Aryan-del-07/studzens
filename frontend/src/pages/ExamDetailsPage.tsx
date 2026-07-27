@@ -52,7 +52,7 @@ export default function ExamDetailsPage() {
  return (
  <div className="max-w-4xl mx-auto px-4 py-16 text-center bg-[#F6F7FB] text-[#0A2540]">
  <h1 className="text-2xl font-bold mb-4 font-sans">Exam not found</h1>
- <Link to="/exams"className="text-[#635BFF] hover:underline font-semibold font-sans">Return to Exam Hub</Link>
+ <Link to="/exams"className="text-black hover:underline font-semibold font-sans">Return to Exam Hub</Link>
  </div>
  );
  }
@@ -119,8 +119,8 @@ export default function ExamDetailsPage() {
  onClick={() => isPinned ? untrackExam(exam.id) : trackExam(exam.id)}
  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold border transition-all font-sans cursor-pointer ${
  isPinned 
- ? 'bg-indigo-50 border-[#635BFF] text-[#635BFF]' 
- : 'bg-white border-[#E3E8EF] text-[#425466] hover:border-[#635BFF] hover:text-[#635BFF]'
+ ? 'bg-indigo-50 border-[#635BFF] text-black' 
+ : 'bg-white border-[#E3E8EF] text-[#425466] hover:border-[#635BFF] hover:text-black'
  }`}
  >
  {isPinned ? (
@@ -156,7 +156,7 @@ export default function ExamDetailsPage() {
  </div>
  <div className="border-l border-[#E3E8EF] pl-6">
  <span className="text-[9px] uppercase font-bold text-[#697386] tracking-wider block mb-1">Official Portal</span>
- <a href={exam.officialWebsite} target="_blank"rel="noopener noreferrer"className="text-[#635BFF] font-bold hover:underline inline-flex items-center gap-1">
+ <a href={exam.officialWebsite} target="_blank"rel="noopener noreferrer"className="text-black font-bold hover:underline inline-flex items-center gap-1">
  Visit Website <ExternalLink size={12} />
  </a>
  </div>
@@ -175,7 +175,7 @@ export default function ExamDetailsPage() {
  {/* Visual Timeline progress */}
  <section className="sz-card p-6 md:p-8 space-y-6">
  <h2 className="text-lg font-bold text-[#0A2540] flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-4">
- <Calendar className="text-[#635BFF]"size={20} /> Milestone Progress Timeline
+ <Calendar className="text-black"size={20} /> Milestone Progress Timeline
  </h2>
 
  <div className="relative pl-6 border-l-2 border-[#E3E8EF] space-y-6 font-sans py-2">
@@ -228,7 +228,7 @@ export default function ExamDetailsPage() {
  {/* Exam Pattern & Sections */}
  <section className="sz-card p-6 md:p-8 space-y-6">
  <h2 className="text-lg font-bold text-[#0A2540] flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-4">
- <Compass className="text-[#635BFF]"size={20} /> Exam Pattern & Marking Scheme
+ <Compass className="text-black"size={20} /> Exam Pattern & Marking Scheme
  </h2>
 
  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -273,7 +273,7 @@ export default function ExamDetailsPage() {
  {/* Syllabus Overview */}
  <section className="sz-card p-6 md:p-8 space-y-4">
  <h2 className="text-lg font-bold text-[#0A2540] flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-4">
- <FileText className="text-[#635BFF]"size={20} /> Syllabus Outline
+ <FileText className="text-black"size={20} /> Syllabus Outline
  </h2>
  <p className="text-xs text-[#697386] font-sans leading-relaxed">
  {exam.syllabusOverview}
@@ -284,7 +284,7 @@ export default function ExamDetailsPage() {
  <ul className="space-y-2 text-xs text-[#425466] leading-relaxed font-sans">
  {exam.eligibility.map((el, i) => (
  <li key={i} className="flex gap-2">
- <span className="text-[#635BFF] font-bold">•</span>
+ <span className="text-black font-bold">•</span>
  {el}
  </li>
  ))}
@@ -299,7 +299,7 @@ export default function ExamDetailsPage() {
  {/* Document Verification Checklist */}
  <div className="sz-card p-6 space-y-4 bg-white">
  <h3 className="font-bold text-sm text-[#0A2540] border-b border-[#E3E8EF] pb-3 flex items-center gap-1.5 font-sans">
- <CheckSquare size={16} className="text-[#635BFF]"/> Documents Required
+ <CheckSquare size={16} className="text-black"/> Documents Required
  </h3>
  
  <div className="space-y-3.5 text-xs font-sans">
@@ -311,7 +311,7 @@ export default function ExamDetailsPage() {
  onClick={() => toggleDoc(doc.id)}
  className="w-full text-left flex items-start gap-2.5 p-2 rounded-lg hover:bg-[#F6F7FB] transition-all cursor-pointer"
  >
- <span className="mt-0.5 shrink-0 text-[#635BFF]">
+ <span className="mt-0.5 shrink-0 text-black">
  {checked ? <CheckCircle2 size={16} className="text-emerald-500 fill-emerald-50"/> : <Square size={16} />}
  </span>
  <div>
@@ -329,7 +329,7 @@ export default function ExamDetailsPage() {
  {/* Accepting Colleges (Linked Engine) */}
  <div className="sz-card p-6 space-y-4 bg-white">
  <h3 className="font-bold text-sm text-[#0A2540] border-b border-[#E3E8EF] pb-3 flex items-center gap-1.5 font-sans">
- <GraduationCap size={18} className="text-[#635BFF]"/> Accepting Colleges
+ <GraduationCap size={18} className="text-black"/> Accepting Colleges
  </h3>
  
  {acceptingColleges.length === 0 ? (
@@ -342,15 +342,15 @@ export default function ExamDetailsPage() {
  <Link
  key={col.id}
  to={`/college/${col.id}`}
- className="p-3 bg-[#F6F7FB] hover:bg-[#EEF0FF]/30 border border-[#E3E8EF] rounded-xl flex items-center justify-between group transition-all"
+ className="p-3 bg-[#F6F7FB] hover:bg-slate-100/30 border border-[#E3E8EF] rounded-xl flex items-center justify-between group transition-all"
  >
  <div className="min-w-0">
- <strong className="text-xs text-[#0A2540] block truncate group-hover:text-[#635BFF] transition-colors">{col.name}</strong>
+ <strong className="text-xs text-[#0A2540] block truncate group-hover:text-black transition-colors">{col.name}</strong>
  <span className="text-[9px] text-[#697386] flex items-center gap-1 mt-0.5">
  <MapPin size={9} /> {col.city}, {col.state}
  </span>
  </div>
- <ChevronRight size={14} className="text-[#9DA6B4] group-hover:text-[#635BFF] shrink-0"/>
+ <ChevronRight size={14} className="text-[#9DA6B4] group-hover:text-black shrink-0"/>
  </Link>
  ))}
  </div>

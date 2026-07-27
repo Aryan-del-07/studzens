@@ -26,8 +26,8 @@
  * ============================================================================
  */
 
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Compass, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard, Sparkles } from 'lucide-react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Search, Compass, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -41,7 +41,6 @@ export default function PageShell() {
 
  // Current URL location — used to highlight the active nav link
  const location = useLocation();
- const navigate = useNavigate();
 
  // Check if the user is logged in; used to hide/show navigation
  const { isAuthenticated } = useAuth();
@@ -49,8 +48,6 @@ export default function PageShell() {
  // Hide the navigation on login and onboarding pages for a cleaner user experience
  const hideNav = ['/login', '/onboarding'].some(p => location.pathname.startsWith(p));
  const isLandingPage = location.pathname === '/';
- const isAICounselorPage = location.pathname === '/counselor';
-
  return (
  <div className="min-h-screen bg-white font-sans text-[#0A2540] pb-20 lg:pb-0 transition-colors duration-200">
  {/* ------------------------------------------------------------------------------
@@ -62,11 +59,8 @@ export default function PageShell() {
  {/* Left side: Logo + Desktop navigation */}
  <div className="flex items-center gap-6">
  {/* Logo link that goes to the dashboard if authenticated, else / */}
- <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center gap-2.5 font-bold text-xl text-[#0A2540]">
- <div className="w-8 h-8 rounded-lg bg-[#635BFF] flex items-center justify-center shadow-md shadow-[#635BFF]/30">
- <GraduationCap size={18} className="text-white" strokeWidth={2.5} />
- </div>
- <span className="hidden sm:inline">Studzens</span>
+ <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center gap-2 group">
+ <img src="/logo.png" alt="Studzens Logo" className="h-8 w-auto object-contain" />
  </Link>
 
  {/* Desktop Navigation — hidden on small screens (hidden lg:flex) */}
@@ -87,7 +81,7 @@ export default function PageShell() {
  {/* Profile icon — only visible on small screens and up */}
  <Link
  to="/profile"
- className="w-9 h-9 rounded-full bg-[#F0F2F8] border border-[#E3E8EF] flex items-center justify-center hover:bg-[#EEF0FF] dark:bg-slate-700 hover:border-[#C7C5FF] dark:border-slate-600 transition-colors hidden sm:flex"
+ className="w-9 h-9 rounded-full bg-slate-50 border border-[#E3E8EF] flex items-center justify-center hover:bg-slate-100 dark:bg-slate-700 hover:border-slate-300 dark:border-slate-600 transition-colors hidden sm:flex"
  >
  <User size={17} className="text-[#425466]"/>
  </Link>
@@ -123,7 +117,7 @@ export default function PageShell() {
  onClick={() => setIsMenuOpen(false)} // Close menu when a link is tapped
  className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
  location.pathname === to
- ? 'bg-[#EEF0FF] text-[#635BFF]'
+ ? 'bg-slate-100 text-black'
  : 'text-[#425466] hover:bg-[#F6F7FB]'
  }`}
  >
@@ -160,16 +154,6 @@ export default function PageShell() {
  </nav>
  )}
 
- {/* Floating AI Counselor Button — always visible when logged in */}
- {isAuthenticated && !hideNav && !isAICounselorPage && (
- <button
- onClick={() => navigate('/counselor')}
- title="AI College Counselor"
- className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-[9998] w-14 h-14 bg-gradient-to-br from-[#635BFF] to-[#4F46E5] rounded-2xl shadow-lg shadow-[#635BFF]/40 flex items-center justify-center hover:scale-110 hover:shadow-xl hover:shadow-[#635BFF]/50 transition-all duration-200 group"
- >
- <Sparkles size={22} className="text-white group-hover:rotate-12 transition-transform duration-200" />
- </button>
- )}
  </div>
  );
 }
@@ -193,8 +177,8 @@ function NavLink({ to, icon, label, active }: { to: string; icon: React.ReactNod
  to={to}
  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
  active
- ? 'bg-[#EEF0FF] text-[#635BFF] '
- : 'text-[#697386] hover:bg-[#F0F2F8] :bg-slate-800 hover:text-[#0A2540] :text-slate-100'
+ ? 'bg-slate-100 text-black '
+ : 'text-[#697386] hover:bg-slate-50 :bg-slate-800 hover:text-[#0A2540] :text-slate-100'
  }`}
  >
  {icon}
@@ -222,10 +206,10 @@ function MobileNavItem({ to, icon, label, active }: { to: string; icon: React.Re
  <Link
  to={to}
  className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${
- active ? 'text-[#635BFF] ' : 'text-[#9DA6B4] hover:text-[#425466] :text-slate-300'
+ active ? 'text-black ' : 'text-[#9DA6B4] hover:text-[#425466] :text-slate-300'
  }`}
  >
- <div className={`p-1.5 rounded-xl transition-all ${active ? 'bg-[#EEF0FF] ' : ''}`}>
+ <div className={`p-1.5 rounded-xl transition-all ${active ? 'bg-slate-100 ' : ''}`}>
  {icon}
  </div>
  <span className="text-[10px] font-semibold">{label}</span>

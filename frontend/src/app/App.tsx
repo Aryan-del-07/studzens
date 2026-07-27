@@ -1,29 +1,29 @@
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
-import PageShell from './components/layout/PageShell';
-import ProtectedRoute from './components/auth/ProtectedRoute';
+import PageShell from '../components/layout/PageShell';
+import ProtectedRoute from '../features/authentication/components/ProtectedRoute';
 import React, { Suspense } from 'react';
 
-const LandingPage = React.lazy(() => import('./pages/LandingPage'));
-const SearchPage = React.lazy(() => import('./pages/SearchPage'));
-const ExamHubPage = React.lazy(() => import('./pages/ExamHubPage'));
-const ExamDetailsPage = React.lazy(() => import('./pages/ExamDetailsPage'));
-const CareerExplorerPage = React.lazy(() => import('./pages/CareerExplorerPage'));
-const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
-const CollegeProfilePage = React.lazy(() => import('./pages/CollegeProfilePage'));
-const LoginPage = React.lazy(() => import('./pages/LoginPage'));
-const OnboardingPage = React.lazy(() => import('./pages/OnboardingPage'));
-const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
-const ComparePage = React.lazy(() => import('./pages/ComparePage'));
-const MapPage = React.lazy(() => import('./pages/MapPage'));
-const AICounselorPage = React.lazy(() => import('./pages/AICounselorPage'));
-const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+const LandingPage = React.lazy(() => import('../pages/LandingPage'));
+const SearchPage = React.lazy(() => import('../pages/SearchPage'));
+const ExamHubPage = React.lazy(() => import('../pages/ExamHubPage'));
+const ExamDetailsPage = React.lazy(() => import('../pages/ExamDetailsPage'));
+const CareerExplorerPage = React.lazy(() => import('../pages/CareerExplorerPage'));
+const DashboardPage = React.lazy(() => import('../pages/DashboardPage'));
+const CollegeProfilePage = React.lazy(() => import('../pages/CollegeProfilePage'));
+const LoginPage = React.lazy(() => import('../pages/LoginPage'));
+const OnboardingPage = React.lazy(() => import('../pages/OnboardingPage'));
+const ProfilePage = React.lazy(() => import('../pages/ProfilePage'));
+const ComparePage = React.lazy(() => import('../pages/ComparePage'));
+const MapPage = React.lazy(() => import('../pages/MapPage'));
+
+const NotFoundPage = React.lazy(() => import('../pages/NotFoundPage'));
 
 const CollegeProfileRoute = () => {
  const { id } = useParams<{ id: string }>();
  return <CollegeProfilePage key={id} />;
 };
 
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from '../components/common/ErrorBoundary';
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-[#F6F7FB]">
@@ -57,7 +57,7 @@ export default function App() {
  <Route path="/profile"element={<ProfilePage />} />
  <Route path="/compare"element={<ComparePage />} />
  <Route path="/map"element={<MapPage />} />
- <Route path="/counselor"element={<AICounselorPage />} />
+
  </Route>
 
  {/* Wildcard 404 Route */}

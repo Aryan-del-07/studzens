@@ -111,14 +111,14 @@ export default function CareerExplorerPage() {
  switch (type) {
  case 'schooling': return <BookOpen size={20} className="text-emerald-500"/>;
  case 'exam': return <Target size={20} className="text-amber-500"/>;
- case 'course': return <GraduationCap size={20} className="text-[#635BFF]"/>;
+ case 'course': return <GraduationCap size={20} className="text-black"/>;
  case 'college': return <Building2 size={20} className="text-teal-500"/>;
  case 'career': return <Briefcase size={20} className="text-blue-500"/>;
  default: return <Map size={20} className="text-slate-600"/>;
  }
  };
 
- const inputClasses ="w-full bg-[#F6F7FB] border border-[#E3E8EF] rounded-xl px-4 py-3 text-[#0A2540] placeholder-[#9DA6B4] focus:outline-none focus:ring-2 focus:ring-[#635BFF]/20 focus:border-[#635BFF] focus:bg-white transition-all font-sans";
+ const inputClasses ="w-full bg-[#F6F7FB] border border-[#E3E8EF] rounded-xl px-4 py-3 text-[#0A2540] placeholder-[#9DA6B4] focus:outline-none focus:ring-2 focus:ring-black/20 focus:border-[#635BFF] focus:bg-white transition-all font-sans";
 
  return (
  <div className="bg-[#F6F7FB] min-h-screen text-[#0A2540]">
@@ -139,7 +139,7 @@ export default function CareerExplorerPage() {
  <div className="flex items-center justify-center w-11 h-11 rounded-full border-4 border-white bg-[#F6F7FB] shadow-sm shrink-0 z-10">
  {getStepIcon(step.type)}
  </div>
- <div className="bg-[#F6F7FB] hover:bg-[#F0F2F8] transition-all p-5 rounded-2xl border border-[#E3E8EF] w-full mt-0 group">
+ <div className="bg-[#F6F7FB] hover:bg-slate-50 transition-all p-5 rounded-2xl border border-[#E3E8EF] w-full mt-0 group">
  <div className="flex justify-between items-start">
  <div>
  <div className="text-xs font-bold uppercase tracking-wider mb-1 text-[#697386] font-sans">{step.type}</div>
@@ -162,7 +162,7 @@ export default function CareerExplorerPage() {
 
  {/* Add New Step Form or Button */}
  <div className="relative flex items-start gap-6 pt-4">
- <div className="flex items-center justify-center w-11 h-11 rounded-full border-4 border-white bg-[#635BFF] text-white shadow-sm shrink-0 z-10">
+ <div className="flex items-center justify-center w-11 h-11 rounded-full border-4 border-white bg-black text-white shadow-sm shrink-0 z-10">
  <Plus size={20} strokeWidth={3} />
  </div>
  
@@ -242,7 +242,7 @@ export default function CareerExplorerPage() {
  ) : (
  <button 
  onClick={() => setIsAdding(true)}
- className="bg-white border border-dashed border-[#C7D0DE] hover:border-[#635BFF] hover:bg-[#EEF0FF]/30 text-[#635BFF] font-bold p-4 rounded-2xl w-full text-left transition-all cursor-pointer font-sans"
+ className="bg-white border border-dashed border-[#C7D0DE] hover:border-[#635BFF] hover:bg-slate-100/30 text-black font-bold p-4 rounded-2xl w-full text-left transition-all cursor-pointer font-sans"
  >
  + Add Next Step
  </button>

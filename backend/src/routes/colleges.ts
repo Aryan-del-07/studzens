@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
       take: 20, // Pagination limit for now
     });
     res.json(colleges);
-  } catch (error) {
+  } catch (_error) {
     res.status(500).json({ error: 'Failed to fetch colleges' });
   }
 });
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
     }
     
     res.json(college);
-  } catch (error) {
+  } catch (_error) {
     res.status(500).json({ error: 'Failed to fetch college details' });
   }
 });

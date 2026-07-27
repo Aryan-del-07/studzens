@@ -116,7 +116,7 @@ export default function MapPage() {
  <div className="bg-white border-b border-[#E3E8EF] p-4 shrink-0 z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
  <div>
  <h1 className="text-2xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <MapPin className="text-[#635BFF]"/> Advanced Discovery Map
+ <MapPin className="text-black"/> Advanced Discovery Map
  </h1>
  <p className="text-[#697386] text-sm mt-1 font-sans">Visualize clustering to find educational hubs and view transit data.</p>
  </div>
@@ -126,7 +126,7 @@ export default function MapPage() {
  <select 
  value={tierFilter} 
  onChange={(e) => setTierFilter(e.target.value)}
- className="bg-white border border-[#E3E8EF] text-sm rounded-lg py-2 px-3 focus:ring-2 focus:ring-[#635BFF]/20 focus:border-[#635BFF] font-semibold text-[#0A2540] outline-none cursor-pointer"
+ className="bg-white border border-[#E3E8EF] text-sm rounded-lg py-2 px-3 focus:ring-2 focus:ring-black/20 focus:border-[#635BFF] font-semibold text-[#0A2540] outline-none cursor-pointer"
  >
  <option value="All">All Institutions</option>
  <option value="Tier 1">Tier 1 Only</option>
@@ -200,7 +200,7 @@ export default function MapPage() {
  
  <Link 
  to={`/college/${popupInfo.id}`}
- className="mt-3 block w-full text-center bg-[#635BFF] text-white text-xs font-semibold py-2 rounded-lg hover:bg-[#4F47E5] transition-colors"
+ className="mt-3 block w-full text-center bg-black text-white text-xs font-semibold py-2 rounded-lg hover:bg-[#4F47E5] transition-colors"
  >
  View Profile
  </Link>

@@ -46,13 +46,13 @@ export default function LandingPage() {
  <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-20 grid lg:grid-cols-2 gap-16 items-center">
  {/* Left: Text */}
  <div className="animate-slide-up">
- <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EEF0FF] rounded-full text-[#635BFF] text-sm font-semibold mb-6">
+ <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-black text-sm font-semibold mb-6">
  <Zap size={14} />
  India's smartest college finder
  </div>
  <h1 className="text-5xl lg:text-[62px] font-bold text-[#0A2540] leading-[1.1] tracking-tight mb-6">
  Find colleges that{' '}
- <span className="text-[#635BFF]">actually</span>{' '}
+ <span className="text-black">actually</span>{' '}
  match your marks.
  </h1>
  <p className="text-xl text-[#425466] leading-relaxed mb-8 max-w-lg">
@@ -72,7 +72,7 @@ export default function LandingPage() {
  <div className="flex items-center gap-1.5">
  <div className="flex -space-x-2">
  {['S','R','A','P'].map(l => (
- <div key={l} className="w-7 h-7 rounded-full bg-[#635BFF] border-2 border-white flex items-center justify-center text-white text-xs font-bold">{l}</div>
+ <div key={l} className="w-7 h-7 rounded-full bg-black border-2 border-white flex items-center justify-center text-white text-xs font-bold">{l}</div>
  ))}
  </div>
  <span><strong className="text-[#0A2540]">50,000+</strong> students</span>
@@ -94,8 +94,8 @@ export default function LandingPage() {
  { name: 'VIT Vellore', match: 'Safe Backup', score: 76, color: 'bg-amber-500' },
  ].map((item, i) => (
  <div key={i} className="flex items-center gap-3 py-3 border-b border-[#E3E8EF] last:border-0">
- <div className="w-10 h-10 bg-[#F0F2F8] rounded-xl flex items-center justify-center shrink-0">
- <GraduationCap size={18} className="text-[#635BFF]"/>
+ <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center shrink-0">
+ <GraduationCap size={18} className="text-black"/>
  </div>
  <div className="flex-1">
  <div className="font-semibold text-[#0A2540] text-sm">{item.name}</div>
@@ -140,7 +140,7 @@ export default function LandingPage() {
  <section className="py-24 px-6">
  <div className="max-w-6xl mx-auto">
  <div className="text-center mb-16 animate-slide-up">
- <span className="text-xs font-bold tracking-widest text-[#635BFF] uppercase">Why Students Love Studzens</span>
+ <span className="text-xs font-bold tracking-widest text-black uppercase">Why Students Love Studzens</span>
  <h2 className="text-4xl font-bold text-[#0A2540] mt-3 mb-4">
  Everything you need to make a smart decision
  </h2>
@@ -153,8 +153,8 @@ export default function LandingPage() {
  {[
  {
  icon: Star,
- color: 'text-[#635BFF]',
- bg: 'bg-[#EEF0FF]',
+ color: 'text-black',
+ bg: 'bg-slate-100',
  title: 'Personalized Match Score',
  desc: `Based on your ${exams.length} entrance exam scores and 12th marks, we tell you exactly where you stand.`,
  chips: ['JEE', 'NEET', 'BITSAT', 'CLAT', 'VITEEE'],
@@ -169,7 +169,7 @@ export default function LandingPage() {
  },
  {
  icon: MapPin,
- color: 'text-blue-600',
+ color: 'text-slate-800',
  bg: 'bg-blue-50',
  title: 'State-wise Intelligence',
  desc: 'Filter by your preferred states, view transport access, and discover educational hubs on an interactive map.',
@@ -206,7 +206,7 @@ export default function LandingPage() {
  { step: '03', title: 'Get Your List', desc: 'See Safe Reach, Safe, and Safe Backup colleges — ready to apply.' },
  ].map(({ step, title, desc }) => (
  <div key={step} className="text-center">
- <div className="w-14 h-14 rounded-2xl bg-[#635BFF] text-white text-lg font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#635BFF]/30">
+ <div className="w-14 h-14 rounded-2xl bg-black text-white text-lg font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-black/30">
  {step}
  </div>
  <h3 className="text-lg font-bold text-[#0A2540] mb-2">{title}</h3>

@@ -164,7 +164,7 @@ export default function OnboardingPage() {
  <div className="w-full max-w-2xl">
  {/* Header */}
  <div className="text-center mb-10 animate-slide-up">
- <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#EEF0FF] rounded-full text-[#635BFF] text-sm font-semibold mb-4">
+ <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-black text-sm font-semibold mb-4">
  <GraduationCap size={16} />
  Welcome, {user?.name?.split(' ')[0] || 'Student'}!
  </div>
@@ -182,7 +182,7 @@ export default function OnboardingPage() {
  <div key={i} className="flex-1 flex flex-col items-center gap-2 relative">
  <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 z-10 ${
  i < step ? 'step-done' :
- i === step ? 'step-active shadow-lg shadow-[#635BFF]/25' :
+ i === step ? 'step-active shadow-lg shadow-black/25' :
  'step-inactive'
  }`}>
  {i < step ? (
@@ -195,7 +195,7 @@ export default function OnboardingPage() {
  {i < steps.length - 1 && (
  <div className={`h-0.5 w-full transition-all duration-500 ${i < step ? 'bg-[#0BBF8A]' : 'bg-[#E3E8EF] '}`} style={{position:'absolute', left:'50%', width:'calc(100% - 36px)', top: '18px', zIndex: 0}} />
  )}
- <span className={`text-xs font-medium hidden md:block text-center ${i === step ? 'text-[#635BFF] ' : 'text-[#9DA6B4] '}`}>
+ <span className={`text-xs font-medium hidden md:block text-center ${i === step ? 'text-black ' : 'text-[#9DA6B4] '}`}>
  {s.title}
  </span>
  </div>
@@ -269,7 +269,7 @@ export default function OnboardingPage() {
  <input
  type="text"
  inputMode="decimal"
- className={`w-full bg-white border ${errors[field] ? 'border-red-400 focus:ring-red-500/10' : 'border-[#E3E8EF] focus:border-[#635BFF] focus:ring-[#635BFF]/10'} focus:ring-4 rounded-xl px-4 py-3 text-center text-lg text-[#0A2540] font-bold outline-none transition-all placeholder:text-[#9DA6B4]`}
+ className={`w-full bg-white border ${errors[field] ? 'border-red-400 focus:ring-red-500/10' : 'border-[#E3E8EF] focus:border-[#635BFF] focus:ring-black/10'} focus:ring-4 rounded-xl px-4 py-3 text-center text-lg text-[#0A2540] font-bold outline-none transition-all placeholder:text-[#9DA6B4]`}
  placeholder="—"
  value={data[field]}
  onChange={e => {
@@ -307,8 +307,8 @@ export default function OnboardingPage() {
  onClick={() => toggleArr('examsTaken', exam.id)}
  className={`px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition-all ${
  data.examsTaken.includes(exam.id)
- ? 'bg-[#635BFF] text-white border-[#635BFF] shadow-md shadow-[#635BFF]/25'
- : 'bg-white text-[#425466] border-[#E3E8EF] hover:border-[#635BFF] hover:text-[#635BFF] :text-[#818CF8]'
+ ? 'bg-black text-white border-[#635BFF] shadow-md shadow-black/25'
+ : 'bg-white text-[#425466] border-[#E3E8EF] hover:border-[#635BFF] hover:text-black :text-[#818CF8]'
  }`}
  >
  {exam.label}
@@ -330,7 +330,7 @@ export default function OnboardingPage() {
  <input
  type="text"
  inputMode="decimal"
- className={`w-full bg-white border ${err ? 'border-red-400 focus:ring-red-500/10' : 'border-[#E3E8EF] focus:border-[#635BFF] focus:ring-[#635BFF]/10'} focus:ring-4 rounded-xl px-4 py-3 text-[15px] text-[#0A2540] font-medium outline-none transition-all placeholder:text-[#9DA6B4]`}
+ className={`w-full bg-white border ${err ? 'border-red-400 focus:ring-red-500/10' : 'border-[#E3E8EF] focus:border-[#635BFF] focus:ring-black/10'} focus:ring-4 rounded-xl px-4 py-3 text-[15px] text-[#0A2540] font-medium outline-none transition-all placeholder:text-[#9DA6B4]`}
  placeholder={placeholder}
  value={data.examScores[id] || ''}
  onChange={e => {
@@ -382,7 +382,7 @@ export default function OnboardingPage() {
  onClick={() => toggleArr('favouriteSubjects', sub)}
  className={`px-3.5 py-2 rounded-xl text-sm font-medium border-2 transition-all ${
  data.favouriteSubjects.includes(sub)
- ? 'bg-[#EEF0FF] text-[#635BFF] border-[#635BFF]'
+ ? 'bg-slate-100 text-black border-[#635BFF]'
  : 'bg-white text-[#425466] border-[#E3E8EF] hover:border-[#635BFF]/50 :border-[#818CF8]/50'
  }`}
  >
@@ -401,7 +401,7 @@ export default function OnboardingPage() {
  onClick={() => toggleArr('careerInterests', career)}
  className={`px-3.5 py-2 rounded-xl text-sm font-medium border-2 transition-all ${
  data.careerInterests.includes(career)
- ? 'bg-[#635BFF] text-white border-[#635BFF] shadow-sm'
+ ? 'bg-black text-white border-[#635BFF] shadow-sm'
  : 'bg-white text-[#425466] border-[#E3E8EF] hover:border-[#635BFF]/50 :border-[#818CF8]/50'
  }`}
  >
@@ -430,7 +430,7 @@ export default function OnboardingPage() {
  onClick={() => toggleArr('preferredStates', state)}
  className={`px-3.5 py-2 rounded-xl text-sm font-medium border-2 transition-all ${
  data.preferredStates.includes(state)
- ? 'bg-[#635BFF] text-white border-[#635BFF]'
+ ? 'bg-black text-white border-[#635BFF]'
  : 'bg-white text-[#425466] border-[#E3E8EF] hover:border-[#635BFF]/50 :border-[#818CF8]/50'
  }`}
  >
@@ -443,7 +443,7 @@ export default function OnboardingPage() {
  <div>
  <div className="flex justify-between items-center mb-3">
  <p className="text-sm font-semibold text-[#425466]">Annual Fee Budget</p>
- <span className="text-xl font-bold text-[#635BFF]">₹{data.budgetLimitLpa}L / year</span>
+ <span className="text-xl font-bold text-black">₹{data.budgetLimitLpa}L / year</span>
  </div>
  <input
  type="range"
@@ -495,7 +495,7 @@ export default function OnboardingPage() {
  <div className="flex gap-1.5">
  {steps.map((_, i) => (
  <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${
- i === step ? 'w-6 bg-[#635BFF]' : i < step ? 'w-3 bg-[#0BBF8A]' : 'w-3 bg-[#E3E8EF] '
+ i === step ? 'w-6 bg-black' : i < step ? 'w-3 bg-[#0BBF8A]' : 'w-3 bg-[#E3E8EF] '
  }`} />
  ))}
  </div>

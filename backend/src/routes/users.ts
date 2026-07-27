@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
     }
     
     res.json(user);
-  } catch (error) {
+  } catch (_error) {
     res.status(500).json({ error: 'Failed to fetch user' });
   }
 });

@@ -31,7 +31,7 @@
   --text-muted:       #94A3B8;
   --text-on-primary:  #ffffff;
   --text-on-accent:   #ffffff;
-  --text-link:        #4F46E5;
+  --text-link:        #0F172A;
   --text-success:     #059669;
   --text-warning:     #D97706;
   --text-danger:      #DC2626;
@@ -39,16 +39,16 @@
   /* Border colors */
   --border-default:   #E2E8F0;
   --border-hover:     #CBD5E1;
-  --border-focus:     #6366F1;
+  --border-focus:     #000000;
   --border-divider:   #F1F5F9;
   --border-subtle:    #F8FAFC;
 
   /* Accent (primary brand) */
-  --accent-primary:   #4F46E5;
-  --accent-primary-hover: #4338CA;
-  --accent-primary-active:#3730A3;
-  --accent-primary-soft:  rgba(79, 70, 229, 0.08);
-  --accent-primary-medium:rgba(79, 70, 229, 0.15);
+  --accent-primary:   #000000;
+  --accent-primary-hover: #1E293B;
+  --accent-primary-active:#0F172A;
+  --accent-primary-soft:  #F1F5F9;
+  --accent-primary-medium:#E2E8F0;
 
   /* Status colors */
   --status-success-bg:   #ECFDF5;
@@ -57,8 +57,8 @@
   --status-warning-text: #D97706;
   --status-danger-bg:    #FEF2F2;
   --status-danger-text:  #DC2626;
-  --status-info-bg:      #EEF2FF;
-  --status-info-text:    #4F46E5;
+  --status-info-bg:      #F8FAFC;
+  --status-info-text:    #0F172A;
 
   /* Shadows - highly refined Stripe/Linear style */
   --shadow-card:        0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
@@ -111,8 +111,8 @@ html {
 
 /* Selection colors */
 ::selection {
-  background-color: #D8D6FF; /* Solid branded soft indigo */
-  color: #0A2540;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 /* Global Premium Scrollbar */
@@ -185,7 +185,7 @@ html {
 .btn-primary:hover {
   background-color: var(--accent-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 91, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:active {

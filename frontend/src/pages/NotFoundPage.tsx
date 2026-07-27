@@ -23,8 +23,8 @@ export default function NotFoundPage() {
  return (
  <div className="min-h-[calc(100vh-73px)] bg-[#F6F7FB] flex flex-col items-center justify-center p-4 text-[#0A2540]">
  <div className="studzens-card max-w-md w-full p-10 text-center animate-slide-up">
- <div className="w-20 h-20 rounded-2xl bg-[#F0F2F8] border border-[#E3E8EF] flex items-center justify-center mx-auto mb-6">
- <AlertTriangle className="text-[#635BFF]"size={40} />
+ <div className="w-20 h-20 rounded-2xl bg-slate-50 border border-[#E3E8EF] flex items-center justify-center mx-auto mb-6">
+ <AlertTriangle className="text-black"size={40} />
  </div>
  
  <h1 className="text-6xl font-bold text-[#0A2540] mb-2 tracking-tight font-sans">404</h1>

@@ -79,8 +79,8 @@ export default function SearchPage() {
  onClick={() => setActiveTab(type)}
  className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
  activeTab === type
- ? 'bg-[#EEF0FF] text-[#635BFF]'
- : 'text-[#697386] hover:bg-[#F0F2F8] hover:text-[#0A2540]'
+ ? 'bg-slate-100 text-black'
+ : 'text-[#697386] hover:bg-slate-50 hover:text-[#0A2540]'
  }`}
  >
  {type}
@@ -118,13 +118,13 @@ export default function SearchPage() {
  style={{ animationDelay: `${(index % 5) * 60}ms` }}
  >
  <div className="flex flex-col sm:flex-row gap-4">
- <div className="w-14 h-14 rounded-2xl bg-[#F0F2F8] flex items-center justify-center shrink-0">
- <Building2 className="text-[#635BFF]"size={26} />
+ <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center shrink-0">
+ <Building2 className="text-black"size={26} />
  </div>
  <div className="flex-1 space-y-2 min-w-0">
  <div className="flex justify-between items-start gap-3">
  <div>
- <Link to={`/college/${college.id}`} className="hover:text-[#635BFF] transition-colors">
+ <Link to={`/college/${college.id}`} className="hover:text-black transition-colors">
  <h3 className="text-lg font-bold text-[#0A2540] truncate">{college.name}</h3>
  </Link>
  <p className="text-[#697386] flex items-center gap-1 text-sm mt-0.5">
@@ -135,8 +135,8 @@ export default function SearchPage() {
  onClick={() => saved ? removeCollege(college.id) : saveCollege(college.id)}
  className={`p-2 rounded-full transition-all shrink-0 ${
  saved
- ? 'bg-[#EEF0FF] text-[#635BFF]'
- : 'bg-[#F0F2F8] text-[#9DA6B4] hover:bg-[#EEF0FF] hover:text-[#635BFF]'
+ ? 'bg-slate-100 text-black'
+ : 'bg-slate-50 text-[#9DA6B4] hover:bg-slate-100 hover:text-black'
  }`}
  >
  {saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
@@ -146,8 +146,8 @@ export default function SearchPage() {
  <p className="text-[#697386] text-sm line-clamp-1">{college.vibe}</p>
 
  <div className="flex flex-wrap gap-2 items-center">
- <span className="flex items-center gap-1 text-sm font-semibold text-[#0A2540] bg-[#F0F2F8] px-2.5 py-1.5 rounded-lg border border-[#E3E8EF]">
- <Wallet size={13} className="text-[#635BFF]"/>
+ <span className="flex items-center gap-1 text-sm font-semibold text-[#0A2540] bg-slate-50 px-2.5 py-1.5 rounded-lg border border-[#E3E8EF]">
+ <Wallet size={13} className="text-black"/>
  ₹{college.annualFeeLpa}L / yr
  </span>
  {college.entranceExams.slice(0, 3).map(exam => (
@@ -161,7 +161,7 @@ export default function SearchPage() {
  <div className="flex-1"/>
  <Link
  to={`/college/${college.id}`}
- className="flex items-center gap-1 text-sm font-bold text-[#635BFF] opacity-0 group-hover:opacity-100 transition-opacity hover:underline"
+ className="flex items-center gap-1 text-sm font-bold text-black opacity-0 group-hover:opacity-100 transition-opacity hover:underline"
  >
  View <ArrowRight size={14} />
  </Link>

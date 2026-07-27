@@ -88,7 +88,7 @@ export default function CollegeProfilePage() {
  return (
  <div className="min-h-[60vh] flex flex-col items-center justify-center bg-[#F6F7FB] text-[#0A2540]">
  <h2 className="text-2xl font-bold mb-2">College not found</h2>
- <Link to="/search"className="text-[#635BFF] hover:underline font-medium font-sans">Return to Search</Link>
+ <Link to="/search"className="text-black hover:underline font-medium font-sans">Return to Search</Link>
  </div>
  );
  }
@@ -221,7 +221,7 @@ export default function CollegeProfilePage() {
  <div className="flex items-center gap-3">
  <Link
  to={`/compare?add=${college.id}`}
- className="flex items-center gap-2 px-4 py-2 rounded-xl border border-[#E3E8EF] text-sm font-semibold text-[#425466] hover:border-[#635BFF] hover:text-[#635BFF] transition-all font-sans cursor-pointer bg-white"
+ className="flex items-center gap-2 px-4 py-2 rounded-xl border border-[#E3E8EF] text-sm font-semibold text-[#425466] hover:border-[#635BFF] hover:text-black transition-all font-sans cursor-pointer bg-white"
  >
  <Compass size={18} />
  <span>Compare</span>
@@ -231,13 +231,13 @@ export default function CollegeProfilePage() {
  onClick={handleBookmarkToggle}
  className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-semibold transition-all font-sans cursor-pointer ${
  isSaved(college.id)
- ? 'bg-indigo-50 border-[#635BFF] text-[#635BFF]'
- : 'bg-white border-[#E3E8EF] text-[#425466] hover:border-[#635BFF] hover:text-[#635BFF]'
+ ? 'bg-indigo-50 border-[#635BFF] text-black'
+ : 'bg-white border-[#E3E8EF] text-[#425466] hover:border-[#635BFF] hover:text-black'
  }`}
  >
  {isSaved(college.id) ? (
  <>
- <Bookmark size={18} className="fill-current text-[#635BFF]"/>
+ <Bookmark size={18} className="fill-current text-black"/>
  <span>Saved to Fit List</span>
  </>
  ) : (
@@ -252,7 +252,7 @@ export default function CollegeProfilePage() {
 
  <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-slide-up">
  <div className="flex items-start gap-6">
- <div className="w-24 h-24 bg-[#F0F2F8] rounded-2xl flex items-center justify-center shrink-0 border border-[#E3E8EF] relative shadow-sm">
+ <div className="w-24 h-24 bg-slate-50 rounded-2xl flex items-center justify-center shrink-0 border border-[#E3E8EF] relative shadow-sm">
  <Building2 className="text-[#425466]"size={44} />
  {college.verificationMetadata?.general?.status === 'Verified' && (
  <div className="absolute -top-2 -right-2 bg-white rounded-full p-0.5 border border-[#E3E8EF] shadow-md"title={`Verified by ${college.verificationMetadata.general.source}`}>
@@ -321,7 +321,7 @@ export default function CollegeProfilePage() {
  onClick={() => setActiveTab(tab.id)}
  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all font-sans cursor-pointer shrink-0 ${
  isSelected
- ? 'bg-[#635BFF] text-white shadow-sm'
+ ? 'bg-black text-white shadow-sm'
  : 'text-[#425466] hover:bg-[#F6F7FB] hover:text-[#0A2540]'
  }`}
  >
@@ -342,7 +342,7 @@ export default function CollegeProfilePage() {
  {/* Highlights Card */}
  <div className="sz-card p-6 md:p-8 space-y-6">
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <GraduationCap className="text-[#635BFF]"size={22} /> About the Institution
+ <GraduationCap className="text-black"size={22} /> About the Institution
  </h2>
  <p className="text-[#425466] leading-relaxed font-sans">{college.vibe}</p>
  
@@ -369,7 +369,7 @@ export default function CollegeProfilePage() {
  {/* Academic Programs */}
  <div className="sz-card p-6 md:p-8 space-y-6">
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <BookOpen className="text-[#635BFF]"size={22} /> Academic Programs & Intake
+ <BookOpen className="text-black"size={22} /> Academic Programs & Intake
  </h2>
  <div className="grid sm:grid-cols-2 gap-4">
  {college.programs.map((program, idx) => (
@@ -384,15 +384,15 @@ export default function CollegeProfilePage() {
  {/* Admission Process */}
  <div className="sz-card p-6 md:p-8 space-y-4">
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <Landmark className="text-[#635BFF]"size={22} /> Admission Details
+ <Landmark className="text-black"size={22} /> Admission Details
  </h2>
- <div className="bg-[#EEF0FF] p-4 rounded-xl border border-[#C7C5FF] flex gap-3">
- <Sparkles className="text-[#635BFF] shrink-0 mt-0.5"size={20} />
+ <div className="bg-slate-100 p-4 rounded-xl border border-slate-300 flex gap-3">
+ <Sparkles className="text-black shrink-0 mt-0.5"size={20} />
  <div className="text-sm text-[#4338CA] leading-relaxed font-sans">
  <strong className="block mb-1">Entrance Exams Accepted:</strong>
  <div className="flex flex-wrap gap-2 mt-1">
  {college.entranceExams.map((ex, i) => (
- <span key={i} className="bg-white border border-[#C7C5FF] text-[#635BFF] px-2 py-0.5 rounded-md font-bold text-xs">
+ <span key={i} className="bg-white border border-slate-300 text-black px-2 py-0.5 rounded-md font-bold text-xs">
  {ex}
  </span>
  ))}
@@ -432,7 +432,7 @@ export default function CollegeProfilePage() {
  {/* Financial Aid Card */}
  <div className="sz-card p-6 space-y-4">
  <h3 className="font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <DollarSign className="text-[#635BFF]"size={20} /> Scholarships & Aid
+ <DollarSign className="text-black"size={20} /> Scholarships & Aid
  </h3>
  <p className="text-[#425466] text-xs leading-relaxed font-sans">
  {intelligence.scholarships}
@@ -444,7 +444,7 @@ export default function CollegeProfilePage() {
  href={college.website}
  target="_blank"
  rel="noopener noreferrer"
- className="flex items-center justify-between p-4 bg-white border border-[#E3E8EF] rounded-xl text-[#635BFF] hover:border-[#635BFF] hover:bg-indigo-50/20 transition-all font-sans font-bold text-sm"
+ className="flex items-center justify-between p-4 bg-white border border-[#E3E8EF] rounded-xl text-black hover:border-[#635BFF] hover:bg-indigo-50/20 transition-all font-sans font-bold text-sm"
  >
  <span>Visit Official Website</span>
  <ExternalLink size={16} />
@@ -454,7 +454,7 @@ export default function CollegeProfilePage() {
  {similarColleges.length > 0 && (
  <div className="sz-card p-6 space-y-4">
  <h3 className="font-bold text-[#0A2540] flex items-center gap-2 font-sans text-sm">
- <Compass className="text-[#635BFF]"size={18} /> Quick Comparisons
+ <Compass className="text-black"size={18} /> Quick Comparisons
  </h3>
  <div className="space-y-2">
  {similarColleges.map(sim => (
@@ -481,7 +481,7 @@ export default function CollegeProfilePage() {
  <div className="grid sm:grid-cols-3 gap-6">
  <div className="sz-card p-6 text-center">
  <span className="text-xs font-semibold text-[#697386] uppercase tracking-wider block mb-1">Highest Package</span>
- <span className="text-3xl font-extrabold text-[#635BFF] font-sans">
+ <span className="text-3xl font-extrabold text-black font-sans">
  ₹{college.highestPackageLpa ? `${college.highestPackageLpa} LPA` : 'Awaiting Report'}
  </span>
  </div>
@@ -509,21 +509,21 @@ export default function CollegeProfilePage() {
  <div className="flex justify-between text-sm font-semibold font-sans">
  <span className="text-[#0A2540]">{trend.year}</span>
  <span className="text-[#697386]">
- Avg: <span className="text-[#0BBF8A] font-bold">₹{trend.avgPackageLpa}L</span> | Max: <span className="text-[#635BFF] font-bold">₹{trend.highestPackageLpa}L</span>
+ Avg: <span className="text-[#0BBF8A] font-bold">₹{trend.avgPackageLpa}L</span> | Max: <span className="text-black font-bold">₹{trend.highestPackageLpa}L</span>
  </span>
  </div>
  
  {/* Progress indicators as standard charts */}
  <div className="space-y-1.5">
  {/* Highest Package bar */}
- <div className="w-full bg-[#F0F2F8] h-2.5 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-2.5 rounded-full overflow-hidden">
  <div 
- className="bg-[#635BFF] h-full rounded-full transition-all duration-500"
+ className="bg-black h-full rounded-full transition-all duration-500"
  style={{ width: `${Math.min(100, (trend.highestPackageLpa / 60) * 100)}%` }}
  />
  </div>
  {/* Average Package bar */}
- <div className="w-full bg-[#F0F2F8] h-2.5 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-2.5 rounded-full overflow-hidden">
  <div 
  className="bg-[#0BBF8A] h-full rounded-full transition-all duration-500"
  style={{ width: `${Math.min(100, (trend.avgPackageLpa / 60) * 100)}%` }}
@@ -548,7 +548,7 @@ export default function CollegeProfilePage() {
  <span>{sect.sector}</span>
  <span className="text-[#0A2540]">{sect.percentage}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-indigo-500 h-full rounded-full"
  style={{ width: `${sect.percentage}%` }}
@@ -571,7 +571,7 @@ export default function CollegeProfilePage() {
  <span>{spread.range}</span>
  <span className="text-[#0A2540]">{spread.percentage}% of Batch</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-emerald-500 h-full rounded-full"
  style={{ width: `${spread.percentage}%` }}
@@ -602,7 +602,7 @@ export default function CollegeProfilePage() {
  <div className="sz-card p-6 md:p-8 space-y-8">
  <div className="max-w-2xl">
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans mb-2">
- <Compass className="text-[#635BFF]"size={22} /> Graduating Class Career Pathways
+ <Compass className="text-black"size={22} /> Graduating Class Career Pathways
  </h2>
  <p className="text-sm text-[#697386] font-sans">
  Detailed analysis of career paths selected by graduates from prime branches within 6 months of graduation.
@@ -614,7 +614,7 @@ export default function CollegeProfilePage() {
  {intelligence.careerOutcomes.map((outcome, idx) => (
  <div key={idx} className="border border-[#E3E8EF] rounded-2xl p-6 bg-[#F6F7FB] space-y-6">
  <div className="flex items-center gap-3">
- <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-[#635BFF]">
+ <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-black">
  <GraduationCap size={20} />
  </div>
  <h3 className="text-base font-extrabold text-[#0A2540] font-sans">{outcome.program} Graduates</h3>
@@ -651,7 +651,7 @@ export default function CollegeProfilePage() {
  Focus areas: {path.subRoles.join(', ')}
  </p>
  </div>
- <span className="text-sm font-extrabold text-[#635BFF] bg-indigo-50 px-2 py-1 rounded">
+ <span className="text-sm font-extrabold text-black bg-indigo-50 px-2 py-1 rounded">
  {path.percentage}%
  </span>
  </div>
@@ -671,14 +671,14 @@ export default function CollegeProfilePage() {
  {/* Transit Hubs */}
  <div className="sz-card p-6 md:p-8 space-y-6">
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <Map className="text-[#635BFF]"size={22} /> Transit & Commute Hubs
+ <Map className="text-black"size={22} /> Transit & Commute Hubs
  </h2>
  
  <div className="space-y-4">
  {college.transit?.airport && typeof college.transit.airport !== 'string' && (
  <div className="p-4 bg-[#F6F7FB] border border-[#E3E8EF] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-sans">
  <div className="flex items-start gap-3">
- <Plane className="text-[#635BFF] mt-0.5 shrink-0"size={20} />
+ <Plane className="text-black mt-0.5 shrink-0"size={20} />
  <div>
  <span className="font-extrabold text-sm text-[#0A2540]">Nearest Airport</span>
  <p className="text-xs text-[#697386] mt-0.5">{college.transit.airport.name}</p>
@@ -696,7 +696,7 @@ export default function CollegeProfilePage() {
  {college.transit?.railway && typeof college.transit.railway !== 'string' && (
  <div className="p-4 bg-[#F6F7FB] border border-[#E3E8EF] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-sans">
  <div className="flex items-start gap-3">
- <Train className="text-[#635BFF] mt-0.5 shrink-0"size={20} />
+ <Train className="text-black mt-0.5 shrink-0"size={20} />
  <div>
  <span className="font-extrabold text-sm text-[#0A2540]">Nearest Railway Terminal</span>
  <p className="text-xs text-[#697386] mt-0.5">{college.transit.railway.name}</p>
@@ -732,7 +732,7 @@ export default function CollegeProfilePage() {
  {college.transit?.busStation && (
  <div className="p-4 bg-[#F6F7FB] border border-[#E3E8EF] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-sans">
  <div className="flex items-start gap-3">
- <MapPin className="text-[#635BFF] mt-0.5 shrink-0"size={20} />
+ <MapPin className="text-black mt-0.5 shrink-0"size={20} />
  <div>
  <span className="font-extrabold text-sm text-[#0A2540]">Interstate Bus Stand (ISBT)</span>
  <p className="text-xs text-[#697386] mt-0.5">{college.transit.busStation.name}</p>
@@ -756,12 +756,12 @@ export default function CollegeProfilePage() {
  <div className="sz-card p-6 space-y-4">
  <h3 className="font-bold text-[#0A2540]">Accessibility Score</h3>
  <div className="flex items-baseline gap-2">
- <span className="text-4xl font-extrabold text-[#635BFF]">{college.transit?.convenienceScore || 7.5}</span>
+ <span className="text-4xl font-extrabold text-black">{college.transit?.convenienceScore || 7.5}</span>
  <span className="text-sm font-semibold text-[#697386]">/ 10</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-2 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-2 rounded-full overflow-hidden">
  <div 
- className="bg-[#635BFF] h-full rounded-full"
+ className="bg-black h-full rounded-full"
  style={{ width: `${(college.transit?.convenienceScore || 7.5) * 10}%` }}
  />
  </div>
@@ -773,15 +773,15 @@ export default function CollegeProfilePage() {
  {/* Travel Guide Tips */}
  <div className="sz-card p-6 space-y-4 bg-indigo-50/30 border-indigo-100">
  <h3 className="font-bold text-[#0A2540] text-sm flex items-center gap-1.5">
- <Sparkles size={16} className="text-[#635BFF]"/> Campus Transit Tips
+ <Sparkles size={16} className="text-black"/> Campus Transit Tips
  </h3>
  <ul className="space-y-2.5 text-xs text-[#425466]">
  <li className="flex gap-2">
- <span className="text-[#635BFF] font-bold">✓</span>
+ <span className="text-black font-bold">✓</span>
  Prepaid taxi counters are available directly inside nearest airports.
  </li>
  <li className="flex gap-2">
- <span className="text-[#635BFF] font-bold">✓</span>
+ <span className="text-black font-bold">✓</span>
  Auto-rickshaws and app cabs are the main transit route from the railway terminal.
  </li>
  </ul>
@@ -803,11 +803,11 @@ export default function CollegeProfilePage() {
  </div>
  
  {/* Toggle */}
- <div className="bg-[#F0F2F8] p-1 rounded-xl flex gap-1 border border-[#E3E8EF]">
+ <div className="bg-slate-50 p-1 rounded-xl flex gap-1 border border-[#E3E8EF]">
  <button
  onClick={() => setLivingType('pg')}
  className={`px-3 py-1.5 rounded-lg text-xs font-bold font-sans cursor-pointer transition-all ${
- livingType === 'pg' ? 'bg-white text-[#635BFF] shadow-xs' : 'text-[#697386]'
+ livingType === 'pg' ? 'bg-white text-black shadow-xs' : 'text-[#697386]'
  }`}
  >
  Off-Campus PG
@@ -815,7 +815,7 @@ export default function CollegeProfilePage() {
  <button
  onClick={() => setLivingType('hostel')}
  className={`px-3 py-1.5 rounded-lg text-xs font-bold font-sans cursor-pointer transition-all ${
- livingType === 'hostel' ? 'bg-white text-[#635BFF] shadow-xs' : 'text-[#697386]'
+ livingType === 'hostel' ? 'bg-white text-black shadow-xs' : 'text-[#697386]'
  }`}
  >
  On-Campus Hostel
@@ -890,7 +890,7 @@ export default function CollegeProfilePage() {
  type="checkbox"
  checked={amenityAddons.includes(am)}
  onChange={() => toggleAmenityAddon(am)}
- className="w-4 h-4 rounded text-[#635BFF] focus:ring-[#635BFF] cursor-pointer"
+ className="w-4 h-4 rounded text-black focus:ring-black cursor-pointer"
  />
  <span>{am}</span>
  </label>
@@ -907,14 +907,14 @@ export default function CollegeProfilePage() {
  ) : (
  <div className="space-y-6 font-sans">
  {/* Hostel details card */}
- <div className="bg-[#EEF0FF] border border-[#C7C5FF] p-6 rounded-xl space-y-4">
+ <div className="bg-slate-100 border border-slate-300 p-6 rounded-xl space-y-4">
  <div className="flex justify-between items-center">
  <span className="text-sm font-semibold text-[#4338CA]">Hostel Fee (Yearly)</span>
- <span className="text-lg font-extrabold text-[#635BFF]">₹{intelligence.livingBudget.hostelFeeYearly.toLocaleString()} / yr</span>
+ <span className="text-lg font-extrabold text-black">₹{intelligence.livingBudget.hostelFeeYearly.toLocaleString()} / yr</span>
  </div>
- <div className="flex justify-between items-center border-t border-[#C7C5FF]/50 pt-3">
+ <div className="flex justify-between items-center border-t border-slate-300/50 pt-3">
  <span className="text-sm font-semibold text-[#4338CA]">Mess Food Bill (Yearly)</span>
- <span className="text-lg font-extrabold text-[#635BFF]">₹{intelligence.livingBudget.messFeeYearly.toLocaleString()} / yr</span>
+ <span className="text-lg font-extrabold text-black">₹{intelligence.livingBudget.messFeeYearly.toLocaleString()} / yr</span>
  </div>
  <div className="text-[10px] text-[#697386] pt-1">
  Note: Hostel fees are collected annually during registration. Mess bills are collected per semester.
@@ -946,7 +946,7 @@ export default function CollegeProfilePage() {
  <div className="space-y-4">
  <div>
  <span className="text-[10px] uppercase font-extrabold text-[#697386] tracking-wider block mb-1">Monthly Total</span>
- <span className="text-3xl font-black text-[#635BFF]">₹{totalMonthlyPg.toLocaleString()}</span>
+ <span className="text-3xl font-black text-black">₹{totalMonthlyPg.toLocaleString()}</span>
  </div>
  <div className="border-t border-[#E3E8EF] pt-4">
  <span className="text-[10px] uppercase font-extrabold text-[#697386] tracking-wider block mb-1">Yearly Total (12 Months)</span>
@@ -957,7 +957,7 @@ export default function CollegeProfilePage() {
  <div className="space-y-4">
  <div>
  <span className="text-[10px] uppercase font-extrabold text-[#697386] tracking-wider block mb-1">Yearly Total (College Session)</span>
- <span className="text-3xl font-black text-[#635BFF]">₹{totalYearlyHostel.toLocaleString()}</span>
+ <span className="text-3xl font-black text-black">₹{totalYearlyHostel.toLocaleString()}</span>
  </div>
  <div className="border-t border-[#E3E8EF] pt-4">
  <span className="text-[10px] uppercase font-extrabold text-[#697386] tracking-wider block mb-1">Equivalent Monthly Cost</span>
@@ -987,7 +987,7 @@ export default function CollegeProfilePage() {
  <ul className="space-y-1 text-[#425466]">
  {intelligence.livingBudget.markets.map((m, i) => (
  <li key={i} className="flex items-center gap-1.5">
- <span className="w-1.5 h-1.5 bg-[#635BFF] rounded-full shrink-0"/>
+ <span className="w-1.5 h-1.5 bg-black rounded-full shrink-0"/>
  {m}
  </li>
  ))}
@@ -1004,7 +1004,7 @@ export default function CollegeProfilePage() {
  <div className="sz-card p-6 md:p-8 space-y-8">
  <div className="max-w-2xl">
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans mb-2">
- <Activity className="text-[#635BFF]"size={22} /> Reality Intelligence Profile
+ <Activity className="text-black"size={22} /> Reality Intelligence Profile
  </h2>
  <p className="text-sm text-[#697386] font-sans">
  Unbiased student satisfaction index and campus stress levels compiled anonymously.
@@ -1018,9 +1018,9 @@ export default function CollegeProfilePage() {
  <div className="space-y-2">
  <div className="flex justify-between text-sm font-semibold font-sans">
  <span className="text-[#0A2540]">Overall Student Happiness Index</span>
- <span className="text-[#635BFF] font-black">{intelligence.realityRatings.happinessScore}%</span>
+ <span className="text-black font-black">{intelligence.realityRatings.happinessScore}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-indigo-600 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.happinessScore}%` }}
@@ -1034,7 +1034,7 @@ export default function CollegeProfilePage() {
  <span className="text-[#0A2540]">Academic Pressure & Competition</span>
  <span className="text-amber-600 font-black">{intelligence.realityRatings.academicPressure}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-amber-500 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.academicPressure}%` }}
@@ -1048,7 +1048,7 @@ export default function CollegeProfilePage() {
  <span className="text-[#0A2540]">Campus Culture & Curfew Freedom</span>
  <span className="text-[#0BBF8A] font-black">{intelligence.realityRatings.freedomCulture}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-emerald-500 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.freedomCulture}%` }}
@@ -1062,7 +1062,7 @@ export default function CollegeProfilePage() {
  <span className="text-[#0A2540]">Mess & Cafeteria Food Quality</span>
  <span className="text-[#697386] font-black">{intelligence.realityRatings.foodQuality}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-[#697386] h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.foodQuality}%` }}
@@ -1077,9 +1077,9 @@ export default function CollegeProfilePage() {
  <div className="space-y-2">
  <div className="flex justify-between text-sm font-semibold font-sans">
  <span className="text-[#0A2540]">Student Diversity (State/Stream)</span>
- <span className="text-[#635BFF] font-black">{intelligence.realityRatings.diversityScore}%</span>
+ <span className="text-black font-black">{intelligence.realityRatings.diversityScore}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-indigo-400 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.diversityScore}%` }}
@@ -1093,7 +1093,7 @@ export default function CollegeProfilePage() {
  <span className="text-[#0A2540]">Hostel Infrastructure & Maintenance</span>
  <span className="text-[#0BBF8A] font-black">{intelligence.realityRatings.hostelQuality}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-emerald-400 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.hostelQuality}%` }}
@@ -1105,9 +1105,9 @@ export default function CollegeProfilePage() {
  <div className="space-y-2">
  <div className="flex justify-between text-sm font-semibold font-sans">
  <span className="text-[#0A2540]">Sports Infrastructure Score</span>
- <span className="text-[#635BFF] font-black">{intelligence.realityRatings.sportsInfrastructure}%</span>
+ <span className="text-black font-black">{intelligence.realityRatings.sportsInfrastructure}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-indigo-500 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.sportsInfrastructure}%` }}
@@ -1121,7 +1121,7 @@ export default function CollegeProfilePage() {
  <span className="text-[#0A2540]">Campus Safety & Security Index</span>
  <span className="text-[#0BBF8A] font-black">{intelligence.realityRatings.safetyScore}%</span>
  </div>
- <div className="w-full bg-[#F0F2F8] h-3 rounded-full overflow-hidden">
+ <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden">
  <div 
  className="bg-emerald-500 h-full rounded-full"
  style={{ width: `${intelligence.realityRatings.safetyScore}%` }}
@@ -1169,7 +1169,7 @@ export default function CollegeProfilePage() {
 
  <button
  onClick={() => setShowReviewForm(!showReviewForm)}
- className="bg-[#635BFF] text-white px-3 py-1.5 rounded-xl text-xs font-bold font-sans hover:bg-[#4F47E5] cursor-pointer flex items-center gap-1"
+ className="bg-black text-white px-3 py-1.5 rounded-xl text-xs font-bold font-sans hover:bg-[#4F47E5] cursor-pointer flex items-center gap-1"
  >
  <Plus size={14} /> Write Review
  </button>
@@ -1254,7 +1254,7 @@ export default function CollegeProfilePage() {
  </button>
  <button
  type="submit"
- className="px-3 py-1.5 bg-[#635BFF] text-white rounded-lg text-xs font-bold font-sans cursor-pointer"
+ className="px-3 py-1.5 bg-black text-white rounded-lg text-xs font-bold font-sans cursor-pointer"
  >
  Submit Review
  </button>
@@ -1275,7 +1275,7 @@ export default function CollegeProfilePage() {
  </div>
  
  <div className="flex gap-2 items-center">
- <span className="bg-[#EEF0FF] border border-[#C7C5FF] text-[#635BFF] px-2 py-0.5 rounded font-bold text-[10px]">
+ <span className="bg-slate-100 border border-slate-300 text-black px-2 py-0.5 rounded font-bold text-[10px]">
  {rev.category}
  </span>
  <span className="flex items-center gap-0.5 text-amber-500 font-bold text-xs">
@@ -1289,7 +1289,7 @@ export default function CollegeProfilePage() {
  <div className="flex items-center gap-2">
  <button
  onClick={() => handleHelpfulReview(rev.id)}
- className="text-[10px] font-bold text-[#697386] hover:text-[#635BFF] bg-[#F6F7FB] px-2 py-1 rounded-md border border-[#E3E8EF] transition-all cursor-pointer"
+ className="text-[10px] font-bold text-[#697386] hover:text-black bg-[#F6F7FB] px-2 py-1 rounded-md border border-[#E3E8EF] transition-all cursor-pointer"
  >
  👍 Helpful ({rev.helpfulVotes})
  </button>
@@ -1304,7 +1304,7 @@ export default function CollegeProfilePage() {
  <div className="space-y-6 font-sans">
  <div className="sz-card p-6 space-y-6">
  <h3 className="font-bold text-[#0A2540] flex items-center gap-2 border-b border-[#E3E8EF] pb-3">
- <MessageSquare size={18} className="text-[#635BFF]"/> Senior Q&A Board
+ <MessageSquare size={18} className="text-black"/> Senior Q&A Board
  </h3>
 
  {/* Ask a question form */}
@@ -1318,7 +1318,7 @@ export default function CollegeProfilePage() {
  />
  <button
  type="submit"
- className="w-full bg-[#635BFF] text-white py-1.5 rounded-lg text-xs font-bold hover:bg-[#4F47E5] cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
+ className="w-full bg-black text-white py-1.5 rounded-lg text-xs font-bold hover:bg-[#4F47E5] cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
  >
  <Send size={12} /> Post Question
  </button>
@@ -1373,7 +1373,7 @@ export default function CollegeProfilePage() {
  </button>
  <button
  onClick={() => handleAddAnswer(q.id)}
- className="px-2.5 py-1 bg-[#635BFF] text-white rounded-md text-[10px] font-bold cursor-pointer"
+ className="px-2.5 py-1 bg-black text-white rounded-md text-[10px] font-bold cursor-pointer"
  >
  Reply
  </button>
@@ -1382,7 +1382,7 @@ export default function CollegeProfilePage() {
  ) : (
  <button
  onClick={() => setActiveReplyBox(q.id)}
- className="text-[10px] font-bold text-[#635BFF] hover:underline pl-3 cursor-pointer"
+ className="text-[10px] font-bold text-black hover:underline pl-3 cursor-pointer"
  >
  Answer this question
  </button>
@@ -1405,7 +1405,7 @@ export default function CollegeProfilePage() {
  <div className="md:col-span-2 space-y-6">
  <div className="sz-card p-6 md:p-8 space-y-6">
  <h3 className="text-lg font-bold text-[#0A2540] flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-3">
- <HelpCircle size={20} className="text-[#635BFF]"/> Frequently Asked Questions
+ <HelpCircle size={20} className="text-black"/> Frequently Asked Questions
  </h3>
  
  <div className="space-y-4">
@@ -1415,7 +1415,7 @@ export default function CollegeProfilePage() {
  <div key={idx} className="border border-[#E3E8EF] rounded-xl overflow-hidden font-sans">
  <button
  onClick={() => setOpenFaqs({ ...openFaqs, [idx]: !isOpen })}
- className="w-full p-4 bg-[#F6F7FB] flex justify-between items-center text-left font-bold text-xs text-[#0A2540] hover:bg-[#EEF0FF]/30 transition-all focus:outline-none cursor-pointer"
+ className="w-full p-4 bg-[#F6F7FB] flex justify-between items-center text-left font-bold text-xs text-[#0A2540] hover:bg-slate-100/30 transition-all focus:outline-none cursor-pointer"
  >
  <span>{faq.q}</span>
  {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -1448,12 +1448,12 @@ export default function CollegeProfilePage() {
  {/* Reservation Rules */}
  <div className="sz-card p-6 space-y-3">
  <h4 className="font-bold text-xs text-[#0A2540] uppercase tracking-wider flex items-center gap-1.5">
- <ShieldCheck size={16} className="text-[#635BFF]"/> Quota & Reservations
+ <ShieldCheck size={16} className="text-black"/> Quota & Reservations
  </h4>
  <ul className="space-y-2 text-xs text-[#425466]">
  {intelligence.rules.reservations.map((res, i) => (
  <li key={i} className="flex gap-2">
- <span className="text-[#635BFF] font-bold">•</span>
+ <span className="text-black font-bold">•</span>
  {res}
  </li>
  ))}
@@ -1485,7 +1485,7 @@ export default function CollegeProfilePage() {
  <div className="flex justify-between items-center flex-wrap gap-4 border-b border-[#E3E8EF] pb-4">
  <div>
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <ImageIcon className="text-[#635BFF]"size={22} /> Campus Photo Explorer
+ <ImageIcon className="text-black"size={22} /> Campus Photo Explorer
  </h2>
  <p className="text-xs text-[#697386] font-sans mt-0.5">Explore libraries, laboratories, hostels, and lecture theatres.</p>
  </div>
@@ -1498,7 +1498,7 @@ export default function CollegeProfilePage() {
  onClick={() => setGalleryFilter(cat)}
  className={`px-3 py-1.5 rounded-lg text-xs font-bold font-sans cursor-pointer transition-all border ${
  galleryFilter === cat
- ? 'bg-[#635BFF] text-white border-[#635BFF]'
+ ? 'bg-black text-white border-[#635BFF]'
  : 'bg-white text-[#697386] border-[#E3E8EF] hover:bg-[#F6F7FB]'
  }`}
  >
@@ -1520,7 +1520,7 @@ export default function CollegeProfilePage() {
  setLightboxCaption(img.caption);
  setLightboxCredit(img.attribution);
  }}
- className="group border border-[#E3E8EF] rounded-xl overflow-hidden cursor-pointer relative bg-[#F0F2F8] shadow-xs hover:border-[#635BFF] transition-all"
+ className="group border border-[#E3E8EF] rounded-xl overflow-hidden cursor-pointer relative bg-slate-50 shadow-xs hover:border-[#635BFF] transition-all"
  >
  <div className="aspect-[4/3] overflow-hidden">
  <img
@@ -1530,7 +1530,7 @@ export default function CollegeProfilePage() {
  />
  </div>
  <div className="p-3 bg-white">
- <span className="text-[10px] font-extrabold uppercase text-[#635BFF] block tracking-wider">{img.category}</span>
+ <span className="text-[10px] font-extrabold uppercase text-black block tracking-wider">{img.category}</span>
  <span className="text-xs font-bold text-[#0A2540] truncate block mt-0.5">{img.caption}</span>
  <span className="text-[8px] text-[#697386] font-semibold block mt-1">{img.attribution}</span>
  </div>

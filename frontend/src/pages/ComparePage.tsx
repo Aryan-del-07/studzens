@@ -82,8 +82,8 @@ export default function ComparePage() {
  >
  <span className="font-semibold text-[#0A2540] text-sm">{college.name}</span>
  {selectedColleges.includes(college.id)
- ? <CheckCircle2 size={18} className="text-[#635BFF]"/>
- : <span className="text-xs text-[#635BFF] font-bold">Add +</span>}
+ ? <CheckCircle2 size={18} className="text-black"/>
+ : <span className="text-xs text-black font-bold">Add +</span>}
  </button>
  ))}
  </div>
@@ -94,9 +94,9 @@ export default function ComparePage() {
  {selectedColleges.map((id, index) => {
  const college = colleges.find(c => c.id === id);
  return (
- <div key={id} className="flex items-center gap-2 bg-[#EEF0FF] text-[#635BFF] border border-[#C7C5FF] px-4 py-2 rounded-xl font-semibold text-sm animate-slide-up"style={{animationDelay:`${index*80}ms`}}>
+ <div key={id} className="flex items-center gap-2 bg-slate-100 text-black border border-slate-300 px-4 py-2 rounded-xl font-semibold text-sm animate-slide-up"style={{animationDelay:`${index*80}ms`}}>
  {college?.name}
- <button onClick={() => handleSelect(id)} className="text-[#635BFF]/60 hover:text-[#635BFF] :text-indigo-300 transition-colors cursor-pointer">
+ <button onClick={() => handleSelect(id)} className="text-black/60 hover:text-black :text-indigo-300 transition-colors cursor-pointer">
  <XCircle size={16} />
  </button>
  </div>

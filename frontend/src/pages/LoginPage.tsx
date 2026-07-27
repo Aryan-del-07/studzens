@@ -160,14 +160,8 @@ export default function LoginPage() {
  <div className="flex-1 flex flex-col justify-center px-8 sm:px-12 md:px-20 lg:px-32 py-12 relative z-10 overflow-y-auto">
  
  {/* Brand Header */}
- <Link to="/"className="flex items-center gap-2.5 mb-10 group w-fit">
- <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-500/20">
- <svg width="24"height="24"viewBox="0 0 24 24"fill="none"xmlns="http://www.w3.org/2000/svg">
- <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z"fill="white"/>
- <path d="M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"fill="white"/>
- </svg>
- </div>
- <span className="text-2xl font-extrabold text-gray-900 tracking-tight">Stuzen</span>
+ <Link to="/"className="flex items-center mb-10 group w-fit">
+ <img src="/logo.png" alt="Studzens Logo" className="h-10 w-auto object-contain" />
  </Link>
 
  <div className="max-w-[420px] w-full">
@@ -231,7 +225,7 @@ export default function LoginPage() {
  <div className="flex justify-between items-center mb-1.5">
  <label className="block text-sm font-semibold text-gray-700">Password</label>
  {mode === 'login' && (
- <button type="button"className="text-sm text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+ <button type="button"className="text-sm text-slate-800 font-semibold hover:text-slate-900 transition-colors">
  Forgot password?
  </button>
  )}
@@ -289,7 +283,7 @@ export default function LoginPage() {
  <button
  type="submit"
  disabled={loading}
- className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-xl py-3.5 text-[15px] font-semibold transition-all flex items-center justify-center gap-2 shadow-sm shadow-blue-600/20 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+ className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-xl py-3.5 text-[15px] font-semibold transition-all flex items-center justify-center gap-2 shadow-sm shadow-black/20 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
  >
  {loading ? (
  <span className="flex items-center gap-2">
@@ -335,7 +329,7 @@ export default function LoginPage() {
  {mode === 'login' ?"Don't have an account?": 'Already have an account? '}
  <button
  onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
- className="text-blue-600 font-bold hover:text-blue-700 :text-blue-300 transition-colors"
+ className="text-slate-800 font-bold hover:text-slate-900 :text-blue-300 transition-colors"
  >
  {mode === 'login' ? 'Sign up free' : 'Sign in'}
  </button>
@@ -347,7 +341,7 @@ export default function LoginPage() {
  <div className="hidden lg:flex flex-1 relative overflow-hidden bg-[var(--bg-page)] flex-col items-center justify-center">
  {/* Sleek deep space gradients */}
  <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-600/20 blur-[100px]"/>
- <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-600/10 blur-[120px]"/>
+ <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-slate-800 blur-[120px]"/>
  
  {/* Subtle grid pattern overlay */}
  <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]"/>
@@ -356,12 +350,12 @@ export default function LoginPage() {
  <div className="relative z-10 w-full max-w-lg px-8">
  
  <div className="text-center mb-12">
- <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-4 uppercase tracking-wider">
+ <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-slate-700 text-slate-300 text-xs font-bold mb-4 uppercase tracking-wider">
  <Zap size={14} className="fill-blue-400"/> Stuzen Intelligence
  </div>
  <h2 className="text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
  The all-in-one platform <br/>
- <span className="text-blue-400">you've been looking for.</span>
+ <span className="text-slate-300">you've been looking for.</span>
  </h2>
  <p className="text-gray-400 text-[15px] leading-relaxed max-w-md mx-auto">
  Track entrance milestones, analyze 10,000+ colleges, and predict admissions with India's most advanced student OS.
@@ -372,7 +366,7 @@ export default function LoginPage() {
  {/* Feature Card 1 */}
  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl hover:bg-white/[0.07] transition-colors">
  <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
- <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-blue-400"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+ <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-slate-300"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
  </div>
  <h3 className="text-white font-semibold text-sm mb-1">Exam Command Center</h3>
  <p className="text-gray-400 text-xs leading-relaxed">
@@ -382,8 +376,8 @@ export default function LoginPage() {
 
  {/* Feature Card 2 */}
  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl hover:bg-white/[0.07] transition-colors">
- <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center mb-4">
- <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-indigo-400"><circle cx="12"cy="12"r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+ <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center mb-4">
+ <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-slate-300"><circle cx="12"cy="12"r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
  </div>
  <h3 className="text-white font-semibold text-sm mb-1">Deep College Analytics</h3>
  <p className="text-gray-400 text-xs leading-relaxed">
@@ -392,10 +386,10 @@ export default function LoginPage() {
  </div>
  
  {/* Wide Feature Card 3 */}
- <div className="col-span-2 bg-gradient-to-r from-blue-900/40 to-indigo-900/40 border border-blue-500/20 rounded-2xl p-6 backdrop-blur-xl flex items-center justify-between">
+ <div className="col-span-2 bg-gradient-to-r from-slate-900/40 to-slate-800/40 border border-slate-700 rounded-2xl p-6 backdrop-blur-xl flex items-center justify-between">
  <div>
  <div className="flex items-center gap-2 mb-1">
- <CheckCircle2 size={16} className="text-blue-400"/>
+ <CheckCircle2 size={16} className="text-slate-300"/>
  <span className="text-white font-semibold text-sm">Trusted by 50,000+ Students</span>
  </div>
  <p className="text-gray-400 text-xs pl-6">

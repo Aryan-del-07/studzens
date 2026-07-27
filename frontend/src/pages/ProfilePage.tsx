@@ -20,7 +20,7 @@ import {
  * - Tracked exams section with score editing
  * - Tabbed navigation for different profile sections
  */
- LogOut, Settings, Home, Search, Bot, Users,
+ LogOut, Settings, Home, Search, Users,
  Target, TrendingUp, Bell, MapPin, Wallet, GraduationCap,
  ChevronRight, ArrowRight, Star, Shield, Clock, Calendar,
  CheckCircle2, Circle, AlertCircle, Bookmark, X, BarChart2,
@@ -40,7 +40,6 @@ const NAV_ITEMS = [
  { icon: Home, label: 'Home', path: '/dashboard' },
  { icon: Search, label: 'Colleges', path: '/search' },
  { icon: GraduationCap, label: 'Exams', path: '/exams' },
- { icon: Bot, label: 'AI Counselor',path: '/counselor' },
  { icon: Users, label: 'Community', path: '/community' },
 ];
 
@@ -51,7 +50,7 @@ type Tab = 'overview' | 'colleges' | 'exams' | 'career' | 'settings';
 
 const FIT_CONFIG: Record<FitType, { label: string; color: string; dot: string }> = {
  Dream: { label: 'Dream', color: 'text-purple-700 bg-purple-50 border-purple-200', dot: 'bg-purple-500' },
- Target: { label: 'Target', color: 'text-blue-700 bg-blue-50 border-blue-200', dot: 'bg-blue-500' },
+ Target: { label: 'Target', color: 'text-slate-900 bg-blue-50 border-blue-200', dot: 'bg-blue-500' },
  Safe: { label: 'Safe', color: 'text-emerald-700 bg-emerald-50 border-emerald-200', dot: 'bg-emerald-500' },
  Uncategorized: { label: 'Saved', color: 'text-slate-600 bg-slate-100 border-slate-200', dot: 'bg-slate-400' },
 };
@@ -78,11 +77,11 @@ function SectionHeader({ icon: Icon, title, action }: {
  return (
  <div className="flex items-center justify-between mb-5">
  <h2 className="text-base font-bold text-[#0A2540] flex items-center gap-2">
- <Icon size={17} className="text-[#635BFF]"/>
+ <Icon size={17} className="text-black"/>
  {title}
  </h2>
  {action && (
- <Link to={action.path} className="text-xs font-semibold text-[#635BFF] hover:underline flex items-center gap-1">
+ <Link to={action.path} className="text-xs font-semibold text-black hover:underline flex items-center gap-1">
  {action.label} <ChevronRight size={13} />
  </Link>
  )}
@@ -145,15 +144,15 @@ function OverviewTab({ profile, savedColleges, navigate }: {
  // AI Insights
  const insights: { icon: React.ElementType; color: string; text: string }[] = [];
  if ((acad?.marks12 ?? 0) >= 90) insights.push({ icon: Trophy, color: 'text-amber-500', text: 'Your 90%+ marks make you eligible for top-tier private colleges like BITS and Manipal.' });
- if (profile.trackedExams.includes('jee-main')) insights.push({ icon: Zap, color: 'text-[#635BFF]', text: 'JEE Main is coming up. Focus on Maths and Physics — they carry the highest weightage.' });
+ if (profile.trackedExams.includes('jee-main')) insights.push({ icon: Zap, color: 'text-black', text: 'JEE Main is coming up. Focus on Maths and Physics — they carry the highest weightage.' });
  if (savedColleges.length === 0) insights.push({ icon: Star, color: 'text-yellow-500', text: 'Start saving colleges to build your application list. Aim for 8-10 colleges across tiers.' });
  if ((prefs?.preferredStates || []).length === 0) insights.push({ icon: MapPin, color: 'text-blue-500', text: 'Add preferred states in your profile to see location-specific college matches.' });
  if (insights.length === 0) insights.push({ icon: Award, color: 'text-emerald-500', text: 'Great profile! Explore the Colleges tab to find more matches based on your scores.' });
 
  // Stats
  const stats = [
- { label: 'Profile Score', value: `${pct}%`, icon: TrendingUp, color: 'text-[#635BFF]', bg: 'bg-[#EEF0FF]' },
- { label: 'Saved Colleges', value: savedColleges.length, icon: Bookmark, color: 'text-blue-600', bg: 'bg-blue-50' },
+ { label: 'Profile Score', value: `${pct}%`, icon: TrendingUp, color: 'text-black', bg: 'bg-slate-100' },
+ { label: 'Saved Colleges', value: savedColleges.length, icon: Bookmark, color: 'text-slate-800', bg: 'bg-blue-50' },
  { label: 'Pinned Exams', value: profile.trackedExams.length, icon: GraduationCap, color: 'text-orange-600', bg: 'bg-orange-50' },
  { label: 'Career Goals', value: profile.targetCareers.length, icon: Target, color: 'text-emerald-600', bg: 'bg-emerald-50' },
  ];
@@ -168,13 +167,13 @@ function OverviewTab({ profile, savedColleges, navigate }: {
  <p className="text-xs text-[#697386] mt-0.5">Complete your profile to get better recommendations</p>
  </div>
  <div className="text-right">
- <div className="text-3xl font-black text-[#635BFF]">{pct}%</div>
+ <div className="text-3xl font-black text-black">{pct}%</div>
  <div className="text-xs text-[#9DA6B4]">complete</div>
  </div>
  </div>
- <div className="w-full h-2.5 bg-[#F0F2F8] rounded-full overflow-hidden">
+ <div className="w-full h-2.5 bg-slate-50 rounded-full overflow-hidden">
  <div
- className="h-full bg-gradient-to-r from-[#635BFF] to-[#818CF8] rounded-full transition-all duration-700"
+ className="h-full bg-gradient-to-r from-black to-slate-800 rounded-full transition-all duration-700"
  style={{ width: `${pct}%` }}
  />
  </div>
@@ -391,11 +390,11 @@ function CollegesTab({ savedColleges, updateFit, removeCollege }: {
  if (!college) return null;
  return (
  <div key={saved.collegeId} className="sz-card p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
- <div className="w-10 h-10 bg-[#F0F2F8] rounded-xl flex items-center justify-center shrink-0">
- <GraduationCap size={18} className="text-[#635BFF]"/>
+ <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center shrink-0">
+ <GraduationCap size={18} className="text-black"/>
  </div>
  <div className="flex-1 min-w-0">
- <Link to={`/college/${college.id}`} className="font-bold text-[#0A2540] text-sm hover:text-[#635BFF] transition-colors truncate block">
+ <Link to={`/college/${college.id}`} className="font-bold text-[#0A2540] text-sm hover:text-black transition-colors truncate block">
  {college.name}
  </Link>
  <div className="flex items-center gap-3 text-xs text-[#697386] mt-0.5">
@@ -412,7 +411,7 @@ function CollegesTab({ savedColleges, updateFit, removeCollege }: {
  >
  {FIT_FITS.map(f => <option key={f} value={f}>{f}</option>)}
  </select>
- <Link to={`/college/${college.id}`} className="p-1.5 text-[#9DA6B4] hover:text-[#635BFF] transition-colors">
+ <Link to={`/college/${college.id}`} className="p-1.5 text-[#9DA6B4] hover:text-black transition-colors">
  <ExternalLink size={14} />
  </Link>
  <button onClick={() => removeCollege(saved.collegeId)} className="p-1.5 text-[#9DA6B4] hover:text-red-500 transition-colors">
@@ -458,7 +457,7 @@ function ExamsTab({ profile, untrackExam }: {
  <div key={examId} className="bg-[#F6F7FB] rounded-xl p-4 border border-[#E3E8EF]">
  <div className="sz-chip text-[10px] mb-2 inline-flex">{exam?.category || 'Exam'}</div>
  <div className="font-bold text-[#0A2540]">{exam?.name || examId.toUpperCase()}</div>
- <div className="text-3xl font-black text-[#635BFF] mt-2">{val ?? '—'}</div>
+ <div className="text-3xl font-black text-black mt-2">{val ?? '—'}</div>
  <div className="text-xs text-[#697386] capitalize">{unit}</div>
  </div>
  );
@@ -482,7 +481,7 @@ function ExamsTab({ profile, untrackExam }: {
  <div className="flex items-start justify-between gap-3 mb-4">
  <div>
  <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md border inline-block mb-1.5 ${
- exam.category === 'Engineering' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+ exam.category === 'Engineering' ? 'bg-blue-50 text-slate-900 border-blue-200' :
  exam.category === 'Medical' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
  'bg-amber-50 text-amber-700 border-amber-200'
  }`}>{exam.category}</span>
@@ -581,14 +580,14 @@ function CareerTab({ profile, untargetCareer }: {
  ) : (
  <div className="flex flex-wrap gap-2">
  {profile.targetCareers.map(career => (
- <div key={career} className="flex items-center gap-2 px-3 py-2 bg-[#EEF0FF] border border-[#C7C5FF] rounded-xl text-sm font-semibold text-[#635BFF]">
+ <div key={career} className="flex items-center gap-2 px-3 py-2 bg-slate-100 border border-slate-300 rounded-xl text-sm font-semibold text-black">
  {career}
- <button onClick={() => untargetCareer(career)} className="text-[#635BFF]/50 hover:text-[#635BFF] transition-colors">
+ <button onClick={() => untargetCareer(career)} className="text-black/50 hover:text-black transition-colors">
  <X size={13} />
  </button>
  </div>
  ))}
- <Link to="/careers"className="flex items-center gap-1 px-3 py-2 border-2 border-dashed border-[#C7C5FF] rounded-xl text-xs font-semibold text-[#635BFF] hover:bg-[#EEF0FF] transition-colors">
+ <Link to="/careers"className="flex items-center gap-1 px-3 py-2 border-2 border-dashed border-slate-300 rounded-xl text-xs font-semibold text-black hover:bg-slate-100 transition-colors">
  <Plus size={13} /> Add Goal
  </Link>
  </div>
@@ -633,7 +632,7 @@ function CareerTab({ profile, untargetCareer }: {
  </div>
  {(profile.preferences as any)?.budgetLimitLpa && (
  <div className="mt-4 flex items-center gap-2 text-sm">
- <Wallet size={15} className="text-[#635BFF]"/>
+ <Wallet size={15} className="text-black"/>
  <span className="text-[#697386]">Annual budget up to</span>
  <span className="font-bold text-[#0A2540]">₹{(profile.preferences as any).budgetLimitLpa}L / year</span>
  </div>
@@ -660,14 +659,14 @@ function SettingsTab({ user, handleLogout }: { user: { name: string; email: stri
  { label: 'Data & Privacy', path: '#', icon: Shield, desc: 'Manage your data and privacy settings' },
  ].map(({ label, path, icon: Icon, desc }) => (
  <Link key={label} to={path} className="flex items-center gap-4 p-5 hover:bg-[#F6F7FB] :bg-slate-800/50 border-b border-[#E3E8EF] last:border-0 transition-colors group">
- <div className="w-10 h-10 bg-[#F0F2F8] rounded-xl flex items-center justify-center group-hover:bg-[#EEF0FF] :bg-slate-700 transition-colors">
- <Icon size={18} className="text-[#697386] group-hover:text-[#635BFF] :text-[#818CF8]"/>
+ <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center group-hover:bg-slate-100 :bg-slate-700 transition-colors">
+ <Icon size={18} className="text-[#697386] group-hover:text-black :text-[#818CF8]"/>
  </div>
  <div className="flex-1">
  <div className="font-semibold text-sm text-[#0A2540]">{label}</div>
  <div className="text-xs text-[#697386]">{desc}</div>
  </div>
- <ChevronRight size={16} className="text-[#C7D0DE] group-hover:text-[#635BFF] :text-[#818CF8]"/>
+ <ChevronRight size={16} className="text-[#C7D0DE] group-hover:text-black :text-[#818CF8]"/>
  </Link>
  ))}
  </div>
@@ -733,14 +732,14 @@ export default function ProfilePage() {
  <aside className="w-full lg:w-64 shrink-0 space-y-4 lg:sticky lg:top-24">
  {/* User Card */}
  <div className="sz-card p-6 text-center">
- <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#635BFF] to-[#818CF8] flex items-center justify-center text-white text-2xl font-black mx-auto mb-4 shadow-lg shadow-[#635BFF]/25">
+ <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-black to-slate-800 flex items-center justify-center text-white text-2xl font-black mx-auto mb-4 shadow-lg shadow-black/25">
  {initials}
  </div>
  <h1 className="text-lg font-bold text-[#0A2540] leading-tight">{user.name}</h1>
  <p className="text-xs text-[#697386] mt-1">{user.email}</p>
 
  {acad?.currentClass && (
- <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-[#EEF0FF] rounded-xl text-xs font-semibold text-[#635BFF]">
+ <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 rounded-xl text-xs font-semibold text-black">
  <GraduationCap size={12} />
  {acad.currentClass} • {acad.board || 'Student'}
  </div>
@@ -762,8 +761,8 @@ export default function ProfilePage() {
  onClick={() => setTab(id)}
  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-left cursor-pointer ${
  tab === id
- ? 'bg-[#EEF0FF] text-[#635BFF] '
- : 'text-[#425466] hover:bg-[#F0F2F8] :bg-slate-800 hover:text-[#0A2540] :text-slate-100'
+ ? 'bg-slate-100 text-black '
+ : 'text-[#425466] hover:bg-slate-50 :bg-slate-800 hover:text-[#0A2540] :text-slate-100'
  }`}
  >
  <Icon size={16} />
@@ -771,7 +770,7 @@ export default function ProfilePage() {
  {count !== undefined && count > 0 && (
  <span className={`text-xs font-bold px-1.5 py-0.5 rounded-md ${
  tab === id 
- ? 'bg-[#635BFF] text-white' 
+ ? 'bg-black text-white' 
  : 'bg-[#E3E8EF] text-[#697386] '
  }`}>
  {count}
@@ -792,9 +791,9 @@ export default function ProfilePage() {
  <Link
  key={path}
  to={path}
- className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#697386] hover:bg-[#F0F2F8] hover:text-[#0A2540] transition-all group"
+ className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#697386] hover:bg-slate-50 hover:text-[#0A2540] transition-all group"
  >
- <Icon size={15} className="group-hover:text-[#635BFF]"/>
+ <Icon size={15} className="group-hover:text-black"/>
  {label}
  </Link>
  ))}
@@ -810,8 +809,8 @@ export default function ProfilePage() {
  const { icon: Icon, label } = TABS.find(t => t.id === tab)!;
  return (
  <>
- <div className="w-9 h-9 bg-[#EEF0FF] rounded-xl flex items-center justify-center">
- <Icon size={18} className="text-[#635BFF]"/>
+ <div className="w-9 h-9 bg-slate-100 rounded-xl flex items-center justify-center">
+ <Icon size={18} className="text-black"/>
  </div>
  <h2 className="text-xl font-bold text-[#0A2540]">{label}</h2>
  </>

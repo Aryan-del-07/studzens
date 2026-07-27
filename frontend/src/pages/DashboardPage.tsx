@@ -240,7 +240,7 @@ export default function DashboardPage() {
  }, [profile.preferences, profile.trackedExams]);
 
  const matchBadge = useMemo(() => ({
- 'Safe Reach': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', dot: 'bg-blue-500' },
+ 'Safe Reach': { bg: 'bg-blue-50', text: 'text-slate-900', border: 'border-blue-200', dot: 'bg-blue-500' },
  'Safe': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', dot: 'bg-emerald-500' },
  'Safe Backup': { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', dot: 'bg-amber-500' },
  }), []);
@@ -271,7 +271,7 @@ export default function DashboardPage() {
  <div className="max-w-7xl mx-auto px-4 py-8">
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
- <p className="text-sm font-semibold text-[#635BFF] mb-1 font-sans">Exam Command Center</p>
+ <p className="text-sm font-semibold text-black mb-1 font-sans">Exam Command Center</p>
  <h1 className="text-3xl font-bold text-[#0A2540] font-sans">
  Hi, {user?.name?.split(' ')[0] || 'Student'} 👋
  </h1>
@@ -283,7 +283,7 @@ export default function DashboardPage() {
  <div className="relative">
  <button 
  onClick={() => setShowNotificationsPanel(!showNotificationsPanel)}
- className="w-10 h-10 rounded-xl bg-[#F0F2F8] border border-[#E3E8EF] flex items-center justify-center hover:bg-[#EEF0FF] transition-colors relative cursor-pointer"
+ className="w-10 h-10 rounded-xl bg-slate-50 border border-[#E3E8EF] flex items-center justify-center hover:bg-slate-100 transition-colors relative cursor-pointer"
  >
  <Bell size={18} className="text-[#425466]"/>
  {unreadCount > 0 && (
@@ -299,7 +299,7 @@ export default function DashboardPage() {
  <div className="flex justify-between items-center mb-3 pb-2 border-b border-[#E3E8EF]">
  <h3 className="font-bold text-sm">Alerts Log</h3>
  <div className="flex gap-2">
- <button onClick={markAllAsRead} className="text-[10px] text-[#635BFF] font-semibold hover:underline cursor-pointer">Read All</button>
+ <button onClick={markAllAsRead} className="text-[10px] text-black font-semibold hover:underline cursor-pointer">Read All</button>
  <button onClick={clearAll} className="text-[10px] text-red-500 font-semibold hover:underline cursor-pointer">Clear</button>
  </div>
  </div>
@@ -308,10 +308,10 @@ export default function DashboardPage() {
  <div className="text-center py-6 text-xs text-[#9DA6B4]">No new alerts. Track exams to get updates.</div>
  ) : (
  notifications.map(n => (
- <div key={n.id} className={`p-3 rounded-xl border text-xs flex gap-2 relative transition-all ${n.read ? 'bg-[#F6F7FB] border-[#E3E8EF] opacity-70' : 'bg-[#EEF0FF]/50 border-[#C7C5FF]'}`}>
+ <div key={n.id} className={`p-3 rounded-xl border text-xs flex gap-2 relative transition-all ${n.read ? 'bg-[#F6F7FB] border-[#E3E8EF] opacity-70' : 'bg-slate-100/50 border-slate-300'}`}>
  <div className="flex-1">
  <div className="font-bold text-[#0A2540] flex items-center gap-1.5">
- {!n.read && <span className="w-1.5 h-1.5 rounded-full bg-[#635BFF] inline-block shrink-0"></span>}
+ {!n.read && <span className="w-1.5 h-1.5 rounded-full bg-black inline-block shrink-0"></span>}
  {n.title}
  </div>
  <p className="text-[#697386] mt-0.5 leading-relaxed">{n.message}</p>
@@ -319,7 +319,7 @@ export default function DashboardPage() {
  {!n.read && (
  <button 
  onClick={() => markAsRead(n.id)}
- className="text-[10px] text-[#635BFF] font-bold self-start cursor-pointer hover:underline"
+ className="text-[10px] text-black font-bold self-start cursor-pointer hover:underline"
  >
  Read
  </button>
@@ -344,10 +344,10 @@ export default function DashboardPage() {
  {/* Quick Stats Grid */}
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
  {[
- { icon: GraduationCap, label: 'Matched Colleges', value: recommendedColleges.length, color: 'text-[#635BFF]', bg: 'bg-[#EEF0FF]' },
+ { icon: GraduationCap, label: 'Matched Colleges', value: recommendedColleges.length, color: 'text-black', bg: 'bg-slate-100' },
  { icon: Bookmark, label: 'Saved Colleges', value: savedColleges.length, color: 'text-emerald-600', bg: 'bg-emerald-50' },
  { icon: Target, label: 'Tracked Exams', value: trackedExamsData.length, color: 'text-orange-600', bg: 'bg-orange-50' },
- { icon: TrendingUp, label: 'Preparation Score', value: `${readiness.score}/100`, color: 'text-blue-600', bg: 'bg-blue-50' },
+ { icon: TrendingUp, label: 'Preparation Score', value: `${readiness.score}/100`, color: 'text-slate-800', bg: 'bg-blue-50' },
  ].map(({ icon: Icon, label, value, color, bg }) => (
  <div key={label} className="sz-card p-4 flex items-center gap-3">
  <div className={`w-10 h-10 ${bg} rounded-xl flex items-center justify-center shrink-0`}>
@@ -411,7 +411,7 @@ export default function DashboardPage() {
  <span className="text-[#425466] flex items-center gap-1.5">
  <AlertTriangle size={14} className="text-amber-500"/> {act.text}
  </span>
- <Link to={act.link} className="text-[#635BFF] font-bold hover:underline">
+ <Link to={act.link} className="text-black font-bold hover:underline">
  {act.actionText} →
  </Link>
  </div>
@@ -464,7 +464,7 @@ export default function DashboardPage() {
  <h3 className="font-bold text-[#0A2540] text-lg font-sans leading-snug">{exam.name}</h3>
  <p className="text-xs text-[#697386] mt-0.5 font-sans leading-snug">{exam.fullName}</p>
  </div>
- <Link to={`/exams/${exam.id}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#635BFF] mt-4 hover:underline font-sans">
+ <Link to={`/exams/${exam.id}`} className="inline-flex items-center gap-1 text-xs font-bold text-black mt-4 hover:underline font-sans">
  Detailed Exam Hub Profile <ArrowRight size={12} />
  </Link>
  </div>
@@ -484,7 +484,7 @@ export default function DashboardPage() {
  </div>
  
  {nextMilestone && (
- <div className="mt-4 bg-[#EEF0FF] rounded-xl p-3 border border-[#C7C5FF] text-xs font-semibold text-[#635BFF] flex items-center justify-between font-sans">
+ <div className="mt-4 bg-slate-100 rounded-xl p-3 border border-slate-300 text-xs font-semibold text-black flex items-center justify-between font-sans">
  <span>🚀 Next Milestone: <strong className="text-[#0A2540]">{nextMilestone.label}</strong> is in <strong className="text-[#0A2540]">{nextMilestone.days} days</strong></span>
  <span className="text-[10px] text-[#697386] font-normal">{nextMilestone.date}</span>
  </div>
@@ -501,7 +501,7 @@ export default function DashboardPage() {
  <div className="studzens-card p-6 space-y-5">
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3E8EF]">
  <h3 className="font-bold text-lg flex items-center gap-2 font-sans">
- <CalendarIcon className="text-[#635BFF]"/> My Academic Calendar
+ <CalendarIcon className="text-black"/> My Academic Calendar
  </h3>
  <div className="flex items-center gap-2">
  <button onClick={handlePrevMonth} className="p-1.5 hover:bg-[#F6F7FB] border border-[#E3E8EF] rounded-lg cursor-pointer transition-colors"><ChevronLeft size={16} /></button>
@@ -523,7 +523,7 @@ export default function DashboardPage() {
  <button
  key={id}
  onClick={() => setSelectedCalExams(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])}
- className={`px-3 py-1.5 rounded-full border transition-all cursor-pointer font-semibold ${selected ? 'bg-[#EEF0FF] border-[#635BFF] text-[#635BFF]' : 'bg-white border-[#E3E8EF] text-[#697386]'}`}
+ className={`px-3 py-1.5 rounded-full border transition-all cursor-pointer font-semibold ${selected ? 'bg-slate-100 border-[#635BFF] text-black' : 'bg-white border-[#E3E8EF] text-[#697386]'}`}
  >
  {exam.name}
  </button>
@@ -546,15 +546,15 @@ export default function DashboardPage() {
  key={`${rIdx}-${cIdx}`} 
  className={`min-h-[60px] rounded-xl border p-1.5 flex flex-col justify-between transition-all ${
  cell.day ? 'bg-white border-[#E3E8EF]' : 'bg-[#F6F7FB] border-transparent'
- } ${isToday ? 'ring-2 ring-[#635BFF] border-transparent' : ''}`}
+ } ${isToday ? 'ring-2 ring-black border-transparent' : ''}`}
  >
  {cell.day ? (
  <div className="flex justify-between items-center">
- <span className={`text-[10px] font-bold flex items-center justify-center w-5 h-5 rounded-full ${isToday ? 'bg-[#635BFF] text-white' : 'text-[#0A2540]'}`}>
+ <span className={`text-[10px] font-bold flex items-center justify-center w-5 h-5 rounded-full ${isToday ? 'bg-black text-white' : 'text-[#0A2540]'}`}>
  {cell.day}
  </span>
  {eventsOnDay.length > 0 && (
- <span className="w-1.5 h-1.5 rounded-full bg-[#635BFF]"></span>
+ <span className="w-1.5 h-1.5 rounded-full bg-black"></span>
  )}
  </div>
  ) : <div />}
@@ -584,7 +584,7 @@ export default function DashboardPage() {
  <div className="flex items-center justify-between">
  <div>
  <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <Star size={20} className="text-[#635BFF]"/> Best Colleges For You
+ <Star size={20} className="text-black"/> Best Colleges For You
  </h2>
  <p className="text-xs text-[#697386] font-sans">Personalized matches based on your profile, budget and exams.</p>
  </div>
@@ -593,8 +593,8 @@ export default function DashboardPage() {
 
  {!hasPreferences ? (
  <div className="studzens-card p-10 text-center border-dashed border-2 border-[#E3E8EF]">
- <div className="w-16 h-16 bg-[#EEF0FF] rounded-2xl flex items-center justify-center mx-auto mb-4">
- <Target size={28} className="text-[#635BFF]"/>
+ <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+ <Target size={28} className="text-black"/>
  </div>
  <h3 className="font-bold text-[#0A2540] text-lg mb-2 font-sans">Set your preferences first</h3>
  <p className="text-[#697386] mb-6 max-w-xs mx-auto text-sm font-sans">
@@ -608,7 +608,7 @@ export default function DashboardPage() {
  <div className="grid md:grid-cols-3 gap-5">
  {(['Safe Reach', 'Safe', 'Safe Backup'] as const).map((type) => {
  const sectionMeta = {
- 'Safe Reach': { label: 'Best Colleges', icon: '🏆', color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200', desc: 'Aspirational — strong effort needed' },
+ 'Safe Reach': { label: 'Best Colleges', icon: '🏆', color: 'text-slate-900', bg: 'bg-blue-50', border: 'border-blue-200', desc: 'Aspirational — strong effort needed' },
  'Safe': { label: 'Reliable Picks', icon: '✅', color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200', desc: 'Good match within your range' },
  'Safe Backup': { label: 'Safest Options', icon: '🛡️', color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', desc: 'High chance of admission' },
  }[type];
@@ -636,8 +636,8 @@ export default function DashboardPage() {
  className="studzens-card p-4 flex flex-col justify-between gap-3 group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
  >
  <div className="flex items-start justify-between gap-2">
- <div className="w-9 h-9 bg-[#F0F2F8] rounded-xl flex items-center justify-center shrink-0">
- <GraduationCap size={18} className="text-[#635BFF]"/>
+ <div className="w-9 h-9 bg-slate-50 rounded-xl flex items-center justify-center shrink-0">
+ <GraduationCap size={18} className="text-black"/>
  </div>
  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${badge.bg} ${badge.text} ${badge.border}`}>
  <span className={`w-1 h-1 rounded-full ${badge.dot}`}></span>
@@ -645,7 +645,7 @@ export default function DashboardPage() {
  </span>
  </div>
  <div>
- <h3 className="font-bold text-[#0A2540] text-xs leading-snug group-hover:text-[#635BFF] transition-colors line-clamp-2 font-sans">
+ <h3 className="font-bold text-[#0A2540] text-xs leading-snug group-hover:text-black transition-colors line-clamp-2 font-sans">
  {c.name}
  </h3>
  <p className="text-[10px] text-[#697386] mt-1 flex items-center gap-1 font-sans">
@@ -653,7 +653,7 @@ export default function DashboardPage() {
  </p>
  </div>
  <div className="flex items-center gap-2 text-[10px] text-[#697386] font-sans">
- <span className="flex items-center gap-0.5"><Wallet size={9} className="text-[#635BFF]"/>₹{c.annualFeeLpa}L/yr</span>
+ <span className="flex items-center gap-0.5"><Wallet size={9} className="text-black"/>₹{c.annualFeeLpa}L/yr</span>
  <span className="flex items-center gap-0.5"><Shield size={9} className="text-emerald-500"/>{c.tier}</span>
  </div>
  {reasons.length > 0 && (
@@ -682,7 +682,7 @@ export default function DashboardPage() {
  {/* Today's Academic Priorities */}
  <div className="studzens-card p-6 space-y-4">
  <h3 className="font-bold text-base flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-3">
- <CheckSquare className="text-[#635BFF]"size={20} /> Today's Priorities
+ <CheckSquare className="text-black"size={20} /> Today's Priorities
  </h3>
  <div className="space-y-3">
  {priorities.map(p => (
@@ -691,7 +691,7 @@ export default function DashboardPage() {
  onClick={() => handleTogglePriority(p.id)}
  className="w-full text-left flex items-start gap-3 p-3 rounded-xl hover:bg-[#F6F7FB] transition-all cursor-pointer font-sans text-xs border border-transparent hover:border-[#E3E8EF]"
  >
- <span className="mt-0.5 shrink-0 text-[#635BFF]">
+ <span className="mt-0.5 shrink-0 text-black">
  {p.done ? <CheckCircle size={16} /> : <Square size={16} />}
  </span>
  <span className={`leading-relaxed ${p.done ? 'line-through text-[#9DA6B4] font-medium' : 'text-[#425466] font-bold'}`}>
@@ -705,7 +705,7 @@ export default function DashboardPage() {
  {/* Suggested Exams For You */}
  <div className="studzens-card p-6 space-y-4">
  <h3 className="font-bold text-base flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-3">
- <Compass className="text-[#635BFF]"size={20} /> Suggested Exams
+ <Compass className="text-black"size={20} /> Suggested Exams
  </h3>
  <div className="space-y-3.5">
  {suggestedExams.length === 0 ? (
@@ -721,7 +721,7 @@ export default function DashboardPage() {
  <h4 className="font-bold text-[#0A2540] text-sm mt-1">{ex.name}</h4>
  <p className="text-[11px] text-[#697386] mt-0.5 line-clamp-2 leading-relaxed">{ex.description}</p>
  </div>
- <Link to={`/exams/${ex.id}`} className="text-xs text-[#635BFF] font-bold hover:underline self-end">
+ <Link to={`/exams/${ex.id}`} className="text-xs text-black font-bold hover:underline self-end">
  View Exam Intel →
  </Link>
  </div>
@@ -733,10 +733,10 @@ export default function DashboardPage() {
  {/* Quick Navigation Panels */}
  <div className="studzens-card overflow-hidden divide-y divide-[#E3E8EF]">
  {[
- { icon: GraduationCap, label: 'Explore Colleges', sub: `${colleges.length} colleges listed`, path: '/search', color: 'text-[#635BFF]', bg: 'bg-[#EEF0FF]' },
+ { icon: GraduationCap, label: 'Explore Colleges', sub: `${colleges.length} colleges listed`, path: '/search', color: 'text-black', bg: 'bg-slate-100' },
  { icon: Target, label: 'Exam Hub', sub: 'Track deadlines', path: '/exams', color: 'text-orange-600', bg: 'bg-orange-50' },
  { icon: BookOpen, label: 'Career Roadmaps', sub: 'Explore paths', path: '/careers', color: 'text-emerald-600', bg: 'bg-emerald-50' },
- { icon: MapPin, label: 'Compare Colleges', sub: 'Side-by-side analysis', path: '/compare', color: 'text-blue-600', bg: 'bg-blue-50' },
+ { icon: MapPin, label: 'Compare Colleges', sub: 'Side-by-side analysis', path: '/compare', color: 'text-slate-800', bg: 'bg-blue-50' },
  ].map(({ icon: Icon, label, sub, path, color, bg }) => (
  <Link key={path} to={path} className="flex items-center gap-3 p-4 hover:bg-[#F6F7FB] transition-colors group">
  <div className={`w-9 h-9 ${bg} rounded-xl flex items-center justify-center shrink-0`}>
@@ -746,7 +746,7 @@ export default function DashboardPage() {
  <div className="font-semibold text-sm text-[#0A2540] font-sans">{label}</div>
  <div className="text-xs text-[#697386] font-sans">{sub}</div>
  </div>
- <ArrowRight size={16} className="text-[#9DA6B4] group-hover:text-[#635BFF] transition-colors shrink-0"/>
+ <ArrowRight size={16} className="text-[#9DA6B4] group-hover:text-black transition-colors shrink-0"/>
  </Link>
  ))}
  </div>

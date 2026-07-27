@@ -168,7 +168,7 @@ export default function ExamHubPage() {
  };
 
  const categoryColor: Record<string, string> = {
- Engineering: 'bg-blue-50 text-blue-700 border-blue-200',
+ Engineering: 'bg-blue-50 text-slate-900 border-blue-200',
  Medical: 'bg-emerald-50 text-emerald-700 border-emerald-200',
  Design: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200',
  Law: 'bg-amber-50 text-amber-700 border-amber-200',
@@ -195,19 +195,19 @@ export default function ExamHubPage() {
  <div className="max-w-7xl mx-auto px-4">
  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
  <div>
- <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#635BFF] uppercase tracking-wider mb-2">
+ <div className="inline-flex items-center gap-1.5 text-xs font-bold text-black uppercase tracking-wider mb-2">
  <Compass size={14} /> Academic Command
  </div>
  <h1 className="text-3xl font-extrabold font-sans tracking-tight">Stuzen Exam Hub</h1>
  </div>
 
  {/* Toggle switch between Command Center and Browse All */}
- <div className="bg-[#F0F2F8] p-1 rounded-2xl flex gap-1 border border-[#E3E8EF] self-start md:self-center">
+ <div className="bg-slate-50 p-1 rounded-2xl flex gap-1 border border-[#E3E8EF] self-start md:self-center">
  <button
  onClick={() => setActiveView('tracker')}
  className={`px-4 py-2 rounded-xl text-sm font-bold font-sans cursor-pointer transition-all flex items-center gap-1.5 ${
  activeView === 'tracker' 
- ? 'bg-white text-[#635BFF] shadow-sm' 
+ ? 'bg-white text-black shadow-sm' 
  : 'text-[#697386] hover:text-[#0A2540]'
  }`}
  >
@@ -218,7 +218,7 @@ export default function ExamHubPage() {
  onClick={() => setActiveView('all')}
  className={`px-4 py-2 rounded-xl text-sm font-bold font-sans cursor-pointer transition-all flex items-center gap-1.5 ${
  activeView === 'all' 
- ? 'bg-white text-[#635BFF] shadow-sm' 
+ ? 'bg-white text-black shadow-sm' 
  : 'text-[#697386] hover:text-[#0A2540]'
  }`}
  >
@@ -277,7 +277,7 @@ export default function ExamHubPage() {
  <span className="text-[#425466] flex items-center gap-1.5 font-semibold">
  <AlertTriangle size={14} className="text-amber-500"/> {act.text}
  </span>
- <Link to={act.link} className="text-[#635BFF] font-bold hover:underline">
+ <Link to={act.link} className="text-black font-bold hover:underline">
  {act.actionText} →
  </Link>
  </div>
@@ -301,7 +301,7 @@ export default function ExamHubPage() {
  <p className="text-xs text-[#697386] mb-4 font-sans max-w-xs mx-auto">Pin exams from the"Browse Entrance Exams"tab to set up countdown trackers.</p>
  <button
  onClick={() => setActiveView('all')}
- className="bg-[#635BFF] text-white px-4 py-2 rounded-xl text-xs font-bold font-sans cursor-pointer hover:bg-[#4F47E5]"
+ className="bg-black text-white px-4 py-2 rounded-xl text-xs font-bold font-sans cursor-pointer hover:bg-[#4F47E5]"
  >
  Browse Exam List
  </button>
@@ -327,7 +327,7 @@ export default function ExamHubPage() {
  <h3 className="font-extrabold text-[#0A2540] text-lg font-sans leading-snug">{exam.name}</h3>
  <p className="text-xs text-[#697386] mt-0.5 font-sans leading-snug line-clamp-2">{exam.fullName}</p>
  </div>
- <Link to={`/exams/${exam.id}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#635BFF] mt-4 hover:underline font-sans">
+ <Link to={`/exams/${exam.id}`} className="inline-flex items-center gap-1 text-xs font-bold text-black mt-4 hover:underline font-sans">
  Syllabus & Pattern Hub →
  </Link>
  </div>
@@ -347,7 +347,7 @@ export default function ExamHubPage() {
  </div>
  
  {nextMilestone && (
- <div className="mt-4 bg-[#EEF0FF] rounded-xl p-3 border border-[#C7C5FF] text-xs font-semibold text-[#635BFF] flex items-center justify-between font-sans">
+ <div className="mt-4 bg-slate-100 rounded-xl p-3 border border-slate-300 text-xs font-semibold text-black flex items-center justify-between font-sans">
  <span>🚀 Next Milestone: <strong className="text-[#0A2540]">{nextMilestone.label}</strong> is in <strong className="text-[#0A2540]">{nextMilestone.days} days</strong></span>
  <span className="text-[10px] text-[#697386] font-normal">{nextMilestone.date}</span>
  </div>
@@ -364,7 +364,7 @@ export default function ExamHubPage() {
  <div className="sz-card p-6 space-y-5 bg-white">
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3E8EF]">
  <h3 className="font-bold text-base flex items-center gap-2 font-sans">
- <CalendarIcon size={18} className="text-[#635BFF]"/> My Academic Calendar
+ <CalendarIcon size={18} className="text-black"/> My Academic Calendar
  </h3>
  <div className="flex items-center gap-2">
  <button onClick={handlePrevMonth} className="p-1.5 hover:bg-[#F6F7FB] border border-[#E3E8EF] rounded-lg cursor-pointer transition-colors"><ChevronLeft size={16} /></button>
@@ -386,7 +386,7 @@ export default function ExamHubPage() {
  key={id}
  onClick={() => handleToggleCalExam(id)}
  className={`px-2.5 py-1 rounded-full border transition-all cursor-pointer font-bold text-[10px] ${
- selected ? 'bg-[#EEF0FF] border-[#635BFF] text-[#635BFF]' : 'bg-white border-[#E3E8EF] text-[#697386]'
+ selected ? 'bg-slate-100 border-[#635BFF] text-black' : 'bg-white border-[#E3E8EF] text-[#697386]'
  }`}
  >
  {exam.name}
@@ -410,14 +410,14 @@ export default function ExamHubPage() {
  key={`${rIdx}-${cIdx}`} 
  className={`min-h-[56px] rounded-xl border p-1 flex flex-col justify-between transition-all ${
  cell.day ? 'bg-white border-[#E3E8EF]' : 'bg-[#F6F7FB] border-transparent'
- } ${isToday ? 'ring-2 ring-[#635BFF] border-transparent' : ''}`}
+ } ${isToday ? 'ring-2 ring-black border-transparent' : ''}`}
  >
  {cell.day ? (
  <div className="flex justify-between items-center">
- <span className={`text-[9px] font-extrabold flex items-center justify-center w-4 h-4 rounded-full ${isToday ? 'bg-[#635BFF] text-white' : 'text-[#0A2540]'}`}>
+ <span className={`text-[9px] font-extrabold flex items-center justify-center w-4 h-4 rounded-full ${isToday ? 'bg-black text-white' : 'text-[#0A2540]'}`}>
  {cell.day}
  </span>
- {eventsOnDay.length > 0 && <span className="w-1.5 h-1.5 rounded-full bg-[#635BFF]"></span>}
+ {eventsOnDay.length > 0 && <span className="w-1.5 h-1.5 rounded-full bg-black"></span>}
  </div>
  ) : <div />}
  
@@ -448,7 +448,7 @@ export default function ExamHubPage() {
  {/* Today's Priorities */}
  <div className="sz-card p-6 bg-white space-y-4">
  <h3 className="font-bold text-base flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-3">
- <CheckSquare size={18} className="text-[#635BFF]"/> Today's Priorities
+ <CheckSquare size={18} className="text-black"/> Today's Priorities
  </h3>
  <div className="space-y-2.5">
  {priorities.map(p => (
@@ -457,7 +457,7 @@ export default function ExamHubPage() {
  onClick={() => handleTogglePriority(p.id)}
  className="w-full text-left flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-[#F6F7FB] transition-all cursor-pointer font-sans text-xs border border-transparent hover:border-[#E3E8EF]"
  >
- <span className="mt-0.5 shrink-0 text-[#635BFF]">
+ <span className="mt-0.5 shrink-0 text-black">
  {p.done ? <CheckCircle size={15} /> : <Square size={15} />}
  </span>
  <span className={`leading-relaxed ${p.done ? 'line-through text-[#9DA6B4] font-medium' : 'text-[#425466] font-bold'}`}>
@@ -471,7 +471,7 @@ export default function ExamHubPage() {
  {/* Suggested Exams */}
  <div className="sz-card p-6 bg-white space-y-4">
  <h3 className="font-bold text-base flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-3">
- <Compass size={18} className="text-[#635BFF]"/> Suggested For You
+ <Compass size={18} className="text-black"/> Suggested For You
  </h3>
  <div className="space-y-3">
  {suggestedExams.length === 0 ? (
@@ -487,7 +487,7 @@ export default function ExamHubPage() {
  <h4 className="font-bold text-[#0A2540] text-sm mt-1">{ex.name}</h4>
  <p className="text-[10px] text-[#697386] mt-0.5 line-clamp-2 leading-relaxed">{ex.description}</p>
  </div>
- <Link to={`/exams/${ex.id}`} className="text-[10px] text-[#635BFF] font-bold hover:underline self-end">
+ <Link to={`/exams/${ex.id}`} className="text-[10px] text-black font-bold hover:underline self-end">
  View details →
  </Link>
  </div>
@@ -499,7 +499,7 @@ export default function ExamHubPage() {
  {/* Future Timeline visualization */}
  <div className="sz-card p-6 bg-gradient-to-br from-indigo-900 to-indigo-955 text-white space-y-4">
  <h3 className="font-bold text-sm flex items-center gap-1.5 font-sans">
- <Sparkles size={16} className="text-indigo-400"/> Future Timeline Journey
+ <Sparkles size={16} className="text-slate-300"/> Future Timeline Journey
  </h3>
  <div className="relative pl-4 border-l-2 border-indigo-400/40 space-y-4 text-xs font-sans">
  <div>
@@ -591,12 +591,12 @@ export default function ExamHubPage() {
  onClick={() => pinned ? untrackExam(exam.id) : trackExam(exam.id)}
  className={`w-9 h-9 rounded-xl flex items-center justify-center border transition-all cursor-pointer ${
  pinned
- ? 'bg-indigo-50 border-[#635BFF] text-[#635BFF]'
- : 'bg-white border-[#E3E8EF] text-[#9DA6B4] hover:border-[#635BFF] hover:text-[#635BFF]'
+ ? 'bg-indigo-50 border-[#635BFF] text-black'
+ : 'bg-white border-[#E3E8EF] text-[#9DA6B4] hover:border-[#635BFF] hover:text-black'
  }`}
  title={pinned ? 'Unpin from dashboard' : 'Pin to dashboard'}
  >
- {pinned ? <BookmarkCheck size={16} className="fill-current text-[#635BFF]"/> : <Bookmark size={16} />}
+ {pinned ? <BookmarkCheck size={16} className="fill-current text-black"/> : <Bookmark size={16} />}
  </button>
  </div>
  </div>
@@ -605,8 +605,8 @@ export default function ExamHubPage() {
 
  <div className="space-y-2 mb-5">
  <div className="flex items-center gap-2.5 text-xs font-sans">
- <div className="w-7 h-7 rounded-lg bg-[#EEF0FF] flex items-center justify-center shrink-0">
- <CalendarIcon size={14} className="text-[#635BFF]"/>
+ <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+ <CalendarIcon size={14} className="text-black"/>
  </div>
  <div>
  <div className="text-[8px] font-bold text-[#9DA6B4] uppercase tracking-wider">Exam Date</div>
@@ -635,7 +635,7 @@ export default function ExamHubPage() {
  Official Website <ExternalLink size={12} />
  </a>
  <Link to={`/exams/${exam.id}`}
- className="text-xs font-extrabold text-[#635BFF] hover:text-[#4F47E5] flex items-center gap-0.5 transition-colors group-hover:underline underline-offset-2">
+ className="text-xs font-extrabold text-black hover:text-[#4F47E5] flex items-center gap-0.5 transition-colors group-hover:underline underline-offset-2">
  View details <ArrowRight size={13} />
  </Link>
  </div>
