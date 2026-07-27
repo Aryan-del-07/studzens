@@ -55,17 +55,12 @@ export default function PageShell() {
  ------------------------------------------------------------------------------ */}
  {(!hideNav && (isAuthenticated || isLandingPage)) && (
  <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#E3E8EF] transition-colors duration-200">
- <div className="w-full max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
- {/* Left side: Logo + Desktop navigation */}
- <div className="flex items-center gap-6">
- {/* Logo link that goes to the dashboard if authenticated, else / */}
- <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center gap-2 group">
- <img src="/logo.png" alt="Studzens Logo" className="h-8 w-auto object-contain" />
- </Link>
-
- {/* Desktop Navigation — hidden on small screens (hidden lg:flex) */}
+ <div className="w-full max-w-[1400px] mx-auto px-6 h-16 relative flex items-center justify-between">
+ 
+ {/* Left side: Desktop navigation */}
+ <div className="flex-1 flex items-center justify-start">
  {isAuthenticated && !isLandingPage && (
- <nav className="hidden lg:flex items-center gap-1 ml-2">
+ <nav className="hidden lg:flex items-center gap-1">
  <NavLink to="/dashboard" icon={<LayoutDashboard size={17} />} label="Dashboard" active={location.pathname === '/dashboard'} />
  <NavLink to="/search" icon={<Search size={17} />} label="Colleges" active={location.pathname === '/search'} />
  <NavLink to="/compare" icon={<GitCompareArrows size={17} />} label="Compare" active={location.pathname === '/compare'} />
@@ -75,9 +70,17 @@ export default function PageShell() {
  )}
  </div>
 
+ {/* Center: Logo */}
+ <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+ <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center group">
+ <img src="/logo.png" alt="Studzens Logo" className="h-8 w-auto object-contain" />
+ </Link>
+ </div>
+
  {/* Right side: Profile icon + Mobile hamburger button */}
+ <div className="flex-1 flex items-center justify-end gap-3">
  {isAuthenticated && !isLandingPage && (
- <div className="flex items-center gap-3">
+ <>
  {/* Profile icon — only visible on small screens and up */}
  <Link
  to="/profile"
@@ -93,8 +96,9 @@ export default function PageShell() {
  >
  {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
  </button>
- </div>
+ </>
  )}
+ </div>
  </div>
 
  {/* ------------------------------------------------------------------------------
