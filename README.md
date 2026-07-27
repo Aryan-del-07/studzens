@@ -1,132 +1,122 @@
-# Stuzen — Student College Finder 🎓
-
-> **Find Your Dream College. Plan Your Career. Ace Your Exams.**
-
-Stuzen is a premium, production-ready full-stack web application that helps Indian students discover colleges, track entrance exams, explore careers, and get AI-powered academic guidance.
-
----
-
-## 🚀 Live Environments
-
-The application is deployed live in production:
-- **Frontend (Deployed on Vercel):** [https://studzens.vercel.app](https://studzens.vercel.app)
-- **Backend (Deployed on Railway):** Node.js API handling business logic and data routing.
-- **Database (Hosted on Neon):** Serverless PostgreSQL.
+<div align="center">
+  <img src="./public/favicon.svg" alt="Studzens Logo" width="100" />
+  <h1>Studzens</h1>
+  <p><strong>The Next-Generation Command Center for Indian Students</strong></p>
+  <p>
+    <img src="https://img.shields.io/badge/react-18-blue.svg" alt="React" />
+    <img src="https://img.shields.io/badge/vite-6-purple.svg" alt="Vite" />
+    <img src="https://img.shields.io/badge/typescript-strict-blue.svg" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/prisma-ORM-black.svg" alt="Prisma" />
+  </p>
+</div>
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 About The Project
 
-### Frontend
-- **Framework:** React 19 + TypeScript
-- **Build Tool:** Vite 8
-- **Styling:** Tailwind CSS 4
-- **Routing:** React Router DOM 7
-- **Maps:** MapLibre GL
-- **Icons:** Lucide React
+Studzens is a centralized platform designed to demystify the college admission process for Indian students. It tracks entrance exams (JEE, NEET, CLAT, etc.), provides intelligent college recommendations (Reach, Match, Safe), and offers an AI-powered counselor to answer complex admission queries instantly.
 
-### Backend & Database
-- **Runtime:** Node.js (Express.js)
-- **Database:** PostgreSQL (Neon)
-- **ORM:** Prisma
-- **Language:** TypeScript (ESM)
+### ✨ Features
+- **Personalized Dashboard:** Get daily updates on exam countdowns and college matches based on your target stream and budget.
+- **Exam Hub:** Track registration deadlines, exam dates, and counseling schedules for over 50+ national and state-level exams.
+- **College Directory & Compare:** Research 100+ top Indian colleges, view placement statistics, and compare them side-by-side.
+- **AI Counselor:** A floating, context-aware AI assistant that can answer questions about JoSAA counseling, cut-offs, and exam patterns.
 
 ---
 
-## 🌐 Architecture & Monorepo Structure
+## 🏗️ Architecture
 
-This project uses npm workspaces to manage a monorepo structure, allowing seamless sharing of database types between the frontend and backend.
+Studzens utilizes a modern, serverless-first architecture to ensure lightning-fast global delivery.
+
+```mermaid
+flowchart LR
+    Client[React SPA] -->|HTTPS| Edge[Vercel Edge]
+    Edge -->|API Calls| Backend[Express.js Node API]
+    Backend -->|TCP| DB[(Neon Postgres)]
+```
+
+> **Note:** For a complete breakdown of the architecture, data flows, and state management, please read the [Complete Engineering Documentation](./docs/COMPLETE_DOCUMENTATION.md).
+
+---
+
+## 🚀 Quick Start
+
+Follow these instructions to get a copy of the project up and running on your local machine.
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- Git
+
+### Installation
+
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/Aryan-del-07/studzens.git
+   cd studzens
+   ```
+
+2. **Install dependencies**
+   ```sh
+   npm install
+   ```
+   *(Note: Navigate into `/frontend`, `/backend`, and `/database` to install local dependencies if using a split monorepo setup).*
+
+3. **Set up Environment Variables**
+   Create a `.env` file in the root directory based on the `.env.example`.
+   ```env
+   DATABASE_URL="postgres://user:pass@ep-restless-bird-xxx.ap-southeast-1.aws.neon.tech/neondb"
+   ```
+
+4. **Initialize the Database**
+   ```sh
+   cd database
+   npx prisma generate
+   npx prisma db push
+   npm run db:seed
+   ```
+
+5. **Start the Frontend Development Server**
+   ```sh
+   cd frontend
+   npm run dev
+   ```
+
+The application will now be running at `http://localhost:5173`.
+
+---
+
+## 📁 Folder Structure
 
 ```
 studzens/
-├── frontend/      # React & Vite application (Vercel)
-├── backend/       # Express.js REST API (Railway)
-└── database/      # Prisma schema, migrations, and database types
+├── frontend/           # React/Vite Application
+├── backend/            # Express.js API (In dev)
+├── database/           # Prisma Schemas & Seed data
+├── docs/               # Architecture & Flow Documentation
+└── scripts/            # Utility scripts
 ```
-
----
-
-## 💻 Local Development
-
-Follow these steps to run the complete stack on your local machine:
-
-### 1. Prerequisites
-- Node.js (v20 or higher)
-- PostgreSQL (or a Neon database string)
-
-### 2. Setup Environment Variables
-Create a `.env` file in the `database` folder with your connection string:
-```bash
-DATABASE_URL="postgresql://user:password@host/dbname?sslmode=require"
-```
-
-### 3. Install & Run
-Run these commands from the root directory:
-
-```bash
-# Install all dependencies across all workspaces
-npm install
-
-# Push database schema & generate Prisma client
-npm run build --workspace=@studzens/database
-
-# Start both frontend and backend development servers
-npm run dev
-```
-- Frontend will run on: `http://localhost:5173`
-- Backend API will run on: `http://localhost:3000`
+For a detailed explanation, see [Folder Structure Docs](./docs/FOLDER_STRUCTURE.md).
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions from the open-source community! Whether it's fixing a bug, adding a new feature, or improving documentation, we'd love your help.
-
-### How to Contribute
-
-1. **Fork the repository** on GitHub.
-2. **Clone your fork** locally:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/studzens.git
-   ```
-3. **Create a new branch** for your feature or bug fix:
-   ```bash
-   git checkout -b feature/your-amazing-feature
-   ```
-4. **Make your changes** and commit them using descriptive messages:
-   ```bash
-   git commit -m "feat: add amazing new feature"
-   ```
-5. **Push your branch** to GitHub:
-   ```bash
-   git push origin feature/your-amazing-feature
-   ```
-6. **Open a Pull Request (PR)** on the main repository.
-
-### Contribution Guidelines
-- Ensure your code follows the existing TypeScript conventions and strict mode rules.
-- Test your changes locally before submitting a PR.
-- If you're changing the database schema in `database/prisma/schema.prisma`, remember to test the migration via Prisma.
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct, branching strategy, and the process for submitting Pull Requests.
 
 ---
 
-## ✨ Features
+## 🗺️ Roadmap
 
-- **🔍 College Search**: Search and filter colleges by state, stream, fees, and type.
-- **📊 Smart Dashboard**: Personalized home with exam countdowns, college recommendations, and daily priorities.
-- **🤖 AI Counselor**: Chat-based academic guidance with personalized AI responses.
-- **🗺️ College Map**: Interactive map showing college locations with details.
-- **📅 Exam Tracker**: Countdown timers, eligibility info, and exam calendars.
-- **💼 Career Explorer**: Discover careers with salary, growth, and required degrees.
+See our [Roadmap](./docs/ROADMAP.md) to understand where the project is heading next, including the rollout of predictive AI analytics and B2B counseling features.
 
 ---
 
-## 📄 License
+## 📜 License
 
-MIT License — free for personal and commercial use.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-
-<p align="center">
-  Built with ❤️ for students everywhere.
-</p>
+<div align="center">
+  <i>Built for the students, by the students.</i>
+</div>
