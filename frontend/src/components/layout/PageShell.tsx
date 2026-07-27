@@ -73,7 +73,7 @@ export default function PageShell() {
  {/* Center: Logo */}
  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
  <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center group">
- <img src="/logo.png" alt="Studzens Logo" className="h-8 w-auto object-contain" />
+ <img src="/logo.png" alt="Studzens Logo" className="h-14 md:h-16 w-auto object-contain scale-[1.5]" />
  </Link>
  </div>
 

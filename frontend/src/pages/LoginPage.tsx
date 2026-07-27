@@ -161,7 +161,7 @@ export default function LoginPage() {
  
  {/* Brand Header */}
  <Link to="/"className="flex items-center mb-10 group w-fit">
- <img src="/logo.png" alt="Studzens Logo" className="h-10 w-auto object-contain" />
+ <img src="/logo.png" alt="Studzens Logo" className="h-16 md:h-20 w-auto object-contain scale-[1.5]" />
  </Link>
 
  <div className="max-w-[420px] w-full">
