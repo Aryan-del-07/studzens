@@ -1,58 +1,137 @@
-# State Management
+# Studzens — State Management
 
-The Studzens frontend utilizes a hybrid state management approach, avoiding bloated libraries like Redux in favor of native React Context and localized component state.
+## Philosophy
 
-## State Management Architecture
+Studzens avoids external state management libraries (Redux, Zustand, Jotai). Instead it uses **React's built-in primitives** — Context + useState + useReducer + useMemo — with localStorage for persistence.
 
-```mermaid
-graph TD
-    subgraph Global State [Global State - React Context]
-        Auth[AuthContext]
-        Profile[StudentProfileContext]
-    end
+---
 
-    subgraph Browser Storage [Persistence]
-        LS[(LocalStorage)]
-    end
+## Global State (React Contexts)
 
-    subgraph Local State [Component State]
-        DashState[Dashboard: Selected Category]
-        ExamState[ExamHub: Calendar Month]
-        SearchState[SearchPage: Filter Query]
-    end
-    
-    Auth <--> LS
-    Profile <--> LS
-    
-    Auth --> App[Application Components]
-    Profile --> App
-    
-    App --> Local State
+Four context providers are mounted at the root in `main.tsx`, wrapping the entire app:
+
+```
+<AuthProvider>
+  <BookmarkProvider>
+    <NotificationProvider>
+      <StudentProfileProvider>
+        <App />
 ```
 
-## 1. Global State (React Context)
+### 1. `AuthContext` — `contexts/AuthContext.tsx`
 
-We use React Context for data that needs to be accessed by components at vastly different levels of the tree without prop-drilling.
+Manages authentication state.
 
-### `AuthContext`
-- **Purpose:** Manages the user's authentication status (`isAuthenticated`, `user` object).
-- **Persistence:** Syncs with `localStorage` (key: `sz_auth`). If a user refreshes the page, the Context initializes with the data from `localStorage` to prevent logging them out.
-- **Usage:** Checked by `ProtectedRoute` to deny access to `/dashboard` if unauthenticated. Used by `PageShell` to display the user's name.
+| Export | Type | Description |
+|---|---|---|
+| `isAuthenticated` | `boolean` | True if a user session exists |
+| `user` | `User \| null` | Currently logged-in user object |
+| `login(email, password)` | `Promise<void>` | Authenticates and stores session |
+| `logout()` | `void` | Clears session |
 
-### `StudentProfileContext`
-- **Purpose:** Stores the user's non-auth preferences and tracked data (e.g., `bookmarkedColleges`, `trackedExams`, `targetStream`).
-- **Persistence:** Syncs with `localStorage` (key: `sz_profile`).
-- **Usage:** 
-  - `ExamHubPage` reads `trackedExams` to populate the calendar.
-  - `DashboardPage` reads `targetStream` to filter college recommendations.
+**Persistence:** Session is stored in `localStorage` so users remain logged in across refreshes.
 
-## 2. Local State (`useState`, `useReducer`)
+---
 
-Data that is only relevant to a specific view is kept localized to that view's top-level component.
+### 2. `BookmarkContext` — `contexts/BookmarkContext.tsx`
 
-- **Form Inputs:** The search query in `SearchPage` is managed via a simple `useState`.
-- **UI Toggles:** The active tab in `DashboardPage` (Reach vs. Safe) is managed locally. It does not need to be in Global Context because if the user navigates away and returns, defaulting back to the first tab is acceptable behavior.
+Manages the list of saved (bookmarked) colleges.
 
-## 3. Server State (Future API Integration)
-Currently, data like the list of colleges is imported statically from `src/api/mocks/`. As the application migrates to the Express backend, this data will be considered **Server State**.
-- **Strategy:** We plan to implement `TanStack Query` (React Query) to handle data fetching, caching, synchronization, and invalidation of server state.
+| Export | Type | Description |
+|---|---|---|
+| `bookmarks` | `Bookmark[]` | Array of saved college bookmarks |
+| `addBookmark(collegeId, category)` | `void` | Adds a college to saved list |
+| `removeBookmark(collegeId)` | `void` | Removes a saved college |
+| `isBookmarked(collegeId)` | `boolean` | Check if a college is saved |
+
+**Persistence:** Uses the `useLocalStorage` hook — bookmarks survive page refresh.
+
+---
+
+### 3. `NotificationContext` — `contexts/NotificationContext.tsx`
+
+In-app toast notification queue.
+
+| Export | Type | Description |
+|---|---|---|
+| `notifications` | `Notification[]` | Current notification queue |
+| `notify(message, type)` | `void` | Push a new notification (success/error/info) |
+| `dismiss(id)` | `void` | Remove a notification by ID |
+
+**Persistence:** In-memory only (notifications disappear on refresh by design).
+
+---
+
+### 4. `StudentProfileContext` — `contexts/StudentProfileContext.tsx`
+
+Holds the student's onboarding profile data, which drives all personalised recommendations.
+
+| Export | Type | Description |
+|---|---|---|
+| `profile` | `StudentProfile \| null` | Full onboarding profile |
+| `setProfile(data)` | `void` | Save or update the profile |
+| `hasProfile` | `boolean` | True if onboarding is complete |
+
+**Persistence:** Uses `useLocalStorage` — profile survives refresh, no re-onboarding needed.
+
+`StudentProfile` shape:
+```typescript
+interface StudentProfile {
+  name: string;
+  stream: string;           // "Engineering" | "Medical" | "Commerce" | "Arts"
+  class: "11" | "12" | "Appeared" | "Passed";
+  twelfthMarks?: number;    // percentage
+  examScores: Record<string, number>; // { "JEE Mains": 95, "NEET": 620, ... }
+  budget: number;           // max annual fee in INR
+  preferredStates: string[]; // e.g. ["Maharashtra", "Delhi"]
+}
+```
+
+---
+
+## Local / Page-Level State
+
+Pages and components manage their own ephemeral state with standard React hooks:
+
+| Pattern | Usage |
+|---|---|
+| `useState` | Filter selections, form fields, toggle states, modal open/close |
+| `useReducer` | Complex multi-step forms (e.g. OnboardingPage step machine) |
+| `useMemo` | Derived filtered/sorted college lists (avoids recomputing on every render) |
+| `useEffect` | Side effects: scroll restoration, document title updates |
+
+---
+
+## Custom Hooks
+
+### `useLocalStorage<T>(key, initialValue)` — `hooks/useLocalStorage.ts`
+
+Type-safe wrapper around `localStorage` that behaves like `useState`:
+```typescript
+const [value, setValue] = useLocalStorage<College[]>('bookmarks', []);
+```
+
+### `useSearch(items, fields, query)` — `hooks/useSearch.ts`
+
+Debounced multi-field search/filter hook used on SearchPage and ExamHubPage:
+```typescript
+const results = useSearch(colleges, ['name', 'city', 'state'], searchQuery);
+```
+
+---
+
+## Data Flow Summary
+
+```
+User fills in OnboardingPage
+    ↓
+StudentProfileContext.setProfile(data) → persisted to localStorage
+    ↓
+DashboardPage reads profile → computes match scores with useMemo
+    ↓
+Renders ranked college cards (Safe Reach / Safe / Safe Backup)
+    ↓
+User clicks bookmark → BookmarkContext.addBookmark() → persisted to localStorage
+    ↓
+NotificationContext.notify("College saved!") → toast appears
+```

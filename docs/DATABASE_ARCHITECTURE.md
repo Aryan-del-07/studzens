@@ -1,86 +1,149 @@
-# Database Architecture
+# Studzens — Database Architecture
 
-The Studzens database is built on **PostgreSQL**, hosted on **Neon**, and managed via **Prisma ORM**.
+## Overview
 
-## Technology Choices
-- **PostgreSQL:** Chosen for its robust relational features, ACID compliance, and rich JSON support (used for storing nested pattern structures of exams).
-- **Neon:** A serverless Postgres provider. It separates compute from storage, meaning it can auto-suspend when idle to save costs and auto-scale instantly when traffic spikes.
-- **Prisma:** Provides a strongly-typed database client and a declarative schema definition, minimizing runtime errors and simplifying migrations.
+The `@studzens/database` package owns the entire data layer. It contains:
 
-## Entity Relationship Diagram (ERD)
+- **`prisma/schema.prisma`** — the authoritative data model
+- **`prisma/seed.ts`** — seed data for 100+ colleges, 50+ exams, programmes, and placements
+- **`prisma.config.ts`** — reads `DATABASE_URL` from `.env`
+
+The target database is **Neon** (serverless PostgreSQL), accessed via the `@prisma/adapter-pg` driver adapter.
+
+---
+
+## Data Model
 
 ```mermaid
 erDiagram
-    User ||--o{ UserExamTrack : tracks
-    User ||--o{ UserCollegeBookmark : bookmarks
-    
-    User {
-        String id PK
-        String email UK
-        String passwordHash
-        String name
-        String stream "e.g., PCM, PCB"
-        DateTime createdAt
-    }
+    User ||--o| Profile : "has one"
+    User ||--o{ Review : "writes"
+    User ||--o{ Bookmark : "saves"
 
-    College ||--o{ Program : offers
-    College ||--o{ Facility : provides
-    College ||--o{ Placement : records
-    College ||--o{ UserCollegeBookmark : "bookmarked by"
+    College ||--o{ Program : "offers"
+    College ||--o{ Placement : "reports"
+    College ||--o{ Facility : "has"
+    College ||--o{ Review : "receives"
+    College ||--o{ Bookmark : "bookmarked by"
+    College ||--o{ CollegeExam : "accepts via"
 
-    College {
-        String id PK
-        String name
-        String location
-        String type "Public, Private, IIIT, etc."
-        Float rating
-        Int nirfRank
-        String description
-    }
-
-    Program {
-        String id PK
-        String collegeId FK
-        String name "e.g., B.Tech Computer Science"
-        Int durationYears
-        Int seats
-        Int estimatedFees
-        String category "Engineering, Medical, etc."
-    }
-
-    Placement {
-        String id PK
-        String collegeId FK
-        Int year
-        Float highestPackage
-        Float averagePackage
-        Float placementPercentage
-    }
-
-    Exam ||--o{ UserExamTrack : "tracked by"
-    
-    Exam {
-        String id PK
-        String name
-        String fullName
-        String category
-        String level "National, State"
-        Json importantDates
-        Json pattern
-        Int difficultyLevel
-    }
+    Exam ||--o{ CollegeExam : "used by"
 ```
 
-## Schema Highlights
+---
+
+## Models
+
+### `User`
+| Field | Type | Notes |
+|---|---|---|
+| `id` | String (UUID) | Primary key |
+| `email` | String | Unique |
+| `passwordHash` | String? | Nullable (OAuth users may not have password) |
+| `name` | String | Display name |
+| `role` | Enum | `STUDENT` \| `ADMIN` \| `MODERATOR` |
+| `createdAt` | DateTime | Auto |
+| `updatedAt` | DateTime | Auto |
+
+### `Profile`
+| Field | Type | Notes |
+|---|---|---|
+| `userId` | String | FK → User (1-to-1, cascade delete) |
+| `targetStream` | String? | e.g. "Engineering", "Medical" |
+| `targetYear` | Int? | Graduation target year |
+| `city` | String? | Home city |
+| `state` | String? | Home state |
 
 ### `College`
-Acts as the central entity for educational institutions. Because queries often involve filtering by `type` or `location`, appropriate indexes are established on these columns to speed up dashboard queries.
+| Field | Type | Notes |
+|---|---|---|
+| `id` | String (UUID) | Primary key |
+| `name` | String | Full official name |
+| `shortName` | String? | e.g. "IIT-B" |
+| `establishedYear` | Int? | |
+| `city` | String | |
+| `state` | String | |
+| `tier` | Enum | `TIER_1` \| `TIER_2` \| `TIER_3` |
+| `ownership` | Enum | `GOVERNMENT` \| `PRIVATE` \| `SEMI_GOVERNMENT` |
+| `campusSize` | String? | e.g. "550 acres" |
+| `facultyCount` | Int? | |
+| `website` | String? | |
+
+Indexed on `(city, state)` and `tier`.
 
 ### `Program`
-Instead of flattening degrees into the `College` model, `Program` is extracted into its own table. This allows users to search directly for "B.Tech Computer Science" across multiple colleges, filtering by `estimatedFees`.
+| Field | Type | Notes |
+|---|---|---|
+| `collegeId` | String | FK → College (cascade delete) |
+| `name` | String | e.g. "Computer Science & Engineering" |
+| `type` | Enum | `BTECH` \| `MTECH` \| `BBA` \| `MBA` \| `MBBS` \| `BA` \| `MA` |
+| `duration` | Int | Years |
+| `annualFee` | Int | INR |
+| `intake` | Int? | Seats per year |
+
+### `Placement`
+| Field | Type | Notes |
+|---|---|---|
+| `collegeId` | String | FK → College |
+| `year` | Int | Academic year |
+| `avgPackageLpa` | Float | Average package in LPA |
+| `highestPackage` | Float? | Highest package in LPA |
+| `placementRate` | Float? | Percentage (0–100) |
 
 ### `Exam`
-Exams have highly variable structures (some have 3 sections, some have 5; dates change frequently). By utilizing Postgres's `JSONB` capabilities (mapped via Prisma's `Json` type), we can store the `importantDates` and `pattern` flexibly without requiring massive schema migrations every time an exam changes its format.
+| Field | Type | Notes |
+|---|---|---|
+| `id` | String (UUID) | Primary key |
+| `name` | String | Unique, e.g. "JEE Advanced" |
+| `fullName` | String? | |
+| `level` | String | "National" or "State" |
 
-## Seeding Strategy
-The database is initially populated using the `prisma/seed.ts` file, which contains a rich dataset of 51 top Indian colleges (IITs, NITs, BITS, etc.) with real-world placement records spanning 2022-2024. This ensures new developers can immediately work with realistic data.
+### `CollegeExam` (join table)
+Many-to-many between `College` and `Exam`. Composite PK on `(collegeId, examId)`.
+
+### `Review`
+| Field | Type | Notes |
+|---|---|---|
+| `userId` | String | FK → User |
+| `collegeId` | String | FK → College |
+| `rating` | Int | 1–5 |
+| `content` | Text | Full review text |
+
+### `Bookmark`
+| Field | Type | Notes |
+|---|---|---|
+| `userId` | String | FK → User |
+| `collegeId` | String | FK → College |
+| `category` | String | Default `"Target"` (Dream / Target / Safety) |
+
+Unique constraint on `(userId, collegeId)`.
+
+### `Facility`
+| Field | Type | Notes |
+|---|---|---|
+| `collegeId` | String | FK → College |
+| `name` | String | e.g. "Boys Hostel", "Gym" |
+| `hasFacility` | Boolean | Default `true` |
+| `details` | Text? | Additional notes |
+
+---
+
+## Enums
+
+| Enum | Values |
+|---|---|
+| `Role` | `STUDENT`, `ADMIN`, `MODERATOR` |
+| `Tier` | `TIER_1`, `TIER_2`, `TIER_3` |
+| `Ownership` | `GOVERNMENT`, `PRIVATE`, `SEMI_GOVERNMENT` |
+| `ProgramType` | `BTECH`, `MTECH`, `BBA`, `MBA`, `MBBS`, `BA`, `MA` |
+
+---
+
+## Scripts
+
+```sh
+npx prisma generate    # Regenerate the Prisma Client after schema changes
+npx prisma db push     # Push schema to the database (dev)
+npm run db:seed        # Run seed.ts to populate all tables
+npx prisma studio      # Open Prisma Studio GUI (localhost:5555)
+```

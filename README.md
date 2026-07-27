@@ -1,122 +1,258 @@
 <div align="center">
-  <img src="./public/favicon.svg" alt="Studzens Logo" width="100" />
-  <h1>Studzens</h1>
-  <p><strong>The Next-Generation Command Center for Indian Students</strong></p>
-  <p>
-    <img src="https://img.shields.io/badge/react-18-blue.svg" alt="React" />
-    <img src="https://img.shields.io/badge/vite-6-purple.svg" alt="Vite" />
-    <img src="https://img.shields.io/badge/typescript-strict-blue.svg" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/prisma-ORM-black.svg" alt="Prisma" />
-  </p>
+
+# ⚡ Studzens
+
+### India's Smartest College Finder & Decision Engine
+
+**Enter your exam scores → Get your personalised Safe / Reach / Backup college list instantly.**
+
+<br/>
+
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Express](https://img.shields.io/badge/Express-4-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://prisma.io)
+[![PostgreSQL](https://img.shields.io/badge/Neon-PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://neon.tech)
+
+<br/>
+
+[🚀 **Live Demo**](https://studzens-frontend-production.up.railway.app) &nbsp;·&nbsp;
+[📖 **Docs**](./docs/) &nbsp;·&nbsp;
+[🐛 **Report a Bug**](https://github.com/Aryan-del-07/studzens/issues/new?template=bug_report.md) &nbsp;·&nbsp;
+[💡 **Request a Feature**](https://github.com/Aryan-del-07/studzens/issues/new?template=feature_request.md)
+
 </div>
 
 ---
 
-## 🎯 About The Project
+## 📸 What It Looks Like
 
-Studzens is a centralized platform designed to demystify the college admission process for Indian students. It tracks entrance exams (JEE, NEET, CLAT, etc.), provides intelligent college recommendations (Reach, Match, Safe), and offers an AI-powered counselor to answer complex admission queries instantly.
+> Students enter their JEE / NEET / BITSAT / CLAT scores → Studzens ranks every college as **Safe Reach**, **Safe**, or **Safe Backup** — no guessing, no spreadsheets.
 
-### ✨ Features
-- **Personalized Dashboard:** Get daily updates on exam countdowns and college matches based on your target stream and budget.
-- **Exam Hub:** Track registration deadlines, exam dates, and counseling schedules for over 50+ national and state-level exams.
-- **College Directory & Compare:** Research 100+ top Indian colleges, view placement statistics, and compare them side-by-side.
-- **AI Counselor:** A floating, context-aware AI assistant that can answer questions about JoSAA counseling, cut-offs, and exam patterns.
+| Landing Page | Dashboard | College Profile |
+|:---:|:---:|:---:|
+| Hero with smart CTA | Personalised recommendations | Full tabs: programmes, placements, map |
+
+---
+
+## ✨ Features at a Glance
+
+| Feature | Description |
+|---|---|
+| 🎯 **Match Score** | Ranks colleges by how well your scores match their cutoffs |
+| 🔴🟡🟢 **Safe / Reach / Backup** | Every college gets an instant label so you always know your odds |
+| 📚 **Exam Hub** | 50+ national & state exams with deadlines, patterns, and syllabus |
+| 🏛️ **College Directory** | 100+ colleges — programmes, fees, placements, facilities |
+| ⚖️ **Side-by-Side Compare** | Compare any colleges on every metric at once |
+| 🗺️ **Interactive Map** | State-wise college density with transport access overlay |
+| 🧭 **Career Explorer** | Discover career paths, required exams, and connected colleges |
+| 🔔 **Notifications** | In-app deadline reminders and match updates |
 
 ---
 
 ## 🏗️ Architecture
 
-Studzens utilizes a modern, serverless-first architecture to ensure lightning-fast global delivery.
-
-```mermaid
-flowchart LR
-    Client[React SPA] -->|HTTPS| Edge[Vercel Edge]
-    Edge -->|API Calls| Backend[Express.js Node API]
-    Backend -->|TCP| DB[(Neon Postgres)]
-```
-
-> **Note:** For a complete breakdown of the architecture, data flows, and state management, please read the [Complete Engineering Documentation](./docs/COMPLETE_DOCUMENTATION.md).
-
----
-
-## 🚀 Quick Start
-
-Follow these instructions to get a copy of the project up and running on your local machine.
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- Git
-
-### Installation
-
-1. **Clone the repository**
-   ```sh
-   git clone https://github.com/Aryan-del-07/studzens.git
-   cd studzens
-   ```
-
-2. **Install dependencies**
-   ```sh
-   npm install
-   ```
-   *(Note: Navigate into `/frontend`, `/backend`, and `/database` to install local dependencies if using a split monorepo setup).*
-
-3. **Set up Environment Variables**
-   Create a `.env` file in the root directory based on the `.env.example`.
-   ```env
-   DATABASE_URL="postgres://user:pass@ep-restless-bird-xxx.ap-southeast-1.aws.neon.tech/neondb"
-   ```
-
-4. **Initialize the Database**
-   ```sh
-   cd database
-   npx prisma generate
-   npx prisma db push
-   npm run db:seed
-   ```
-
-5. **Start the Frontend Development Server**
-   ```sh
-   cd frontend
-   npm run dev
-   ```
-
-The application will now be running at `http://localhost:5173`.
-
----
-
-## 📁 Folder Structure
+Studzens is a **single npm monorepo** with three independent packages:
 
 ```
 studzens/
-├── frontend/           # React/Vite Application
-├── backend/            # Express.js API (In dev)
-├── database/           # Prisma Schemas & Seed data
-├── docs/               # Architecture & Flow Documentation
-└── scripts/            # Utility scripts
+├── frontend/   →  React 19 + Vite 8 SPA         (deployed on Railway)
+├── backend/    →  Express 4 + Node 22 REST API  (deployed on Railway)
+└── database/   →  Prisma schema + seed data     (Neon PostgreSQL)
 ```
-For a detailed explanation, see [Folder Structure Docs](./docs/FOLDER_STRUCTURE.md).
+
+```
+Browser  ──HTTPS──▶  Vite Preview (Railway)
+Browser  ──REST───▶  Express API  (Railway)
+Express  ──Prisma──▶  Neon PostgreSQL
+```
+
+> Full architecture diagrams → [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have these installed:
+
+| Tool | Minimum Version | Check |
+|---|---|---|
+| Node.js | 18+ | `node -v` |
+| npm | 8+ | `npm -v` |
+| Git | Any | `git --version` |
+
+You also need a **free [Neon](https://neon.tech) PostgreSQL database** (takes 30 seconds to create).
+
+---
+
+### Step 1 — Clone & Install
+
+```bash
+git clone https://github.com/Aryan-del-07/studzens.git
+cd studzens
+npm install          # installs all three workspaces in one shot
+```
+
+---
+
+### Step 2 — Set Up Environment Variables
+
+Create a `.env` file inside the `database/` folder:
+
+```bash
+# database/.env
+DATABASE_URL="postgres://user:password@ep-xxxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+```
+
+Create a `.env` file inside the `backend/` folder:
+
+```bash
+# backend/.env
+DATABASE_URL="postgres://user:password@ep-xxxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+PORT=3000
+```
+
+> 💡 Get your `DATABASE_URL` from your [Neon dashboard](https://console.neon.tech) → Project → Connection string.
+
+---
+
+### Step 3 — Set Up the Database
+
+```bash
+cd database
+npx prisma generate     # generate the Prisma client
+npx prisma db push      # push the schema to your database
+npm run db:seed         # populate with 100+ colleges & 50+ exams
+cd ..
+```
+
+---
+
+### Step 4 — Run the App
+
+```bash
+# Start the frontend only (fastest way to see the UI)
+npm run dev --workspace=@studzens/frontend
+# → Opens at http://localhost:5173
+
+# Start the backend only
+npm run dev --workspace=@studzens/backend
+# → Runs at http://localhost:3000
+
+# Start both at once
+npm run dev
+```
+
+That's it! Open **http://localhost:5173** and you're in. 🎉
+
+---
+
+## 📁 Folder Structure (Quick Reference)
+
+```
+studzens/
+│
+├── frontend/src/
+│   ├── pages/              ← 13 route-level pages (Landing, Dashboard, Search …)
+│   ├── components/layout/  ← PageShell (navbar + mobile nav)
+│   ├── contexts/           ← Auth, Bookmark, Notification, StudentProfile
+│   ├── api/mocks/          ← Static data: colleges, exams, careers
+│   ├── hooks/              ← useLocalStorage, useSearch
+│   ├── types/              ← TypeScript interfaces
+│   └── styles/index.css    ← Global styles + Tailwind 4
+│
+├── backend/src/
+│   ├── index.ts            ← Express entry (middleware + routes)
+│   ├── db.ts               ← Prisma singleton
+│   └── routes/             ← colleges, users, reviews
+│
+├── database/prisma/
+│   ├── schema.prisma       ← Full data model
+│   └── seed.ts             ← Seed 100+ colleges & 50+ exams
+│
+└── docs/                   ← All documentation (see below)
+```
+
+---
+
+## 📖 Documentation
+
+All documentation lives in the [`docs/`](./docs/) folder:
+
+| Document | What it covers |
+|---|---|
+| [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | System diagram, package graph, key design decisions |
+| [`FRONTEND_ARCHITECTURE.md`](./docs/FRONTEND_ARCHITECTURE.md) | React component hierarchy, routing, styling system |
+| [`BACKEND_ARCHITECTURE.md`](./docs/BACKEND_ARCHITECTURE.md) | Express routes, middleware stack, API reference |
+| [`DATABASE_ARCHITECTURE.md`](./docs/DATABASE_ARCHITECTURE.md) | Prisma schema, ER diagram, all models explained |
+| [`DEPLOYMENT_ARCHITECTURE.md`](./docs/DEPLOYMENT_ARCHITECTURE.md) | Railway setup, env vars, deployment flow |
+| [`STATE_MANAGEMENT.md`](./docs/STATE_MANAGEMENT.md) | All React contexts and custom hooks |
+| [`USER_FLOW.md`](./docs/USER_FLOW.md) | User journeys with Mermaid diagrams |
+| [`ROADMAP.md`](./docs/ROADMAP.md) | What's done and what's coming next |
+| [`PROJECT_STRUCTURE.md`](./docs/PROJECT_STRUCTURE.md) | Full file tree with explanations |
+| [`CHANGELOG.md`](./docs/CHANGELOG.md) | Version history of all changes |
+| [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md) | How to contribute, code standards, commit format |
+
+---
+
+## 🌐 Deployment
+
+Both services are deployed on **Railway**:
+
+| Service | Start Command |
+|---|---|
+| Frontend | `npm run preview --workspace=@studzens/frontend` |
+| Backend | `npm run start --workspace=@studzens/backend` |
+
+The preview script automatically reads `$PORT` from Railway:
+```json
+"preview": "vite preview --host 0.0.0.0 --port ${PORT:-4173}"
+```
+
+> Full deployment guide → [`docs/DEPLOYMENT_ARCHITECTURE.md`](./docs/DEPLOYMENT_ARCHITECTURE.md)
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct, branching strategy, and the process for submitting Pull Requests.
+Contributions are very welcome! Here's the quick version:
+
+1. Fork → `git clone` → `npm install`
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Make changes, then: `npm run build --workspace=@studzens/frontend`
+4. Commit: `git commit -m "feat: your feature description"`
+5. Push & open a Pull Request to `main`
+
+Read the full guide → [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md)
 
 ---
 
 ## 🗺️ Roadmap
 
-See our [Roadmap](./docs/ROADMAP.md) to understand where the project is heading next, including the rollout of predictive AI analytics and B2B counseling features.
+- ✅ **v0.1** — Core SPA with mock data, routing, auth
+- ✅ **v0.3** — All 13 pages, 4 contexts, MapLibre map, Career Explorer
+- 🚧 **v0.4** — Connect frontend to live backend API (replace mocks)
+- 🔜 **v0.5** — JWT auth, real college search, bookmark sync
+- 🔜 **v1.0** — AI counselor, smart match algorithm, exam notifications
+
+See the full roadmap → [`docs/ROADMAP.md`](./docs/ROADMAP.md)
 
 ---
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the **MIT License** — use it freely, just give credit.
 
 ---
+
 <div align="center">
-  <i>Built for the students, by the students.</i>
+
+Built with ❤️ for Indian students, by Indian students.
+
+⭐ **Star this repo** if Studzens helped you!
+
 </div>

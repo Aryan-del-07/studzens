@@ -1,49 +1,94 @@
-# Deployment Architecture
-
-The deployment architecture of Studzens utilizes a modern, serverless-first approach to maximize performance, reduce operational overhead, and ensure infinite scalability.
+# Studzens — Deployment Architecture
 
 ## Overview
 
-```mermaid
-graph TD
-    subgraph Edge Network [Edge CDN / Vercel]
-        DNS[DNS / Domain] --> CDN[Vercel Global CDN]
-        CDN --> Frontend[Static Frontend Files]
-    end
+Studzens uses **Railway** to host both the frontend (as a Vite preview server) and the backend (as a Node.js service). The database runs on **Neon** (serverless PostgreSQL).
 
-    subgraph Backend Infrastructure [Railway / Render]
-        API[Node.js Express Server]
-    end
+---
 
-    subgraph Database Infrastructure [Neon]
-        DB[(Serverless Postgres)]
-        Storage[S3 Backed Storage]
-        Compute[Compute Endpoint]
-        Compute --> Storage
-        DB --- Compute
-    end
-    
-    Frontend -- "API Calls (HTTPS)" --> API
-    API -- "Prisma TCP/TLS" --> DB
+## Services
+
+| Service | Package | Platform | Start Command |
+|---|---|---|---|
+| Frontend | `@studzens/frontend` | Railway | `npm run preview --workspace=@studzens/frontend` |
+| Backend | `@studzens/backend` | Railway | `npm run start --workspace=@studzens/backend` |
+| Database | `@studzens/database` | Neon (external) | — managed by Neon |
+
+---
+
+## Environment Variables
+
+### Frontend (Railway)
+| Variable | Required | Description |
+|---|---|---|
+| `PORT` | Set by Railway | The preview server reads this via `${PORT:-4173}` inside the npm script |
+
+### Backend (Railway)
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | ✅ | Full Neon connection string including `?sslmode=require` |
+| `PORT` | Set by Railway | Defaults to `3000` if not set |
+
+---
+
+## Frontend Deployment Note
+
+The `preview` script in `frontend/package.json` is:
+
+```json
+"preview": "vite preview --host 0.0.0.0 --port ${PORT:-4173}"
 ```
 
-## 1. Frontend Hosting: Vercel
-- **Why Vercel?** Vercel provides zero-configuration deployment for Vite/React applications. It automatically deploys code pushed to the `main` branch.
-- **Routing Configuration:** Because Studzens is an SPA, a `vercel.json` file is placed in the frontend root to rewrite all unmatched routes to `index.html`, allowing React Router to handle client-side routing without triggering 404s.
-- **Edge Caching:** Static assets (JS, CSS, Images) are cached at the edge globally, meaning users in India load the application UI in milliseconds.
+**Why this matters:** Passing `--port $PORT` via a Railway run command results in a `CACError` because the shell variable is not expanded before npm passes it to Vite. The `${PORT:-4173}` syntax inside the script ensures the shell running the script expands the variable correctly, with a fallback to `4173` (Vite's default) for local use.
 
-## 2. Backend Hosting: Railway / Render (Planned)
-- **Why Railway?** It offers simple Docker-based deployments or native Node.js builds. It scales automatically based on incoming traffic.
-- **Environment Variables:** Secrets (like JWT_SECRET and DATABASE_URL) are injected securely via the hosting provider's dashboard.
+---
 
-## 3. Database: Neon Serverless Postgres
-- **Why Neon?** Neon decouples storage and compute. If the app has low traffic at night, the compute scales down to zero, saving costs. During result days (when traffic spikes), it scales up instantly.
-- **Connection Pooling:** Neon provides built-in connection pooling, which is critical because serverless backends can rapidly spin up and overwhelm standard Postgres databases with hundreds of concurrent connections.
+## Deployment Flow
 
-## 4. CI/CD Pipeline
-1. Developer pushes to a feature branch on GitHub.
-2. Vercel automatically creates a "Preview Deployment" (a unique URL for testing the branch).
-3. Pull Request is merged into `main`.
-4. Vercel triggers a Production Build.
-5. Railway detects the push to `main` and deploys the new backend container.
-6. The new version is live to users with zero downtime.
+```mermaid
+flowchart LR
+    DevPush["git push origin main"]
+    Railway["Railway detects push"]
+    BuildFE["Build: npm run build --workspace=@studzens/frontend"]
+    BuildBE["Build: npm run build --workspace=@studzens/backend"]
+    StartFE["Start: npm run preview --workspace=@studzens/frontend"]
+    StartBE["Start: npm run start --workspace=@studzens/backend"]
+
+    DevPush --> Railway
+    Railway --> BuildFE & BuildBE
+    BuildFE --> StartFE
+    BuildBE --> StartBE
+```
+
+---
+
+## Infrastructure
+
+```
+Internet
+    │
+    ├── *.railway.app/frontend ──→ Vite preview (React SPA)
+    │                              PORT env var from Railway
+    │
+    └── *.railway.app/backend  ──→ Express API (Node 22)
+                                   PORT env var from Railway
+                                   DATABASE_URL → Neon Postgres
+```
+
+---
+
+## Local Development
+
+```sh
+# Install all workspaces
+npm install
+
+# Start frontend dev server (hot reload)
+npm run dev --workspace=@studzens/frontend   # http://localhost:5173
+
+# Start backend dev server (tsx watch)
+npm run dev --workspace=@studzens/backend    # http://localhost:3000
+
+# Or start both simultaneously
+npm run dev   # runs dev in all workspaces
+```
