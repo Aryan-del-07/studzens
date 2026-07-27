@@ -334,14 +334,11 @@ export default function LoginPage() {
  {mode === 'login' ? 'Sign up free' : 'Sign in'}
  </button>
  </p>
- </div>
- </div>
-
  {/* RIGHT PANEL — Premium Brand Showcase */}
- <div className="hidden lg:flex flex-1 relative overflow-hidden bg-[var(--bg-page)] flex-col items-center justify-center">
+ <div className="hidden lg:flex flex-1 relative overflow-hidden bg-black flex-col items-center justify-center">
  {/* Sleek deep space gradients */}
- <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-600/20 blur-[100px]"/>
- <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-slate-800 blur-[120px]"/>
+ <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-slate-800/40 blur-[100px]"/>
+ <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-slate-900/40 blur-[120px]"/>
  
  {/* Subtle grid pattern overlay */}
  <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]"/>
@@ -350,12 +347,12 @@ export default function LoginPage() {
  <div className="relative z-10 w-full max-w-lg px-8">
  
  <div className="text-center mb-12">
- <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-slate-700 text-slate-300 text-xs font-bold mb-4 uppercase tracking-wider">
- <Zap size={14} className="fill-blue-400"/> Stuzen Intelligence
+ <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-300 text-xs font-bold mb-4 uppercase tracking-wider">
+ <Zap size={14} className="fill-slate-300 text-slate-300"/> Stuzen Intelligence
  </div>
  <h2 className="text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
  The all-in-one platform <br/>
- <span className="text-slate-300">you've been looking for.</span>
+ <span className="text-slate-400">you've been looking for.</span>
  </h2>
  <p className="text-gray-400 text-[15px] leading-relaxed max-w-md mx-auto">
  Track entrance milestones, analyze 10,000+ colleges, and predict admissions with India's most advanced student OS.
@@ -365,8 +362,8 @@ export default function LoginPage() {
  <div className="grid grid-cols-2 gap-4">
  {/* Feature Card 1 */}
  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl hover:bg-white/[0.07] transition-colors">
- <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
- <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-slate-300"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+ <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+ <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-white"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
  </div>
  <h3 className="text-white font-semibold text-sm mb-1">Exam Command Center</h3>
  <p className="text-gray-400 text-xs leading-relaxed">
@@ -376,8 +373,8 @@ export default function LoginPage() {
 
  {/* Feature Card 2 */}
  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl hover:bg-white/[0.07] transition-colors">
- <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center mb-4">
- <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-slate-300"><circle cx="12"cy="12"r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+ <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+ <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-white"><circle cx="12"cy="12"r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
  </div>
  <h3 className="text-white font-semibold text-sm mb-1">Deep College Analytics</h3>
  <p className="text-gray-400 text-xs leading-relaxed">
@@ -386,10 +383,10 @@ export default function LoginPage() {
  </div>
  
  {/* Wide Feature Card 3 */}
- <div className="col-span-2 bg-gradient-to-r from-slate-900/40 to-slate-800/40 border border-slate-700 rounded-2xl p-6 backdrop-blur-xl flex items-center justify-between">
+ <div className="col-span-2 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl flex items-center justify-between">
  <div>
  <div className="flex items-center gap-2 mb-1">
- <CheckCircle2 size={16} className="text-slate-300"/>
+ <CheckCircle2 size={16} className="text-white"/>
  <span className="text-white font-semibold text-sm">Trusted by 50,000+ Students</span>
  </div>
  <p className="text-gray-400 text-xs pl-6">
@@ -397,10 +394,12 @@ export default function LoginPage() {
  </p>
  </div>
  <div className="flex -space-x-3">
- <div className="w-8 h-8 rounded-full border-2 border-[#0A1020] bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=1"alt="Student"/></div>
- <div className="w-8 h-8 rounded-full border-2 border-[#0A1020] bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=2"alt="Student"/></div>
- <div className="w-8 h-8 rounded-full border-2 border-[#0A1020] bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=3"alt="Student"/></div>
- <div className="w-8 h-8 rounded-full border-2 border-[#0A1020] bg-blue-600 flex items-center justify-center text-[10px] text-white font-bold">+2k</div>
+ <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=1"alt="Student"/></div>
+ <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=2"alt="Student"/></div>
+ <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=3"alt="Student"/></div>
+ <div className="w-8 h-8 rounded-full border-2 border-black bg-slate-800 flex items-center justify-center text-[10px] text-white font-bold">+2k</div>
+ </div>
+ </div>
  </div>
  </div>
  </div>
