@@ -26,9 +26,10 @@ import {
  * - `calculateReadinessScore`: Measures how prepared the student is
  * - `getTodayPriorities`: Generates a daily todo list based on exam dates
  */
- Target, Clock, BookOpen, Bookmark, Bell, ArrowRight, GraduationCap, MapPin, 
- Wallet, TrendingUp, Star, Shield, CheckSquare, Square, Calendar as CalendarIcon, 
- ChevronLeft, ChevronRight, AlertTriangle, CheckCircle, CalendarClock, Compass
+ Clock, BookOpen, Bookmark, Bell, ArrowRight, GraduationCap, MapPin,
+ TrendingUp, CheckSquare, Square, Calendar as CalendarIcon,
+ ChevronLeft, ChevronRight, AlertTriangle, CheckCircle, CalendarClock,
+ User, ExternalLink, Sparkles, Target
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
@@ -95,14 +96,25 @@ export default function DashboardPage() {
  // Toggle Notification Panel
  const [showNotificationsPanel, setShowNotificationsPanel] = useState(false);
 
- // Readiness Score Logic
- const readiness = useMemo(() => {
- const base = calculateReadinessScore(profile);
- const completedCount = priorities.filter(p => p.done).length;
- const additionalScore = completedCount * 5; // +5 points per completed priority
- const finalScore = Math.min(100, base.score + additionalScore);
- return { score: finalScore, breakdown: base.breakdown };
- }, [profile, priorities]);
+  // Profile Completion Score (0–100)
+  const profileCompletion = useMemo(() => {
+  let score = 0;
+  const breakdown: { label: string; done: boolean; pts: number }[] = [];
+  const add = (label: string, done: boolean, pts: number) => {
+    breakdown.push({ label, done, pts });
+    if (done) score += pts;
+  };
+  add('Stream selected', !!profile.academicProfile?.stream, 15);
+  add('Class / Board set', !!profile.academicProfile?.currentClass && !!profile.academicProfile?.board, 10);
+  add('12th marks entered', !!profile.academicProfile?.marks12, 10);
+  add('Academic category set', !!profile.academicProfile?.category, 5);
+  add('Budget limit set', !!profile.preferences?.budgetLimitLpa, 15);
+  add('Preferred states set', (profile.preferences?.preferredStates?.length ?? 0) > 0, 10);
+  add('Career goals set', (profile.preferences?.goals?.length ?? 0) > 0, 10);
+  add('Exam tracked', (profile.trackedExams?.length ?? 0) > 0, 15);
+  add('College saved', (profile.savedColleges?.length ?? 0) > 0, 10);
+  return { score: Math.min(100, score), breakdown };
+  }, [profile, priorities]);
 
  const missingActions = useMemo(() => getMissingActions(profile), [profile]);
  const suggestedExams = useMemo(() => getSuggestedExams(profile, exams), [profile]);
@@ -183,67 +195,43 @@ export default function DashboardPage() {
  return calendarEvents.filter(e => e.date === dateStr);
  }, [calendarEvents]);
 
- // Personalized college recommendations engine
- const recommendedColleges = useMemo((): CollegeMatch[] => {
- const prefs = profile.preferences as any;
- const preferredStates: string[] = prefs?.preferredStates || [];
- const budget: number = prefs?.budgetLimitLpa || 40;
- const examIds = Object.keys(profile.examScores || {});
+  // Calendar sync helpers
+  const buildGoogleCalendarUrl = useCallback(() => {
+  const events = calendarEvents.slice(0, 1);
+  if (events.length === 0) return 'https://calendar.google.com';
+  const ev = events[0];
+  const date = ev.date.replace(/-/g, '');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&dates=${date}/${date}&details=${encodeURIComponent('Added from Studzens')}`;
+  }, [calendarEvents]);
 
- const scored = colleges.map(c => {
- let score = 0;
- const reasons: string[] = [];
+  const buildICSContent = useCallback(() => {
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Studzens//Academic Calendar//EN',
+  ];
+  calendarEvents.forEach(ev => {
+    const d = ev.date.replace(/-/g, '');
+    lines.push('BEGIN:VEVENT');
+    lines.push(`DTSTART;VALUE=DATE:${d}`);
+    lines.push(`DTEND;VALUE=DATE:${d}`);
+    lines.push(`SUMMARY:${ev.title}`);
+    lines.push(`DESCRIPTION:${ev.examName} - Added from Studzens`);
+    lines.push('END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  return lines.join('\r\n');
+  }, [calendarEvents]);
 
- if (preferredStates.length === 0 || preferredStates.includes(c.state)) {
- score += 30;
- if (preferredStates.includes(c.state)) reasons.push(`In ${c.state}`);
- }
-
- if (c.annualFeeLpa <= budget) {
- score += 25;
- reasons.push(`Within ₹${budget}L budget`);
- } else if (c.annualFeeLpa <= budget * 1.3) {
- score += 10;
- }
-
- const examMatch = c.entranceExams.some(exam =>
- examIds.some(id => exam.toLowerCase().includes(id.replace('-', ' ')))
- );
- if (examMatch) { score += 20; reasons.push('Accepts your exams'); }
-
- if (c.tier === 'Tier 1') score += 15;
- else if (c.tier === 'Tier 2') score += 10;
- else score += 5;
-
- const avg12 = profile.academicProfile?.marks12 || 0;
- let matchType: CollegeMatch['matchType'];
- if (c.tier === 'Tier 1') {
- matchType = avg12 >= 90 ? 'Safe' : 'Safe Reach';
- } else if (c.tier === 'Tier 2') {
- matchType = avg12 >= 75 ? 'Safe' : avg12 >= 60 ? 'Safe Backup' : 'Safe Reach';
- } else {
- matchType = 'Safe Backup';
- }
-
- return { college: c, matchType, matchScore: score, reasons };
- });
-
- return scored
- .filter(x => x.matchScore > 30)
- .sort((a, b) => b.matchScore - a.matchScore)
- .slice(0, 9);
- }, [profile]);
-
- const hasPreferences = useMemo(() => {
- return (profile.preferences as any)?.preferredStates?.length > 0 ||
- profile.trackedExams?.length > 0;
- }, [profile.preferences, profile.trackedExams]);
-
- const matchBadge = useMemo(() => ({
- 'Safe Reach': { bg: 'bg-blue-50', text: 'text-slate-900', border: 'border-blue-200', dot: 'bg-blue-500' },
- 'Safe': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', dot: 'bg-emerald-500' },
- 'Safe Backup': { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', dot: 'bg-amber-500' },
- }), []);
+  const handleDownloadICS = useCallback(() => {
+  const blob = new Blob([buildICSContent()], { type: 'text/calendar' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'studzens-academic-calendar.ics';
+  a.click();
+  URL.revokeObjectURL(url);
+  }, [buildICSContent]);
 
  const getEventBadgeColor = useCallback((type: string) => {
  switch (type) {
@@ -344,10 +332,10 @@ export default function DashboardPage() {
  {/* Quick Stats Grid */}
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
  {[
- { icon: GraduationCap, label: 'Matched Colleges', value: recommendedColleges.length, color: 'text-black', bg: 'bg-slate-100' },
+ { icon: Sparkles, label: 'Profile Complete', value: `${profileCompletion.score}%`, color: 'text-black', bg: 'bg-slate-100' },
  { icon: Bookmark, label: 'Saved Colleges', value: savedColleges.length, color: 'text-emerald-600', bg: 'bg-emerald-50' },
  { icon: Target, label: 'Tracked Exams', value: trackedExamsData.length, color: 'text-orange-600', bg: 'bg-orange-50' },
- { icon: TrendingUp, label: 'Preparation Score', value: `${readiness.score}/100`, color: 'text-slate-800', bg: 'bg-blue-50' },
+ { icon: TrendingUp, label: 'Profile Score', value: `${profileCompletion.score}/100`, color: 'text-slate-800', bg: 'bg-blue-50' },
  ].map(({ icon: Icon, label, value, color, bg }) => (
  <div key={label} className="sz-card p-4 flex items-center gap-3">
  <div className={`w-10 h-10 ${bg} rounded-xl flex items-center justify-center shrink-0`}>
@@ -371,53 +359,48 @@ export default function DashboardPage() {
  {/* LEFT 2/3 COLUMN */}
  <div className="lg:col-span-2 space-y-8">
  
- {/* Exam Readiness Card */}
+ {/* Profile Completion Card */}
  <div className="studzens-card p-6 flex flex-col md:flex-row items-center gap-6">
  {/* Progress Arc */}
  <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
  <svg className="w-full h-full transform -rotate-90">
- <circle cx="64"cy="64"r="54"stroke="#F0F2F8"strokeWidth="8"fill="transparent"/>
+ <circle cx="64" cy="64" r="54" stroke="#F0F2F8" strokeWidth="8" fill="transparent"/>
  <circle 
- cx="64"cy="64"r="54"
- stroke="#635BFF"strokeWidth="8"fill="transparent"
+ cx="64" cy="64" r="54"
+ stroke="#0A2540" strokeWidth="8" fill="transparent"
  strokeDasharray={2 * Math.PI * 54}
- strokeDashoffset={2 * Math.PI * 54 * (1 - readiness.score / 100)}
+ strokeDashoffset={2 * Math.PI * 54 * (1 - profileCompletion.score / 100)}
  strokeLinecap="round"
  className="transition-all duration-1000 ease-out"
  />
  </svg>
  <div className="absolute flex flex-col items-center justify-center text-center">
- <span className="text-2xl font-black text-[#0A2540] font-sans">{readiness.score}</span>
- <span className="text-[10px] text-[#697386] font-bold uppercase tracking-wider">Readiness</span>
+ <span className="text-2xl font-black text-[#0A2540] font-sans">{profileCompletion.score}</span>
+ <span className="text-[10px] text-[#697386] font-bold uppercase tracking-wider">/ 100</span>
  </div>
  </div>
 
- {/* Missing actions list */}
- <div className="flex-1 space-y-2">
- <h3 className="font-bold text-base font-sans">Exam Readiness Score</h3>
- <p className="text-sm text-[#697386] leading-relaxed font-sans">
- Your preparation score is calculated based on completed milestones, registered exams, and targets.
- </p>
- <div className="pt-2">
- {missingActions.length === 0 ? (
- <div className="flex items-center gap-2 text-emerald-600 text-sm font-semibold font-sans">
- <CheckCircle size={16} /> All readiness actions completed! You are fully set up.
+ {/* Breakdown */}
+ <div className="flex-1 space-y-2 w-full">
+ <div className="flex items-center justify-between">
+ <h3 className="font-bold text-base font-sans flex items-center gap-2"><User size={16}/>Profile Completed</h3>
+ <Link to="/profile" className="text-xs font-bold text-black hover:underline">Edit Profile →</Link>
  </div>
- ) : (
- <div className="space-y-1.5">
- <div className="text-xs font-bold text-[#9DA6B4] uppercase tracking-wider font-sans">Pending Setup Items:</div>
- {missingActions.map(act => (
- <div key={act.id} className="flex items-center justify-between text-xs bg-[#F6F7FB] border border-[#E3E8EF] p-2.5 rounded-xl font-sans">
- <span className="text-[#425466] flex items-center gap-1.5">
- <AlertTriangle size={14} className="text-amber-500"/> {act.text}
+ <p className="text-sm text-[#697386] leading-relaxed font-sans">
+ Complete your profile to unlock accurate college matches and exam suggestions.
+ </p>
+ <div className="pt-1 space-y-1.5">
+ {profileCompletion.breakdown.map(item => (
+ <div key={item.label} className="flex items-center justify-between text-xs bg-[#F6F7FB] border border-[#E3E8EF] p-2.5 rounded-xl font-sans">
+ <span className={`flex items-center gap-1.5 font-semibold ${item.done ? 'text-emerald-700' : 'text-[#425466]'}`}>
+ {item.done
+ ? <CheckCircle size={13} className="text-emerald-500"/>
+ : <AlertTriangle size={13} className="text-amber-400"/>}
+ {item.label}
  </span>
- <Link to={act.link} className="text-black font-bold hover:underline">
- {act.actionText} →
- </Link>
+ <span className={`font-bold text-[10px] px-1.5 py-0.5 rounded-full ${item.done ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>+{item.pts}pts</span>
  </div>
  ))}
- </div>
- )}
  </div>
  </div>
  </div>
@@ -503,12 +486,41 @@ export default function DashboardPage() {
  <h3 className="font-bold text-lg flex items-center gap-2 font-sans">
  <CalendarIcon className="text-black"/> My Academic Calendar
  </h3>
- <div className="flex items-center gap-2">
+ <div className="flex items-center gap-2 flex-wrap">
+ {/* Google Calendar sync */}
+ <a
+ href={buildGoogleCalendarUrl()}
+ target="_blank"
+ rel="noopener noreferrer"
+ className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border border-[#E3E8EF] bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-[#0A2540]"
+ title="Add events to Google Calendar"
+ >
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+ <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+ <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+ <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+ <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+ </svg>
+ Google
+ <ExternalLink size={11} className="text-slate-400"/>
+ </a>
+ {/* Apple/ICS download */}
+ <button
+ onClick={handleDownloadICS}
+ className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border border-[#E3E8EF] bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-[#0A2540]"
+ title="Download .ics for Apple Calendar / Outlook"
+ >
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+ <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+ </svg>
+ Apple / ICS
+ </button>
+ {/* Month nav */}
+ <div className="flex items-center gap-1">
  <button onClick={handlePrevMonth} className="p-1.5 hover:bg-[#F6F7FB] border border-[#E3E8EF] rounded-lg cursor-pointer transition-colors"><ChevronLeft size={16} /></button>
- <span className="font-bold text-sm min-w-[120px] text-center font-sans">
- {calMonthLabel}
- </span>
+ <span className="font-bold text-sm min-w-[120px] text-center font-sans">{calMonthLabel}</span>
  <button onClick={handleNextMonth} className="p-1.5 hover:bg-[#F6F7FB] border border-[#E3E8EF] rounded-lg cursor-pointer transition-colors"><ChevronRight size={16} /></button>
+ </div>
  </div>
  </div>
 
@@ -579,101 +591,19 @@ export default function DashboardPage() {
  </div>
  </div>
 
- {/* Best Colleges For You Section — 3 categories */}
- <div className="space-y-6">
- <div className="flex items-center justify-between">
- <div>
- <h2 className="text-xl font-bold text-[#0A2540] flex items-center gap-2 font-sans">
- <Star size={20} className="text-black"/> Best Colleges For You
- </h2>
- <p className="text-xs text-[#697386] font-sans">Personalized matches based on your profile, budget and exams.</p>
- </div>
- <Link to="/search" className="btn-ghost text-sm font-sans">View All <ArrowRight size={14} /></Link>
- </div>
-
- {!hasPreferences ? (
- <div className="studzens-card p-10 text-center border-dashed border-2 border-[#E3E8EF]">
- <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
- <Target size={28} className="text-black"/>
- </div>
- <h3 className="font-bold text-[#0A2540] text-lg mb-2 font-sans">Set your preferences first</h3>
- <p className="text-[#697386] mb-6 max-w-xs mx-auto text-sm font-sans">
- Tell us your academic marks, exams, and preferred states to unlock personalized college recommendations.
- </p>
- <button onClick={() => navigate('/onboarding')} className="btn-primary font-sans">
- Complete Setup <ArrowRight size={18} />
- </button>
- </div>
- ) : (
- <div className="grid md:grid-cols-3 gap-5">
- {(['Safe Reach', 'Safe', 'Safe Backup'] as const).map((type) => {
- const sectionMeta = {
- 'Safe Reach': { label: 'Best Colleges', icon: '🏆', color: 'text-slate-900', bg: 'bg-blue-50', border: 'border-blue-200', desc: 'Aspirational — strong effort needed' },
- 'Safe': { label: 'Reliable Picks', icon: '✅', color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200', desc: 'Good match within your range' },
- 'Safe Backup': { label: 'Safest Options', icon: '🛡️', color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', desc: 'High chance of admission' },
- }[type];
- const sectionColleges = recommendedColleges.filter(x => x.matchType === type).slice(0, 3);
- return (
- <div key={type} className="space-y-3">
- <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${sectionMeta.bg} ${sectionMeta.border}`}>
- <span className="text-base">{sectionMeta.icon}</span>
- <div>
- <div className={`font-bold text-sm ${sectionMeta.color} font-sans`}>{sectionMeta.label}</div>
- <div className="text-[10px] text-[#697386] font-sans">{sectionMeta.desc}</div>
- </div>
- </div>
- {sectionColleges.length === 0 ? (
- <div className="studzens-card p-6 text-center text-xs text-[#9DA6B4] font-sans">
- No {type.toLowerCase()} matches yet.
- </div>
- ) : (
- sectionColleges.map(({ college: c, matchType, reasons }) => {
- const badge = matchBadge[matchType];
- return (
- <Link
- key={c.id}
- to={`/college/${c.id}`}
- className="studzens-card p-4 flex flex-col justify-between gap-3 group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
- >
- <div className="flex items-start justify-between gap-2">
- <div className="w-9 h-9 bg-slate-50 rounded-xl flex items-center justify-center shrink-0">
- <GraduationCap size={18} className="text-black"/>
- </div>
- <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${badge.bg} ${badge.text} ${badge.border}`}>
- <span className={`w-1 h-1 rounded-full ${badge.dot}`}></span>
- {matchType}
- </span>
- </div>
- <div>
- <h3 className="font-bold text-[#0A2540] text-xs leading-snug group-hover:text-black transition-colors line-clamp-2 font-sans">
- {c.name}
- </h3>
- <p className="text-[10px] text-[#697386] mt-1 flex items-center gap-1 font-sans">
- <MapPin size={9} className="text-[#9DA6B4]"/> {c.city}, {c.state}
- </p>
- </div>
- <div className="flex items-center gap-2 text-[10px] text-[#697386] font-sans">
- <span className="flex items-center gap-0.5"><Wallet size={9} className="text-black"/>₹{c.annualFeeLpa}L/yr</span>
- <span className="flex items-center gap-0.5"><Shield size={9} className="text-emerald-500"/>{c.tier}</span>
- </div>
- {reasons.length > 0 && (
- <div className="flex flex-wrap gap-1">
- {reasons.slice(0, 1).map(r => (
- <span key={r} className="sz-chip-gray text-[9px] px-1.5 py-0.5">{r}</span>
- ))}
- </div>
- )}
- </Link>
- );
- })
- )}
- </div>
- );
- })}
- </div>
- )}
- </div>
-
+  {/* For You shortcut card */}
+  <div className="studzens-card p-5 flex items-center gap-4">
+  <div className="w-11 h-11 bg-slate-100 rounded-2xl flex items-center justify-center shrink-0">
+  <Sparkles size={22} className="text-[#0A2540]"/>
+  </div>
+  <div className="flex-1 min-w-0">
+  <h3 className="font-bold text-[#0A2540] font-sans">Personalised College Picks</h3>
+  <p className="text-xs text-[#697386] font-sans mt-0.5">See colleges ranked just for you based on your profile.</p>
+  </div>
+  <Link to="/for-you" className="shrink-0 flex items-center gap-1.5 text-sm font-bold text-white bg-[#0A2540] px-4 py-2 rounded-xl hover:bg-slate-900 transition-colors">
+  View <ArrowRight size={14}/>
+  </Link>
+  </div>
  </div>
 
  {/* RIGHT 1/3 SIDEBAR */}
@@ -705,7 +635,7 @@ export default function DashboardPage() {
  {/* Suggested Exams For You */}
  <div className="studzens-card p-6 space-y-4">
  <h3 className="font-bold text-base flex items-center gap-2 font-sans border-b border-[#E3E8EF] pb-3">
- <Compass className="text-black"size={20} /> Suggested Exams
+ <BookOpen className="text-black"size={20} /> Suggested Exams
  </h3>
  <div className="space-y-3.5">
  {suggestedExams.length === 0 ? (
@@ -734,8 +664,7 @@ export default function DashboardPage() {
  <div className="studzens-card overflow-hidden divide-y divide-[#E3E8EF]">
  {[
  { icon: GraduationCap, label: 'Explore Colleges', sub: `${colleges.length} colleges listed`, path: '/search', color: 'text-black', bg: 'bg-slate-100' },
- { icon: Target, label: 'Exam Hub', sub: 'Track deadlines', path: '/exams', color: 'text-orange-600', bg: 'bg-orange-50' },
- { icon: BookOpen, label: 'Career Roadmaps', sub: 'Explore paths', path: '/careers', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+ { icon: BookOpen, label: 'Exam Hub', sub: 'Track deadlines', path: '/exams', color: 'text-orange-600', bg: 'bg-orange-50' },
  { icon: MapPin, label: 'Compare Colleges', sub: 'Side-by-side analysis', path: '/compare', color: 'text-slate-800', bg: 'bg-blue-50' },
  ].map(({ icon: Icon, label, sub, path, color, bg }) => (
  <Link key={path} to={path} className="flex items-center gap-3 p-4 hover:bg-[#F6F7FB] transition-colors group">

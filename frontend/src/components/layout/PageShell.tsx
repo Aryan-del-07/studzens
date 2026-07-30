@@ -27,7 +27,7 @@
  */
 
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Search, Compass, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard, Sparkles } from 'lucide-react';
+import { Search, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -65,7 +65,6 @@ export default function PageShell() {
  <NavLink to="/for-you" icon={<Sparkles size={17} />} label="For You" active={location.pathname === '/for-you'} />
  <NavLink to="/search" icon={<Search size={17} />} label="Colleges" active={location.pathname === '/search'} />
  <NavLink to="/compare" icon={<GitCompareArrows size={17} />} label="Compare" active={location.pathname === '/compare'} />
- <NavLink to="/careers" icon={<Compass size={17} />} label="Careers" active={location.pathname === '/careers'} />
  <NavLink to="/exams" icon={<GraduationCap size={17} />} label="Exams" active={location.pathname.startsWith('/exams')} />
  </nav>
  )}
@@ -113,7 +112,6 @@ export default function PageShell() {
  { to: '/for-you', label: 'For You ✨' },
  { to: '/search', label: 'Colleges' },
  { to: '/compare', label: 'Compare Colleges' },
- { to: '/careers', label: 'Careers' },
  { to: '/exams', label: 'Exams' },
  { to: '/profile', label: 'Profile' },
  ].map(({ to, label }) => (
