@@ -19,63 +19,26 @@ export default function LandingPage() {
       <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-50 border-b border-[#E3E8EF]">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-20 grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Text */}
-          <div className="animate-slide-up">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-16 py-28 flex flex-col items-center text-center">
+          <div className="animate-slide-up flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E3E8EF] rounded-full text-[#425466] text-sm font-semibold mb-6 shadow-sm">
               <Info size={14} className="text-[#0A2540]" />
               Data-driven college recommendations
             </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#0A2540] leading-tight tracking-tight mb-6">
+            <h1 className="text-4xl lg:text-6xl font-bold text-[#0A2540] leading-[1.1] tracking-tight mb-6">
               Make confident decisions about your college education.
             </h1>
-            <p className="text-lg text-[#425466] leading-relaxed mb-8 max-w-lg">
+            <p className="text-lg md:text-xl text-[#425466] leading-relaxed mb-10 max-w-2xl">
               Studzens helps you understand your admission options. By matching your Class 12 marks, entrance exam scores, and location preferences against our college database, we provide a realistic assessment of where you can apply—saving you time and reducing uncertainty.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button onClick={handleCTA} className="bg-[#0A2540] text-white font-semibold text-base px-8 py-3.5 rounded-xl hover:bg-slate-900 transition-colors flex items-center justify-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+              <button onClick={handleCTA} className="bg-[#0A2540] text-white font-semibold text-base px-8 py-4 rounded-xl hover:bg-slate-900 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
                 Check My Admission Chances <ArrowRight size={18} />
               </button>
-              <Link to="/search" className="bg-white text-[#0A2540] border border-[#E3E8EF] font-semibold text-base px-8 py-3.5 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
+              <Link to="/search" className="bg-white text-[#0A2540] border border-[#E3E8EF] font-semibold text-base px-8 py-4 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center w-full sm:w-auto">
                 Explore Colleges
               </Link>
-            </div>
-          </div>
-
-          {/* Right: Floating card (visible on lg) */}
-          <div className="hidden lg:flex justify-center items-center animate-slide-up delay-200">
-            <div className="bg-white border border-[#E3E8EF] rounded-3xl shadow-xl p-8 max-w-sm w-full relative">
-              <div className="absolute top-0 right-0 p-4 opacity-10">
-                <Shield size={64} />
-              </div>
-              <div className="text-xs font-bold text-[#697386] uppercase tracking-wider mb-6">Recommendation Categories</div>
-              
-              <div className="space-y-4">
-                <div className="flex items-start gap-4 pb-4 border-b border-[#E3E8EF]">
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500 mt-1.5 shrink-0"></div>
-                  <div>
-                    <div className="font-bold text-[#0A2540] text-sm mb-0.5">Safe</div>
-                    <div className="text-xs text-[#697386] leading-relaxed">High likelihood of admission based on historical trends. Reliable options for your profile.</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 pb-4 border-b border-[#E3E8EF]">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></div>
-                  <div>
-                    <div className="font-bold text-[#0A2540] text-sm mb-0.5">Target</div>
-                    <div className="text-xs text-[#697386] leading-relaxed">Good alignment with your scores. These are competitive but highly realistic matches.</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></div>
-                  <div>
-                    <div className="font-bold text-[#0A2540] text-sm mb-0.5">Reach</div>
-                    <div className="text-xs text-[#697386] leading-relaxed">Aspirational choices. Your profile is slightly below historical averages, requiring strong effort.</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
