@@ -250,19 +250,6 @@ function OverviewTab({ profile, savedColleges, navigate }: {
  <EmptyState icon={BarChart2} title="No marks added"desc="Add your academic details"cta={{ label: 'Add Now', path: '/onboarding' }} />
  )}
  </div>
-
- {/* AI Insights */}
- <div className="sz-card p-6">
- <SectionHeader icon={Zap} title="AI Insights"/>
- <div className="space-y-3">
- {insights.map(({ icon: Icon, color, text }, i) => (
- <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl bg-[#F6F7FB] border border-[#E3E8EF]">
- <Icon size={16} className={`${color} shrink-0 mt-0.5`} />
- <p className="text-sm text-[#425466] leading-relaxed">{text}</p>
- </div>
- ))}
- </div>
- </div>
  </div>
 
  {/* Upcoming Deadlines */}
@@ -698,8 +685,16 @@ export default function ProfilePage() {
  const { savedColleges, updateFit, removeCollege } = useBookmarks();
  const navigate = useNavigate();
  const [tab, setTab] = useState<Tab>('overview');
+ const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
  const handleLogout = () => { logout(); navigate('/login'); };
+
+ const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (file) {
+    setAvatarUrl(URL.createObjectURL(file));
+  }
+ };
 
  if (!user) {
  return (
@@ -732,8 +727,18 @@ export default function ProfilePage() {
  <aside className="w-full lg:w-64 shrink-0 space-y-4 lg:sticky lg:top-24">
  {/* User Card */}
  <div className="sz-card p-6 text-center">
- <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-black to-slate-800 flex items-center justify-center text-white text-2xl font-black mx-auto mb-4 shadow-lg shadow-black/25">
- {initials}
+ <div className="relative w-20 h-20 mx-auto mb-4 group">
+  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-black to-slate-800 flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-black/25 overflow-hidden">
+    {avatarUrl ? (
+      <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+    ) : (
+      initials
+    )}
+  </div>
+  <label className="absolute inset-0 bg-black/50 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity text-white" title="Change Image">
+    <Edit3 size={18} />
+    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+  </label>
  </div>
  <h1 className="text-lg font-bold text-[#0A2540] leading-tight">{user.name}</h1>
  <p className="text-xs text-[#697386] mt-1">{user.email}</p>
