@@ -1,239 +1,282 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, GraduationCap, MapPin, Star, Shield, Zap } from 'lucide-react';
+import { ArrowRight, GraduationCap, MapPin, Search, Shield, Info, CheckCircle, HelpCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { colleges } from '../api/mocks/colleges';
 import { exams } from '../api/mocks/exams';
 
-
-/**
- * LandingPage.tsx
- *
- * WHAT THIS FILE DOES:
- * The public marketing page — the first thing visitors see.
- * Shows the app's value proposition, features, and testimonials.
- *
- * WHY IT EXISTS:
- * Not everyone who visits the app is logged in. This page convinces
- * new students to sign up by showing what the app can do for them.
- *
- * KEY CONCEPTS:
- * - Hero section with animated stats and CTA buttons
- * - Feature grid with icons and descriptions
- * -"How It Works"step-by-step guide
- * - Top colleges showcase
- * - Responsive design: single column on mobile, multi-column on desktop
- */
 export default function LandingPage() {
- const { isAuthenticated } = useAuth();
- const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
- const handleCTA = () => navigate(isAuthenticated ? '/dashboard' : '/login');
+  const handleCTA = () => navigate(isAuthenticated ? '/dashboard' : '/login');
 
- return (
- <div className="flex flex-col min-h-screen bg-white overflow-x-hidden">
+  return (
+    <div className="flex flex-col min-h-screen bg-white overflow-x-hidden font-sans">
+      
+      {/* ============================
+          HERO SECTION
+          ============================ */}
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-50 border-b border-[#E3E8EF]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-20 grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left: Text */}
+          <div className="animate-slide-up">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E3E8EF] rounded-full text-[#425466] text-sm font-semibold mb-6 shadow-sm">
+              <Info size={14} className="text-[#0A2540]" />
+              Data-driven college recommendations
+            </div>
+            <h1 className="text-4xl lg:text-5xl font-bold text-[#0A2540] leading-tight tracking-tight mb-6">
+              Make confident decisions about your college education.
+            </h1>
+            <p className="text-lg text-[#425466] leading-relaxed mb-8 max-w-lg">
+              Studzens helps you understand your admission options. By matching your Class 12 marks, entrance exam scores, and location preferences against our college database, we provide a realistic assessment of where you can apply—saving you time and reducing uncertainty.
+            </p>
 
- {/* ============================
- HERO SECTION
- ============================ */}
- <section className="relative min-h-[92vh] flex items-center overflow-hidden">
- {/* Aurora RIGHT panel */}
- <div className="absolute right-0 top-0 w-[55%] h-full aurora-mesh opacity-90 hidden lg:block"/>
- <div className="absolute right-0 top-0 w-[55%] h-full bg-gradient-to-l from-transparent via-transparent to-white hidden lg:block"/>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button onClick={handleCTA} className="bg-[#0A2540] text-white font-semibold text-base px-8 py-3.5 rounded-xl hover:bg-slate-900 transition-colors flex items-center justify-center gap-2">
+                Check My Admission Chances <ArrowRight size={18} />
+              </button>
+              <Link to="/search" className="bg-white text-[#0A2540] border border-[#E3E8EF] font-semibold text-base px-8 py-3.5 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
+                Explore Colleges
+              </Link>
+            </div>
+          </div>
 
- {/* Small screen bg gradient */}
- <div className="absolute inset-0 lg:hidden"style={{background: 'linear-gradient(160deg, #fff 50%, #f0f0ff 100%)'}} />
+          {/* Right: Floating card (visible on lg) */}
+          <div className="hidden lg:flex justify-center items-center animate-slide-up delay-200">
+            <div className="bg-white border border-[#E3E8EF] rounded-3xl shadow-xl p-8 max-w-sm w-full relative">
+              <div className="absolute top-0 right-0 p-4 opacity-10">
+                <Shield size={64} />
+              </div>
+              <div className="text-xs font-bold text-[#697386] uppercase tracking-wider mb-6">Recommendation Categories</div>
+              
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 pb-4 border-b border-[#E3E8EF]">
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500 mt-1.5 shrink-0"></div>
+                  <div>
+                    <div className="font-bold text-[#0A2540] text-sm mb-0.5">Safe</div>
+                    <div className="text-xs text-[#697386] leading-relaxed">High likelihood of admission based on historical trends. Reliable options for your profile.</div>
+                  </div>
+                </div>
 
- <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-20 grid lg:grid-cols-2 gap-16 items-center">
- {/* Left: Text */}
- <div className="animate-slide-up">
- <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-black text-sm font-semibold mb-6">
- <Zap size={14} />
- India's smartest college finder
- </div>
- <h1 className="text-5xl lg:text-[62px] font-bold text-[#0A2540] leading-[1.1] tracking-tight mb-6">
- Find colleges that{' '}
- <span className="text-black">actually</span>{' '}
- match your marks.
- </h1>
- <p className="text-xl text-[#425466] leading-relaxed mb-8 max-w-lg">
- Enter your exam scores and preferred states. Studzens instantly shows you Safe, Reach, and Backup colleges — no guessing required.
- </p>
+                <div className="flex items-start gap-4 pb-4 border-b border-[#E3E8EF]">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></div>
+                  <div>
+                    <div className="font-bold text-[#0A2540] text-sm mb-0.5">Target</div>
+                    <div className="text-xs text-[#697386] leading-relaxed">Good alignment with your scores. These are competitive but highly realistic matches.</div>
+                  </div>
+                </div>
 
- <div className="flex flex-col sm:flex-row gap-4">
- <button onClick={handleCTA} className="btn-primary text-base px-8 py-4">
- Get My College List <ArrowRight size={20} />
- </button>
- <Link to="/search"className="btn-secondary text-base px-8 py-4">
- Explore Colleges
- </Link>
- </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></div>
+                  <div>
+                    <div className="font-bold text-[#0A2540] text-sm mb-0.5">Reach</div>
+                    <div className="text-xs text-[#697386] leading-relaxed">Aspirational choices. Your profile is slightly below historical averages, requiring strong effort.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
- <div className="flex items-center gap-6 mt-10 text-sm text-[#697386]">
- <div className="flex items-center gap-1.5">
- <div className="flex -space-x-2">
- {['S','R','A','P'].map(l => (
- <div key={l} className="w-7 h-7 rounded-full bg-black border-2 border-white flex items-center justify-center text-white text-xs font-bold">{l}</div>
- ))}
- </div>
- <span><strong className="text-[#0A2540]">50,000+</strong> students</span>
- </div>
- <div className="flex items-center gap-1">
- {[1,2,3,4,5].map(i => <Star key={i} size={14} className="text-yellow-400 fill-yellow-400"/>)}
- <span className="ml-1"><strong className="text-[#0A2540]">4.8</strong> rating</span>
- </div>
- </div>
- </div>
+      {/* ============================
+          STATS BAR
+          ============================ */}
+      <div className="bg-white border-b border-[#E3E8EF] py-8">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { icon: CheckCircle, label: `Supports ${exams.length}+ Entrance Exams` },
+            { icon: MapPin, label: 'Covers Colleges Across India' },
+            { icon: Shield, label: 'Personalized Recommendations' },
+            { icon: Search, label: 'Multiple Filters Available' },
+          ].map(({ icon: Icon, label }, idx) => (
+            <div key={idx} className="flex flex-col items-center gap-2">
+              <Icon size={24} className="text-[#697386]" />
+              <div className="text-sm font-semibold text-[#0A2540]">{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
- {/* Right: Floating card (visible on lg) */}
- <div className="hidden lg:flex justify-center items-center animate-slide-up delay-200">
- <div className="glass-light rounded-3xl shadow-2xl p-8 max-w-sm w-full">
- <div className="text-sm font-bold text-[#697386] uppercase tracking-wider mb-4">Your Match Preview</div>
- {[
- { name: 'IIT Bombay', match: 'Safe Reach', score: 94, color: 'bg-blue-500' },
- { name: 'BITS Pilani', match: 'Safe', score: 88, color: 'bg-emerald-500' },
- { name: 'VIT Vellore', match: 'Safe Backup', score: 76, color: 'bg-amber-500' },
- ].map((item, i) => (
- <div key={i} className="flex items-center gap-3 py-3 border-b border-[#E3E8EF] last:border-0">
- <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center shrink-0">
- <GraduationCap size={18} className="text-black"/>
- </div>
- <div className="flex-1">
- <div className="font-semibold text-[#0A2540] text-sm">{item.name}</div>
- <div className="text-xs text-[#697386]">{item.match}</div>
- </div>
- <div className="text-right">
- <div className="text-sm font-bold text-[#0A2540]">{item.score}%</div>
- <div className={`w-2 h-2 rounded-full ${item.color} ml-auto mt-1`}></div>
- </div>
- </div>
- ))}
- <button onClick={handleCTA} className="btn-primary w-full mt-5 text-sm">
- See Your Full List <ArrowRight size={16} />
- </button>
- </div>
- </div>
- </div>
- </section>
+      {/* ============================
+          HOW IT WORKS
+          ============================ */}
+      <section className="py-20 bg-[#F6F7FB] px-6 border-b border-[#E3E8EF]">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-[#0A2540] mb-3">How Studzens Works</h2>
+            <p className="text-[#425466] text-lg max-w-2xl">A transparent process to help you build your college list.</p>
+          </div>
 
- {/* ============================
- STATS BAR
- ============================ */}
- <div className="bg-[#F6F7FB] border-y border-[#E3E8EF] py-8">
- <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
- {[
- { value: `${colleges.length}+`, label: 'Colleges Listed' },
- { value: `${exams.length}+`, label: 'Entrance Exams' },
- { value: '50,000+', label: 'Students Helped' },
- { value: '29', label: 'States Covered' },
- ].map(({ value, label }) => (
- <div key={label}>
- <div className="text-3xl font-bold text-[#0A2540] mb-1">{value}</div>
- <div className="text-sm text-[#697386] font-medium">{label}</div>
- </div>
- ))}
- </div>
- </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { 
+                step: 'Step 1', 
+                title: 'Enter your academic profile', 
+                desc: 'Input your entrance exam scores, Class 12 marks, preferred courses, and desired states. The more detail you provide, the more relevant your results will be.' 
+              },
+              { 
+                step: 'Step 2', 
+                title: 'Data comparison', 
+                desc: 'Studzens compares your academic profile with available colleges, analyzing location preferences, budget constraints, and exam acceptances.' 
+              },
+              { 
+                step: 'Step 3', 
+                title: 'Review recommendations', 
+                desc: 'Receive a personalized list of colleges categorized by your admission likelihood (Safe, Target, Reach). Use this list to prioritize your applications.' 
+              },
+            ].map(({ step, title, desc }) => (
+              <div key={step} className="bg-white p-8 rounded-2xl border border-[#E3E8EF]">
+                <div className="text-sm font-bold text-[#635BFF] mb-3 uppercase tracking-wider">{step}</div>
+                <h3 className="text-xl font-bold text-[#0A2540] mb-3">{title}</h3>
+                <p className="text-[#697386] text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
- {/* ============================
- FEATURES
- ============================ */}
- <section className="py-24 px-6">
- <div className="max-w-6xl mx-auto">
- <div className="text-center mb-16 animate-slide-up">
- <span className="text-xs font-bold tracking-widest text-black uppercase">Why Students Love Studzens</span>
- <h2 className="text-4xl font-bold text-[#0A2540] mt-3 mb-4">
- Everything you need to make a smart decision
- </h2>
- <p className="text-[#425466] text-lg max-w-2xl mx-auto">
- Not just a list of colleges — a complete decision engine.
- </p>
- </div>
+      {/* ============================
+          FEATURES (Why Studzens)
+          ============================ */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-[#0A2540] mb-3">
+              Tools to support your academic planning
+            </h2>
+            <p className="text-[#425466] text-lg max-w-2xl">
+              We organize complex educational data so you can focus on making the right choice.
+            </p>
+          </div>
 
- <div className="grid md:grid-cols-3 gap-8">
- {[
- {
- icon: Star,
- color: 'text-black',
- bg: 'bg-slate-100',
- title: 'Personalized Match Score',
- desc: `Based on your ${exams.length} entrance exam scores and 12th marks, we tell you exactly where you stand.`,
- chips: ['JEE', 'NEET', 'BITSAT', 'CLAT', 'VITEEE'],
- },
- {
- icon: Shield,
- color: 'text-emerald-600',
- bg: 'bg-emerald-50',
- title: 'Safe vs Reach Labels',
- desc: 'Every college is categorized as Safe Reach, Safe, or Safe Backup — so you apply with confidence.',
- chips: ['Safe Reach', 'Safe', 'Safe Backup'],
- },
- {
- icon: MapPin,
- color: 'text-slate-800',
- bg: 'bg-blue-50',
- title: 'State-wise Intelligence',
- desc: 'Filter by your preferred states, view transport access, and discover educational hubs on an interactive map.',
- chips: ['Maharashtra', 'Karnataka', 'Delhi', 'Tamil Nadu'],
- },
- ].map(({ icon: Icon, color, bg, title, desc, chips }) => (
- <div key={title} className="sz-card p-8 flex flex-col h-full animate-slide-up">
- <div className={`w-12 h-12 ${bg} rounded-2xl flex items-center justify-center mb-5 shrink-0`}>
- <Icon size={24} className={color} />
- </div>
- <h3 className="text-xl font-bold text-[#0A2540] mb-3">{title}</h3>
- <p className="text-[#697386] text-sm leading-relaxed mb-6 flex-1">{desc}</p>
- <div className="flex flex-wrap gap-2">
- {chips.map(c => <span key={c} className="sz-chip-gray">{c}</span>)}
- </div>
- </div>
- ))}
- </div>
- </div>
- </section>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF]">
+              <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mb-6">
+                <Search size={24} className="text-[#0A2540]" />
+              </div>
+              <h3 className="text-xl font-bold text-[#0A2540] mb-3">Clarity through categorization</h3>
+              <p className="text-[#697386] text-sm leading-relaxed mb-4">
+                <strong>The problem:</strong> With thousands of colleges, it is difficult to know where your scores are competitive.
+              </p>
+              <p className="text-[#697386] text-sm leading-relaxed">
+                <strong>Our approach:</strong> We group colleges into Safe, Target, and Reach buckets, providing a structured framework to balance your college application strategy without false expectations.
+              </p>
+            </div>
 
- {/* ============================
- HOW IT WORKS
- ============================ */}
- <section className="py-24 bg-[#F6F7FB] px-6">
- <div className="max-w-4xl mx-auto text-center">
- <h2 className="text-4xl font-bold text-[#0A2540] mb-4">How it works</h2>
- <p className="text-[#425466] mb-16">Get your personalized college list in 3 simple steps.</p>
+            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF]">
+              <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mb-6">
+                <MapPin size={24} className="text-[#0A2540]" />
+              </div>
+              <h3 className="text-xl font-bold text-[#0A2540] mb-3">Objective filtering</h3>
+              <p className="text-[#697386] text-sm leading-relaxed mb-4">
+                <strong>The problem:</strong> Finding colleges that meet specific geographical and financial constraints is tedious and time-consuming.
+              </p>
+              <p className="text-[#697386] text-sm leading-relaxed">
+                <strong>Our approach:</strong> You can apply strict filters for budget limits and preferred states. We only show you institutions that align with your practical requirements, saving you hours of manual research.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
- <div className="grid md:grid-cols-3 gap-10">
- {[
- { step: '01', title: 'Enter Your Profile', desc: 'Share your class, marks, entrance exams and preferred states.' },
- { step: '02', title: 'We Compute Matches', desc: 'Our engine filters colleges by your scores, budget, and location preferences.' },
- { step: '03', title: 'Get Your List', desc: 'See Safe Reach, Safe, and Safe Backup colleges — ready to apply.' },
- ].map(({ step, title, desc }) => (
- <div key={step} className="text-center">
- <div className="w-14 h-14 rounded-2xl bg-black text-white text-lg font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-black/30">
- {step}
- </div>
- <h3 className="text-lg font-bold text-[#0A2540] mb-2">{title}</h3>
- <p className="text-[#697386] text-sm leading-relaxed">{desc}</p>
- </div>
- ))}
- </div>
- </div>
- </section>
+      {/* ============================
+          TRUST SECTION
+          ============================ */}
+      <section className="py-20 bg-slate-50 px-6 border-y border-[#E3E8EF]">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-8">
+            <Shield size={28} className="text-[#0A2540]" />
+            <h2 className="text-3xl font-bold text-[#0A2540]">Why Students Can Trust Studzens</h2>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle size={18} className="text-emerald-600 mt-0.5 shrink-0" />
+                <span className="text-[#425466] text-sm leading-relaxed"><strong>Data-driven recommendations.</strong> Results are strictly based on the academic information and preferences you provide.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle size={18} className="text-emerald-600 mt-0.5 shrink-0" />
+                <span className="text-[#425466] text-sm leading-relaxed"><strong>Estimates, not guarantees.</strong> Admission chances are calculated estimates designed to guide your research. Final admission decisions are made solely by the institutions.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle size={18} className="text-emerald-600 mt-0.5 shrink-0" />
+                <span className="text-[#425466] text-sm leading-relaxed"><strong>Privacy first.</strong> Your personal academic data is kept private and is only used to generate your personalized recommendations.</span>
+              </li>
+            </ul>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle size={18} className="text-emerald-600 mt-0.5 shrink-0" />
+                <span className="text-[#425466] text-sm leading-relaxed"><strong>Publicly available information.</strong> We aim to aggregate and use verified, publicly available educational data regarding fees, exams, and courses.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle size={18} className="text-emerald-600 mt-0.5 shrink-0" />
+                <span className="text-[#425466] text-sm leading-relaxed"><strong>No paid rankings.</strong> We do not artificially boost or rank colleges based on paid promotions. Recommendations remain objective.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
- {/* ============================
- CTA FOOTER
- ============================ */}
- <section className="py-24 px-6 relative overflow-hidden">
- <div className="absolute inset-0 aurora-mesh opacity-10"/>
- <div className="relative max-w-2xl mx-auto text-center">
- <h2 className="text-4xl md:text-5xl font-bold text-[#0A2540] mb-6">
- Ready to find your perfect college?
- </h2>
- <p className="text-[#425466] text-lg mb-8">
- Free forever. No credit card required.
- </p>
- <button onClick={handleCTA} className="btn-primary px-10 py-4 text-lg mx-auto">
- Get Started Free <ArrowRight size={22} />
- </button>
- </div>
- </section>
- </div>
- );
+      {/* ============================
+          FAQ SECTION
+          ============================ */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-10">
+            <HelpCircle size={28} className="text-[#0A2540]" />
+            <h2 className="text-3xl font-bold text-[#0A2540]">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 className="font-bold text-[#0A2540] mb-2">How are colleges recommended?</h4>
+              <p className="text-[#697386] text-sm leading-relaxed">Colleges are recommended by matching your provided Class 12 marks, entrance exam scores, budget, and location preferences against our database of college admission trends.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-[#0A2540] mb-2">Are admission chances guaranteed?</h4>
+              <p className="text-[#697386] text-sm leading-relaxed">No. The Safe, Target, and Reach categories are historical estimates intended to help you prioritize applications. Final admission depends on the respective college's official process.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-[#0A2540] mb-2">Which entrance exams are supported?</h4>
+              <p className="text-[#697386] text-sm leading-relaxed">We currently support over 20 major Indian entrance exams, including JEE Main, NEET, BITSAT, CLAT, and state-level engineering and medical examinations.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-[#0A2540] mb-2">Can I compare colleges side-by-side?</h4>
+              <p className="text-[#697386] text-sm leading-relaxed">Yes. Once you build your list, you can use our comparison tool to evaluate colleges based on fees, rankings, and accepted exams.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-[#0A2540] mb-2">Is Studzens free?</h4>
+              <p className="text-[#697386] text-sm leading-relaxed">Yes, creating an account and accessing personalized college recommendations is completely free for students.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-[#0A2540] mb-2">How often is the data updated?</h4>
+              <p className="text-[#697386] text-sm leading-relaxed">We review and update our database periodically to reflect the latest available information regarding exam dates, fee structures, and course offerings.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================
+          CTA FOOTER
+          ============================ */}
+      <section className="py-20 px-6 border-t border-[#E3E8EF] bg-white">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-[#0A2540] mb-6">
+            Begin your college research
+          </h2>
+          <p className="text-[#425466] text-base mb-8">
+            Create a free profile to see which colleges align with your academic background.
+          </p>
+          <button onClick={handleCTA} className="bg-[#0A2540] text-white font-semibold text-base px-8 py-3.5 rounded-xl hover:bg-slate-900 transition-colors inline-flex items-center gap-2">
+            Build My College List <ArrowRight size={18} />
+          </button>
+        </div>
+      </section>
+      
+    </div>
+  );
 }
