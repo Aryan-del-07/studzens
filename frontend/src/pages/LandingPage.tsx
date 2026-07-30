@@ -141,42 +141,73 @@ export default function LandingPage() {
       {/* ============================
           FEATURES (Why Studzens)
           ============================ */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-[#0A2540] mb-3">
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-16 text-center">
+            <h2 className="text-4xl font-bold text-[#0A2540] mb-4">
               Tools to support your academic planning
             </h2>
-            <p className="text-[#425466] text-lg max-w-2xl">
+            <p className="text-[#425466] text-lg max-w-2xl mx-auto">
               We organize complex educational data so you can focus on making the right choice.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF]">
-              <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mb-6">
-                <Search size={24} className="text-[#0A2540]" />
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Card 1 */}
+            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF] flex flex-col shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start mb-8">
+                <div className="text-sm font-medium text-[#425466]">Match Categories</div>
+                <Shield size={24} strokeWidth={1.5} className="text-[#635BFF]" />
               </div>
-              <h3 className="text-xl font-bold text-[#0A2540] mb-3">Clarity through categorization</h3>
-              <p className="text-[#697386] text-sm leading-relaxed mb-4">
-                <strong>The problem:</strong> With thousands of colleges, it is difficult to know where your scores are competitive.
-              </p>
-              <p className="text-[#697386] text-sm leading-relaxed">
-                <strong>Our approach:</strong> We group colleges into Safe, Target, and Reach buckets, providing a structured framework to balance your college application strategy without false expectations.
-              </p>
+              <h3 className="text-2xl font-bold text-[#0A2540] leading-tight mb-10 tracking-tight">
+                Know exactly where you stand: <span className="text-[#635BFF] font-medium">We group colleges into Safe, Target, and Reach buckets.</span>
+              </h3>
+              <div className="mt-auto flex items-center gap-6 text-sm font-medium text-[#635BFF]">
+                <Link to="/search" className="flex items-center gap-1 hover:text-[#4F47E5]">
+                  See Example <ArrowRight size={16} className="-rotate-45" />
+                </Link>
+                <Link to="/search" className="flex items-center gap-1 hover:text-[#4F47E5]">
+                  Know More <ArrowRight size={16} className="-rotate-45" />
+                </Link>
+              </div>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF]">
-              <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mb-6">
-                <MapPin size={24} className="text-[#0A2540]" />
+            {/* Card 2 */}
+            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF] flex flex-col shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start mb-8">
+                <div className="text-sm font-medium text-[#425466]">Objective Filtering</div>
+                <MapPin size={24} strokeWidth={1.5} className="text-[#635BFF]" />
               </div>
-              <h3 className="text-xl font-bold text-[#0A2540] mb-3">Objective filtering</h3>
-              <p className="text-[#697386] text-sm leading-relaxed mb-4">
-                <strong>The problem:</strong> Finding colleges that meet specific geographical and financial constraints is tedious and time-consuming.
-              </p>
-              <p className="text-[#697386] text-sm leading-relaxed">
-                <strong>Our approach:</strong> You can apply strict filters for budget limits and preferred states. We only show you institutions that align with your practical requirements, saving you hours of manual research.
-              </p>
+              <h3 className="text-2xl font-bold text-[#0A2540] leading-tight mb-10 tracking-tight">
+                Filter by what matters: <span className="text-[#635BFF] font-medium">Instantly sort colleges by budget limits and preferred states.</span>
+              </h3>
+              <div className="mt-auto flex items-center gap-6 text-sm font-medium text-[#635BFF]">
+                <Link to="/search" className="flex items-center gap-1 hover:text-[#4F47E5]">
+                  Try Filters <ArrowRight size={16} className="-rotate-45" />
+                </Link>
+                <Link to="/search" className="flex items-center gap-1 hover:text-[#4F47E5]">
+                  Know More <ArrowRight size={16} className="-rotate-45" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white p-8 rounded-2xl border border-[#E3E8EF] flex flex-col shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start mb-8">
+                <div className="text-sm font-medium text-[#425466]">Data-driven Insights</div>
+                <Search size={24} strokeWidth={1.5} className="text-[#635BFF]" />
+              </div>
+              <h3 className="text-2xl font-bold text-[#0A2540] leading-tight mb-10 tracking-tight">
+                Stop guessing your chances: <span className="text-[#635BFF] font-medium">We compare your profile against historical admission trends.</span>
+              </h3>
+              <div className="mt-auto flex items-center gap-6 text-sm font-medium text-[#635BFF]">
+                <button onClick={handleCTA} className="flex items-center gap-1 hover:text-[#4F47E5] cursor-pointer">
+                  Sign Up <ArrowRight size={16} className="-rotate-45" />
+                </button>
+                <button onClick={handleCTA} className="flex items-center gap-1 hover:text-[#4F47E5] cursor-pointer">
+                  Know More <ArrowRight size={16} className="-rotate-45" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
