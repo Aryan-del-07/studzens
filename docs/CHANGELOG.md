@@ -17,6 +17,21 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   `vite preview` to `vite preview --host 0.0.0.0 --port ${PORT:-4173}`.
   Passing `--port $PORT` via the deployment platform's run command failed because the shell variable
   was not expanded before npm forwarded it to vite — resulting in a `CACError: option --port value is missing`.
+- **Timeline Gradient:** Fixed an invalid Tailwind class (`to-indigo-955`) in `ExamHubPage.tsx` that caused text to be unreadable against a transparent/white background fallback.
+
+### Changed
+- **Typography:** Global application font changed to `Trebuchet MS`. Removed `Inter` and `Geist` Google Fonts from `index.html`.
+- **Landing Page Hero:** Centered the main layout, rewrote hero copy for a more trusted, student-focused tone.
+- **Dashboard:** Replaced the "Exam Readiness Score" with a 9-point "Profile Completion" score widget.
+- **Exams Page:** Added Google Calendar and Apple Calendar (.ics) export buttons to the Academic Calendar widget. Renamed "Command Center" tabs to "Your Exams".
+- **Profile Page Avatar:** Added image upload functionality on hover for the user's avatar.
+
+### Removed
+- **Careers Nav:** Removed the "Careers" link from desktop and mobile `PageShell` navigation to reduce clutter.
+- **Landing Page Elements:** Removed the floating "Recommendation Categories" card and "Data-driven college recommendations" badge from the Hero section.
+- **Dashboard Recommendations:** Removed the full "Best Colleges For You" list from the dashboard, replacing it with a clean shortcut card linking to `/for-you`.
+- **Exam Readiness:** Removed the "Preparation Readiness" section from the Exams page.
+- **Profile AI Insights:** Removed the AI Insights block from the Profile page Overview tab.
 
 ---
 
