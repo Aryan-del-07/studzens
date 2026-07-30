@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Eye, EyeOff, ArrowRight, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight, CheckCircle2, ShieldCheck, XCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 
@@ -62,7 +62,7 @@ const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 const isValidPhone = (phone: string) => /^[0-9]{10}$/.test(phone);
 
 export default function LoginPage() {
- const [mode, setMode] = useState<'login' | 'signup'>('login');
+ const [mode] = useState<'login' | 'signup'>('login');
  const [name, setName] = useState('');
  const [email, setEmail] = useState('');
  const [phone, setPhone] = useState('');
@@ -144,20 +144,10 @@ export default function LoginPage() {
  setLoading(false);
  };
 
- const switchMode = (m: 'login' | 'signup') => {
- setMode(m);
- setFormError('');
- setTouched({});
- setPassword('');
- setEmail('');
- setName('');
- setPhone('');
- };
-
  return (
- <div className="min-h-screen flex bg-white font-sans">
- {/* LEFT PANEL — Form */}
- <div className="flex-1 flex flex-col justify-center px-8 sm:px-12 md:px-20 lg:px-32 py-12 relative z-10 overflow-y-auto">
+ <div className="min-h-screen flex bg-white font-sans items-center justify-center">
+ {/* FORM PANEL */}
+ <div className="w-full flex flex-col justify-center px-8 sm:px-12 py-12 relative z-10 overflow-y-auto max-w-[520px]">
  
  {/* Brand Header */}
  <Link to="/"className="flex items-center mb-10 group w-fit">
@@ -324,87 +314,7 @@ export default function LoginPage() {
  Google
  </button>
  </form>
-
- <p className="text-[15px] text-gray-500 mt-8 text-center font-medium">
- {mode === 'login' ?"Don't have an account?": 'Already have an account? '}
- <button
- onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
- className="text-slate-800 font-bold hover:text-slate-900 :text-blue-300 transition-colors"
- >
- {mode === 'login' ? 'Sign up free' : 'Sign in'}
- </button>
- </p>
- {/* RIGHT PANEL — Premium Brand Showcase */}
- <div className="hidden lg:flex flex-1 relative overflow-hidden bg-black flex-col items-center justify-center">
- {/* Sleek deep space gradients */}
- <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-slate-800/40 blur-[100px]"/>
- <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-slate-900/40 blur-[120px]"/>
- 
- {/* Subtle grid pattern overlay */}
- <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]"/>
-
- {/* Floating Showcase Cards */}
- <div className="relative z-10 w-full max-w-lg px-8">
- 
- <div className="text-center mb-12">
- <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-300 text-xs font-bold mb-4 uppercase tracking-wider">
- <Zap size={14} className="fill-slate-300 text-slate-300"/> Stuzen Intelligence
  </div>
- <h2 className="text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
- The all-in-one platform <br/>
- <span className="text-slate-400">you've been looking for.</span>
- </h2>
- <p className="text-gray-400 text-[15px] leading-relaxed max-w-md mx-auto">
- Track entrance milestones, analyze 10,000+ colleges, and predict admissions with India's most advanced student OS.
- </p>
- </div>
-
- <div className="grid grid-cols-2 gap-4">
- {/* Feature Card 1 */}
- <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl hover:bg-white/[0.07] transition-colors">
- <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4">
- <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-white"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
- </div>
- <h3 className="text-white font-semibold text-sm mb-1">Exam Command Center</h3>
- <p className="text-gray-400 text-xs leading-relaxed">
- Sync admit cards, result dates, and registration windows in one clean timeline.
- </p>
- </div>
-
- {/* Feature Card 2 */}
- <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl hover:bg-white/[0.07] transition-colors">
- <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4">
- <svg width="20"height="20"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"strokeLinejoin="round"className="text-white"><circle cx="12"cy="12"r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
- </div>
- <h3 className="text-white font-semibold text-sm mb-1">Deep College Analytics</h3>
- <p className="text-gray-400 text-xs leading-relaxed">
- 9 layers of verified intelligence including hidden costs and real placements.
- </p>
- </div>
- 
- {/* Wide Feature Card 3 */}
- <div className="col-span-2 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl flex items-center justify-between">
- <div>
- <div className="flex items-center gap-2 mb-1">
- <CheckCircle2 size={16} className="text-white"/>
- <span className="text-white font-semibold text-sm">Trusted by 50,000+ Students</span>
- </div>
- <p className="text-gray-400 text-xs pl-6">
- Across 28 states and union territories.
- </p>
- </div>
- <div className="flex -space-x-3">
- <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=1"alt="Student"/></div>
- <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=2"alt="Student"/></div>
- <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-700 flex items-center justify-center overflow-hidden"><img src="https://i.pravatar.cc/100?img=3"alt="Student"/></div>
- <div className="w-8 h-8 rounded-full border-2 border-black bg-slate-800 flex items-center justify-center text-[10px] text-white font-bold">+2k</div>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
-
  </div>
  </div>
  );

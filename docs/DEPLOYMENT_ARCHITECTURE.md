@@ -2,7 +2,8 @@
 
 ## Overview
 
-Studzens uses **Railway** to host both the frontend (as a Vite preview server) and the backend (as a Node.js service). The database runs on **Neon** (serverless PostgreSQL).
+Studzens uses **Railway** to host both the frontend (as a Vite preview server) and the backend (as a Node.js service). The database runs on **Neon** (serverless PostgreSQL). 
+Alternatively, the frontend can be seamlessly deployed on **Vercel** (recommended for production static SPAs).
 
 ---
 
@@ -10,9 +11,36 @@ Studzens uses **Railway** to host both the frontend (as a Vite preview server) a
 
 | Service | Package | Platform | Start Command |
 |---|---|---|---|
-| Frontend | `@studzens/frontend` | Railway | `npm run preview --workspace=@studzens/frontend` |
+| Frontend | `@studzens/frontend` | Railway or Vercel | `npm run preview --workspace=@studzens/frontend` (Railway) / Auto (Vercel) |
 | Backend | `@studzens/backend` | Railway | `npm run start --workspace=@studzens/backend` |
 | Database | `@studzens/database` | Neon (external) | — managed by Neon |
+
+---
+
+## Frontend Deployment to Vercel (Alternative)
+
+Deploying the frontend SPA on Vercel is highly recommended for edge caching and performance. 
+
+### Resolving the "404 NOT_FOUND" Routing Error
+Since Studzens uses client-side routing (React Router), you must configure Vercel to route all unknown paths to `index.html`. A `vercel.json` file is provided in the `frontend` directory for this purpose:
+
+```json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+### Vercel Project Settings (Crucial)
+Because this is a monorepo, Vercel will ignore `frontend/vercel.json` **unless you configure the Root Directory**.
+1. In your Vercel Dashboard, go to your project **Settings** → **General**.
+2. Scroll to **Root Directory** and click Edit.
+3. Select the `frontend` folder and save.
+4. Vercel will automatically detect Vite and apply the `vercel.json` routing configuration correctly.
 
 ---
 
@@ -31,7 +59,7 @@ Studzens uses **Railway** to host both the frontend (as a Vite preview server) a
 
 ---
 
-## Frontend Deployment Note
+## Frontend Deployment Note (Railway)
 
 The `preview` script in `frontend/package.json` is:
 
@@ -67,8 +95,8 @@ flowchart LR
 ```
 Internet
     │
-    ├── *.railway.app/frontend ──→ Vite preview (React SPA)
-    │                              PORT env var from Railway
+    ├── *.vercel.app / *.railway.app ──→ Vite SPA
+    │                              
     │
     └── *.railway.app/backend  ──→ Express API (Node 22)
                                    PORT env var from Railway
