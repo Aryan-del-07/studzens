@@ -19,19 +19,17 @@ import {
  * - Category filtering: Engineering, Medical, etc.
  * - Calendar view: Visual representation of exam timeline
  */
- Search, Calendar as CalendarIcon, Compass, MapPin, 
- ExternalLink, ArrowRight, Bookmark, BookmarkCheck, Clock, CheckSquare, 
- Square, CheckCircle, AlertTriangle, ChevronLeft, ChevronRight, Activity, 
+ Search, Calendar as CalendarIcon, Compass, MapPin,
+ ExternalLink, ArrowRight, Bookmark, BookmarkCheck, Clock, CheckSquare,
+ Square, CheckCircle, ChevronLeft, ChevronRight,
  BookOpen, Sparkles
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { exams } from '../api/mocks/exams';
 import { useStudentProfile } from '../contexts/StudentProfileContext';
 import { 
- calculateReadinessScore, 
- getMissingActions, 
- getSuggestedExams, 
- getTodayPriorities, 
+ getSuggestedExams,
+ getTodayPriorities,
  getCalendarEvents
 } from '../utils/examCommandCenter';
 
@@ -62,16 +60,6 @@ export default function ExamHubPage() {
  }));
  };
 
- // Readiness Score
- const readiness = useMemo(() => {
- const base = calculateReadinessScore(profile);
- const completedCount = priorities.filter(p => p.done).length;
- const additionalScore = completedCount * 5; 
- const finalScore = Math.min(100, base.score + additionalScore);
- return { score: finalScore, breakdown: base.breakdown };
- }, [profile, priorities]);
-
- const missingActions = useMemo(() => getMissingActions(profile), [profile]);
  const suggestedExams = useMemo(() => getSuggestedExams(profile, exams), [profile]);
 
  // Tracked Exams
@@ -211,8 +199,7 @@ export default function ExamHubPage() {
  : 'text-[#697386] hover:text-[#0A2540]'
  }`}
  >
- <Activity size={16} />
- <span>Command Center</span>
+ <span>Your Exams</span>
  </button>
  <button
  onClick={() => setActiveView('all')}
@@ -239,55 +226,6 @@ export default function ExamHubPage() {
  {/* Left columns */}
  <div className="lg:col-span-2 space-y-8">
  
- {/* Readiness Score meter */}
- <div className="sz-card p-6 flex flex-col md:flex-row items-center gap-6">
- <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
- <svg className="w-full h-full transform -rotate-90">
- <circle cx="64"cy="64"r="54"stroke="#F0F2F8"strokeWidth="8"fill="transparent"/>
- <circle 
- cx="64"cy="64"r="54"
- stroke="#635BFF"strokeWidth="8"fill="transparent"
- strokeDasharray={2 * Math.PI * 54}
- strokeDashoffset={2 * Math.PI * 54 * (1 - readiness.score / 100)}
- strokeLinecap="round"
- className="transition-all duration-1000 ease-out"
- />
- </svg>
- <div className="absolute flex flex-col items-center justify-center text-center">
- <span className="text-2xl font-black text-[#0A2540] font-sans">{readiness.score}</span>
- <span className="text-[9px] text-[#697386] font-bold uppercase tracking-wider">Readiness</span>
- </div>
- </div>
-
- <div className="flex-1 space-y-2 font-sans">
- <h3 className="font-bold text-base">Preparation Readiness</h3>
- <p className="text-xs text-[#697386] leading-relaxed">
- Based on your profile milestones, marks, target careers, and pinned exams. Complete missing steps to improve setup.
- </p>
- 
- <div className="pt-2">
- {missingActions.length === 0 ? (
- <div className="flex items-center gap-2 text-emerald-600 text-xs font-semibold">
- <CheckCircle size={15} /> All setup milestones are completed!
- </div>
- ) : (
- <div className="space-y-1.5">
- {missingActions.slice(0, 2).map(act => (
- <div key={act.id} className="flex items-center justify-between text-[11px] bg-[#F6F7FB] border border-[#E3E8EF] p-2.5 rounded-xl">
- <span className="text-[#425466] flex items-center gap-1.5 font-semibold">
- <AlertTriangle size={14} className="text-amber-500"/> {act.text}
- </span>
- <Link to={act.link} className="text-black font-bold hover:underline">
- {act.actionText} →
- </Link>
- </div>
- ))}
- </div>
- )}
- </div>
- </div>
- </div>
-
  {/* My Exam Tracker Countdowns */}
  <div className="space-y-4">
  <h3 className="text-lg font-bold text-[#0A2540] flex items-center gap-2 font-sans">

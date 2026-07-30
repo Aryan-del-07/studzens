@@ -259,7 +259,7 @@ export default function DashboardPage() {
  <div className="max-w-7xl mx-auto px-4 py-8">
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
- <p className="text-sm font-semibold text-black mb-1 font-sans">Exam Command Center</p>
+ <p className="text-sm font-semibold text-black mb-1 font-sans">Your Dashboard</p>
  <h1 className="text-3xl font-bold text-[#0A2540] font-sans">
  Hi, {user?.name?.split(' ')[0] || 'Student'} 👋
  </h1>
