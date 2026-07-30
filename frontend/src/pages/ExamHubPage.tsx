@@ -435,7 +435,7 @@ export default function ExamHubPage() {
  </div>
 
  {/* Future Timeline visualization */}
- <div className="sz-card p-6 bg-gradient-to-br from-indigo-900 to-indigo-955 text-white space-y-4">
+ <div className="sz-card p-6 bg-gradient-to-br from-indigo-900 to-slate-900 text-white space-y-4">
  <h3 className="font-bold text-sm flex items-center gap-1.5 font-sans">
  <Sparkles size={16} className="text-slate-300"/> Future Timeline Journey
  </h3>
