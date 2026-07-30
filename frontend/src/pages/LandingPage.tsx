@@ -21,10 +21,6 @@ export default function LandingPage() {
         
         <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-16 py-28 flex flex-col items-center text-center">
           <div className="animate-slide-up flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E3E8EF] rounded-full text-[#425466] text-sm font-semibold mb-6 shadow-sm">
-              <Info size={14} className="text-[#0A2540]" />
-              Data-driven college recommendations
-            </div>
             <h1 className="text-4xl lg:text-6xl font-bold text-[#0A2540] leading-[1.1] tracking-tight mb-6">
               Make confident decisions about your college education.
             </h1>
