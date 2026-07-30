@@ -27,7 +27,7 @@
  */
 
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Search, Compass, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard } from 'lucide-react';
+import { Search, Compass, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -62,6 +62,7 @@ export default function PageShell() {
  {isAuthenticated && !isLandingPage && (
  <nav className="hidden lg:flex items-center gap-1">
  <NavLink to="/dashboard" icon={<LayoutDashboard size={17} />} label="Dashboard" active={location.pathname === '/dashboard'} />
+ <NavLink to="/for-you" icon={<Sparkles size={17} />} label="For You" active={location.pathname === '/for-you'} />
  <NavLink to="/search" icon={<Search size={17} />} label="Colleges" active={location.pathname === '/search'} />
  <NavLink to="/compare" icon={<GitCompareArrows size={17} />} label="Compare" active={location.pathname === '/compare'} />
  <NavLink to="/careers" icon={<Compass size={17} />} label="Careers" active={location.pathname === '/careers'} />
@@ -109,6 +110,7 @@ export default function PageShell() {
  <div className="lg:hidden bg-white border-t border-[#E3E8EF] px-4 py-4 space-y-1 animate-slide-up">
  {[
  { to: '/dashboard', label: 'Dashboard' },
+ { to: '/for-you', label: 'For You ✨' },
  { to: '/search', label: 'Colleges' },
  { to: '/compare', label: 'Compare Colleges' },
  { to: '/careers', label: 'Careers' },
@@ -150,8 +152,8 @@ export default function PageShell() {
  <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[#E3E8EF] z-[9999] pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
  <div className="flex items-center justify-around h-16">
  <MobileNavItem to="/dashboard" icon={<LayoutDashboard size={22} />} label="Home" active={location.pathname === '/dashboard'} />
+ <MobileNavItem to="/for-you" icon={<Sparkles size={22} />} label="For You" active={location.pathname === '/for-you'} />
  <MobileNavItem to="/search" icon={<Search size={22} />} label="Colleges" active={location.pathname === '/search'} />
- <MobileNavItem to="/compare" icon={<GitCompareArrows size={22} />} label="Compare" active={location.pathname === '/compare'} />
  <MobileNavItem to="/exams" icon={<GraduationCap size={22} />} label="Exams" active={location.pathname.startsWith('/exams')} />
  <MobileNavItem to="/profile" icon={<User size={22} />} label="Me" active={location.pathname === '/profile'} />
  </div>

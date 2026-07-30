@@ -9,6 +9,7 @@ const ExamHubPage = React.lazy(() => import('../pages/ExamHubPage'));
 const ExamDetailsPage = React.lazy(() => import('../pages/ExamDetailsPage'));
 const CareerExplorerPage = React.lazy(() => import('../pages/CareerExplorerPage'));
 const DashboardPage = React.lazy(() => import('../pages/DashboardPage'));
+const ForYouPage = React.lazy(() => import('../pages/ForYouPage'));
 const CollegeProfilePage = React.lazy(() => import('../pages/CollegeProfilePage'));
 const LoginPage = React.lazy(() => import('../pages/LoginPage'));
 const OnboardingPage = React.lazy(() => import('../pages/OnboardingPage'));
@@ -54,6 +55,7 @@ export default function App() {
  <Route element={<ProtectedRoute />}>
  <Route path="/onboarding"element={<OnboardingPage />} />
  <Route path="/dashboard"element={<DashboardPage />} />
+ <Route path="/for-you"element={<ForYouPage />} />
  <Route path="/profile"element={<ProfilePage />} />
  <Route path="/compare"element={<ComparePage />} />
  <Route path="/map"element={<MapPage />} />
