@@ -23,10 +23,9 @@ frontend/src/
 ├── app/App.tsx                  ← Route tree (all 13 pages, lazy-loaded)
 │
 ├── api/mocks/                   ← Static datasets (no live API calls yet)
-│   ├── colleges.ts              ← 100+ colleges
+│   ├── colleges.ts              ← Private colleges database
 │   ├── exams.ts                 ← 50+ exams
 │   ├── careers.ts               ← Career paths
-│   ├── gov-colleges.ts          ← Government colleges subset
 │   └── transit-nodes.ts         ← Airports & railway stations
 │
 ├── components/

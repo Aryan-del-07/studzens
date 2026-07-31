@@ -28,6 +28,7 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Removed
 - **Careers Nav:** Removed the "Careers" link from desktop and mobile `PageShell` navigation to reduce clutter.
+- **Government & Semi-Government Colleges:** Removed all government-owned colleges (IITs, NITs, IIITs, NLUs, DU, JNU, BHU, AIIMS, MAMC) and Semi-Government entries from the college database. The `Ownership` type now only contains `'Private'`. The `gov-colleges.ts` mock file has been emptied. The Search page filter sidebar no longer shows a "Government" tab.
 - **Landing Page Elements:** Removed the floating "Recommendation Categories" card and "Data-driven college recommendations" badge from the Hero section.
 - **Dashboard Recommendations:** Removed the full "Best Colleges For You" list from the dashboard, replacing it with a clean shortcut card linking to `/for-you`.
 - **Exam Readiness:** Removed the "Preparation Readiness" section from the Exams page.
@@ -46,7 +47,7 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Compare Page:** Side-by-side college comparison with metric highlights.
 - **Exam Details Page:** Full detail view for each exam — pattern, eligibility, important dates, counselling.
 - **College Profile Page:** Comprehensive college detail with tabs for Overview, Programmes, Placements, Facilities, and Reviews.
-- **Mock Datasets:** Rich static data for `colleges.ts` (100+ colleges), `exams.ts` (50+ exams), `careers.ts`, `gov-colleges.ts`, and `transit-nodes.ts`.
+- **Mock Datasets:** Rich static data for `colleges.ts` (private colleges only), `exams.ts` (50+ exams), `careers.ts`, and `transit-nodes.ts`.
 - **Error Boundary:** Global `ErrorBoundary` component wrapping the entire route tree.
 - **Custom Hooks:** `useLocalStorage` and `useSearch` added to `src/hooks/`.
 

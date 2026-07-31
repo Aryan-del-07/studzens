@@ -37,10 +37,9 @@ frontend/
 │   │
 │   ├── api/
 │   │   └── mocks/               ← Static TypeScript datasets (no real API calls yet)
-│   │       ├── colleges.ts      ← 100+ Indian colleges with full metadata
+│   │       ├── colleges.ts      ← Private colleges with full metadata
 │   │       ├── exams.ts         ← 50+ national & state entrance exams
 │   │       ├── careers.ts       ← Career paths with required exams & salary data
-│   │       ├── gov-colleges.ts  ← Government college subset for map layer
 │   │       └── transit-nodes.ts ← Railway stations & airports for transport access
 │   │
 │   ├── components/

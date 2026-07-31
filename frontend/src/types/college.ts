@@ -28,7 +28,7 @@ export type CollegeCategory =
  | 'Law'
  | 'Design';
 
-export type Ownership = 'Government' | 'Private' | 'Semi-Government';
+export type Ownership = 'Private';
 export type Tier = 'Tier 1' | 'Tier 2' | 'Tier 3';
 
 export type Subject =

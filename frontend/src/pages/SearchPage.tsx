@@ -5,7 +5,7 @@ import { colleges } from '../api/mocks/colleges';
 import { useSearch } from '../hooks/useSearch';
 import { useBookmarks } from '../contexts/BookmarkContext';
 
-type TabType = 'All' | 'Government' | 'Private';
+type TabType = 'All' | 'Private';
 type SortType = 'relevance' | 'lowest-fees' | 'highest-fees';
 
 
@@ -73,7 +73,7 @@ export default function SearchPage() {
  </h3>
  <div className="space-y-2">
  <p className="text-xs font-semibold text-[#9DA6B4] uppercase tracking-wider mb-2">Institution Type</p>
- {(['All', 'Government', 'Private'] as TabType[]).map(type => (
+ {(['All', 'Private'] as TabType[]).map(type => (
  <button
  key={type}
  onClick={() => setActiveTab(type)}
