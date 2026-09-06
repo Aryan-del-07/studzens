@@ -579,48 +579,92 @@ export default function CollegeProfilePage() {
  </tbody>
  </table>
  </div>
- </div>
 
  <div className="grid md:grid-cols-2 gap-8">
- {/* Trends Bar Chart */}
- <div className="sz-card p-6 md:p-8 space-y-6">
- <h3 className="text-lg font-bold text-[#0A2540] font-sans">Placement Package Progression</h3>
- 
- {/* SVG Chart */}
- <div className="space-y-6 pt-4">
- {intelligence.placementTrends.map((trend, idx) => (
- <div key={idx} className="space-y-2">
- <div className="flex justify-between text-sm font-semibold font-sans">
- <span className="text-[#0A2540]">{trend.year}</span>
- <span className="text-[#697386]">
- Avg: <span className="text-[#0BBF8A] font-bold">₹{trend.avgPackageLpa}L</span> | Max: <span className="text-black font-bold">₹{trend.highestPackageLpa}L</span>
- </span>
- </div>
- 
- {/* Progress indicators as standard charts */}
- <div className="space-y-1.5">
- {/* Highest Package bar */}
- <div className="w-full bg-slate-50 h-2.5 rounded-full overflow-hidden">
- <div 
- className="bg-black h-full rounded-full transition-all duration-500"
- style={{ width: `${Math.min(100, (trend.highestPackageLpa / 100) * 100)}%` }}
- />
- </div>
- {/* Average Package bar */}
- <div className="w-full bg-slate-50 h-2.5 rounded-full overflow-hidden">
- <div 
- className="bg-[#0BBF8A] h-full rounded-full transition-all duration-500"
- style={{ width: `${Math.min(100, (trend.avgPackageLpa / 30) * 100)}%` }}
- />
- </div>
- </div>
- </div>
- ))}
- <div className="text-[10px] text-[#697386] font-sans text-center mt-2">
- Relative progress comparison for Average (teal) vs Highest (black) package.
- </div>
- </div>
- </div>
+    {/* Clean 3-Year Vertical Grouped Bar Graph */}
+    <div className="sz-card p-6 md:p-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <div>
+          <h3 className="text-lg font-bold text-[#0A2540] font-sans">Placement Package Comparison (Bar Chart)</h3>
+          <p className="text-xs text-[#697386]">Visual year-on-year average vs. highest CTC growth</p>
+        </div>
+
+        {/* Legend */}
+        <div className="flex items-center gap-4 text-xs font-semibold font-sans">
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded bg-[#0BBF8A]"></span>
+            <span className="text-[#0A2540]">Average Package</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded bg-[#635BFF]"></span>
+            <span className="text-[#0A2540]">Highest Offer</span>
+          </div>
+        </div>
+      </div>
+          </div>
+
+          {/* Chart Canvas Container */}
+          <div className="relative pt-6 pb-2">
+            {/* Y-Axis Grid Lines */}
+            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8 text-[10px] text-slate-300">
+              <div className="border-b border-dashed border-slate-200 flex justify-between"><span>Max</span></div>
+              <div className="border-b border-dashed border-slate-200 flex justify-between"><span>Mid</span></div>
+              <div className="border-b border-slate-200 flex justify-between"><span>0 LPA</span></div>
+            </div>
+
+            {/* Vertical Bar Columns */}
+            <div className="relative z-10 grid grid-cols-3 gap-6 h-56 items-end pt-4 px-4">
+              {intelligence.placementTrends.map((trend) => {
+                const maxScale = Math.max(80, Math.max(...intelligence.placementTrends.map(t => t.highestPackageLpa)));
+                const avgHeight = Math.max(14, (trend.avgPackageLpa / maxScale) * 100);
+                const maxHeight = Math.max(18, (trend.highestPackageLpa / maxScale) * 100);
+
+                return (
+                  <div key={trend.year} className="flex flex-col items-center h-full justify-end group">
+                    {/* Grouped Bars Container */}
+                    <div className="flex items-end gap-2 sm:gap-3 w-full justify-center h-full pb-1">
+                      {/* Average Bar */}
+                      <div className="relative flex flex-col items-center w-6 sm:w-10 group/bar">
+                        <span className="absolute -top-7 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded pointer-events-none whitespace-nowrap z-20 shadow-md">
+                          Avg: ₹{trend.avgPackageLpa} LPA
+                        </span>
+                        <span className="text-[10px] font-extrabold text-[#0BBF8A] mb-1 font-sans block">
+                          ₹{trend.avgPackageLpa}L
+                        </span>
+                        <div 
+                          className="w-full bg-[#0BBF8A] rounded-t-md hover:brightness-110 transition-all duration-500 shadow-sm"
+                          style={{ height: `${avgHeight}%` }}
+                        />
+                      </div>
+
+                      {/* Highest Bar */}
+                      <div className="relative flex flex-col items-center w-6 sm:w-10 group/bar">
+                        <span className="absolute -top-7 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-[#635BFF] text-white text-[10px] font-bold px-1.5 py-0.5 rounded pointer-events-none whitespace-nowrap z-20 shadow-md">
+                          Max: ₹{trend.highestPackageLpa} LPA
+                        </span>
+                        <span className="text-[10px] font-extrabold text-[#635BFF] mb-1 font-sans block">
+                          ₹{trend.highestPackageLpa}L
+                        </span>
+                        <div 
+                          className="w-full bg-[#635BFF] rounded-t-md hover:brightness-110 transition-all duration-500 shadow-sm"
+                          style={{ height: `${maxHeight}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Year X-Axis Label */}
+                    <div className="pt-2 border-t-2 border-slate-200 w-full text-center">
+                      <span className="text-xs font-extrabold text-[#0A2540] font-sans block">{trend.year} Drive</span>
+                      <span className="text-[10px] text-[#697386] font-medium block">
+                        {trend.placementRate ? `${trend.placementRate}% Placed` : 'Placed'}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
  {/* Sector Allocation */}
  <div className="sz-card p-6 md:p-8 space-y-6">
