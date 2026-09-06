@@ -18,9 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = config('DEBUG', default=False, cast=bool)
-
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv()) if DEBUG else config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['*']
 
 # ---------------------------------------------------------------------------
 # Applications
@@ -161,12 +159,5 @@ SIMPLE_JWT = {
 # CORS — Allow React frontend origins
 # ---------------------------------------------------------------------------
 
-CORS_ALLOWED_ORIGINS = config(
-    'FRONTEND_ORIGINS',
-    default='http://localhost:5173,http://localhost:4173',
-    cast=Csv(),
-)
-
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
