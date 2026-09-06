@@ -1,225 +1,161 @@
 # StudZens
 
-An AI-powered college recommendation platform for Indian students. Enter your entrance exam scores, get colleges ranked by how well they match — no spreadsheets, no guessing.
+An AI-powered college intelligence and recommendation platform for Indian students. Enter your entrance exam scores, get colleges ranked by how well they match — no spreadsheets, no guessing.
 
-**[Live Demo](https://studzens-frontend-production.up.railway.app)** · **[Architecture Docs](./docs/ARCHITECTURE.md)** · **[Full Documentation](./docs/)**
+**[Live Web App](https://frontend-git-main-stuzen.vercel.app)** · **[Backend API](./docs/BACKEND_ARCHITECTURE.md)** · **[Full Architecture Docs](./docs/ARCHITECTURE.md)**
 
 ---
 
-## The Problem
+## 🎯 The Problem
 
-Every year, millions of Indian students take entrance exams like JEE, NEET, BITSAT, and CLAT. After results come out, they face the same problem: *which colleges can I actually get into?*
+Every year, millions of Indian students take entrance exams like JEE Advanced, JEE Main, NEET, BITSAT, and UGEE. After results come out, they face a stressful question: *which colleges can I actually get into?*
 
-The current process involves manually cross-referencing cutoff lists across dozens of colleges, comparing fees, checking placements, and hoping you don't miss a good option. Most students either rely on expensive counselors or make decisions with incomplete information.
+The current process involves manually cross-referencing cutoff lists across dozens of colleges, comparing fees, checking placements, and hoping you don't miss a great option. Most students either rely on expensive counselors or make decisions with incomplete information.
 
-## What StudZens Does
+## 🚀 What StudZens Does
 
-Students enter their exam scores. StudZens runs a scoring algorithm that ranks every college in the database as **Safe Reach**, **Safe**, or **Safe Backup** based on the student's specific profile — scores, budget, preferred stream, and location.
+Students enter their exam scores, budget, location preferences, and target stream. StudZens runs an intelligent match algorithm that classifies and ranks colleges as **Dream**, **Target**, or **Safety** based on the student's specific profile.
 
 Beyond matching, students can:
-- Compare colleges side-by-side on every metric
-- Explore 50+ entrance exams with deadlines and syllabus info
-- Discover career paths and which exams lead to them
-- View colleges on an interactive map with state-wise density
-- Get a personalized dashboard with exam countdowns and daily priorities
+- **Compare Colleges**: Side-by-side comparison on every metric (NIRF rank, avg package LPA, annual fee, facilities, programs)
+- **Exam Command Center**: 50+ national and state entrance exams with deadlines, levels, and syllabus info
+- **Career Explorer**: Discover career paths, required entrance exams, and connected institutions
+- **Interactive Density Map**: MapLibre GL map displaying state-wise college density and location pins
+- **Student Dashboard**: Exam countdowns, match recommendations, readiness score, and daily priorities
+- **Django Control Center**: Production-ready Admin Portal (`/admin/`) for institutional data management
 
 ---
 
-## Features
+## ✨ Features
 
 | Feature | Description |
-|---------|-------------|
+|---|---|
 | **Match Scoring** | Ranks colleges 0–100 based on eligibility, budget fit, and stream alignment |
-| **Safe / Reach / Backup** | Every college gets an instant label so students know their odds |
-| **College Search & Filter** | Filter by state, stream, fees, ownership, and tier |
-| **Side-by-Side Compare** | Compare any colleges on programmes, fees, placements, and facilities |
-| **Exam Hub** | 50+ national and state exams with deadlines, patterns, and syllabus |
+| **Dream / Target / Safety** | Every college gets an instant label so students know their exact admission odds |
+| **College Search & Filter** | Real-time filtering by state, city, tier (`TIER_1`, `TIER_2`, `TIER_3`), ownership, and fee |
+| **Side-by-Side Compare** | Compare colleges on programmes, fees, placements, and facilities |
+| **Exam Hub** | 50+ national and state exams with deadlines, patterns, and levels |
 | **Career Explorer** | Discover career paths, required exams, and connected colleges |
 | **Interactive Map** | MapLibre GL map with state-wise college density |
 | **Personalized Dashboard** | Exam countdowns, match recommendations, readiness score, daily priorities |
-| **Bookmarks & Notifications** | Save colleges, get deadline reminders and match updates |
-| **Mobile Responsive** | Full mobile layout with bottom tab navigation |
+| **Django Admin Portal** | Full backoffice management interface (`/admin/`) for colleges, programs, placements, reviews & users |
+| **JWT Authentication** | Secure token-based registration & authentication via SimpleJWT |
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
-StudZens is a **monorepo** with three packages managed via npm workspaces:
+StudZens uses a modern decoupled architecture:
 
 ```
 studzens/
-├── frontend/   →  React 19 + Vite 8 SPA         (deployed on Railway)
-├── backend/    →  Express 4 + Node 22 REST API   (deployed on Railway)
-└── database/   →  Prisma schema + seed data      (Neon PostgreSQL)
+├── frontend/   →  React 19 + Vite 8 SPA          (deployed on Vercel / Railway)
+├── backend/    →  Django 5 + REST Framework API  (deployed on Railway with Gunicorn)
+└── docs/       →  Comprehensive System & Architecture Documentation
 ```
 
 ```
-Browser  ──HTTPS──▶  Vite Preview (Railway)
-Browser  ──REST──▶   Express API  (Railway)
-Express  ──Prisma──▶ Neon PostgreSQL
+Browser  ──HTTPS──▶  React 19 SPA (Vercel)
+Browser  ──REST──▶   Django 5 REST API (Railway / Gunicorn)
+Django   ──psycopg──▶ Neon PostgreSQL (Cloud DB)
 ```
 
 ### Frontend
-- **13 route-level pages** with React.lazy code-splitting
-- **4 React contexts** for auth, bookmarks, notifications, and student profile
-- **Protected routes** for authenticated features (dashboard, profile, onboarding)
-- **Custom hooks** for localStorage persistence and search
+- **React 19 & Vite 8 SPA** with fast HMR and route-level code splitting
+- **4 React Contexts** for auth, bookmarks, notifications, and student profile
+- **MapLibre GL & Tailwind CSS** for responsive map visualizations & dynamic UI
 
 ### Backend
-- Express with Helmet (security headers), CORS, and JSON middleware
-- RESTful routes: `/api/colleges`, `/api/users`, `/api/reviews`
-- Zod for request validation
-- Prisma Client for type-safe database queries
+- **Django 5.1 & Django REST Framework 3.15** REST API
+- **SimpleJWT** for access & refresh token authentication
+- **Django Filter & SearchBackends** for real-time querying (`?search=`, `?tier=`, `?ownership=`)
+- **Built-in Admin Panel** (`/admin/`) for administrative management
 
 ### Database
-- PostgreSQL on Neon (serverless)
-- 9 models: User, Profile, College, Program, Placement, Review, Exam, Bookmark, Facility
-- Seed script populates 100+ colleges and 50+ exams
-- Indexed on common query patterns (city/state, tier, college+year)
-
-> Full architecture diagrams → [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+- **Neon PostgreSQL** serverless cloud database
+- **10 Django ORM Models**: `User`, `Profile`, `College`, `Program`, `Placement`, `Review`, `Exam`, `CollegeExam`, `Bookmark`, `Facility`
+- Indexed on common query patterns (`city`, `state`, `tier`, `ownership`)
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technology | Why |
-|-------|-----------|-----|
-| **Frontend** | React 19, TypeScript, Tailwind CSS 4, Vite 8 | Modern SPA with fast HMR and utility-first styling |
+|---|---|---|
+| **Frontend** | React 19, TypeScript, Tailwind CSS, Vite 8 | Modern SPA with ultra-fast HMR and utility-first styling |
 | **Routing** | React Router v7 | Nested layouts, protected routes, lazy loading |
-| **Maps** | MapLibre GL + react-map-gl | Open-source, no API key required for map tiles |
-| **Icons** | Lucide React | Consistent, tree-shakeable icon set |
-| **Backend** | Express 4, Node.js 22, TypeScript | Lightweight REST API with middleware ecosystem |
-| **Validation** | Zod | Runtime request validation with TypeScript inference |
-| **ORM** | Prisma | Type-safe queries, schema-as-code, migrations |
-| **Database** | Neon PostgreSQL | Serverless Postgres with connection pooling |
-| **Deployment** | Railway | Both frontend (static preview) and backend (always-on) |
+| **Maps** | MapLibre GL | Open-source vector maps without API key restrictions |
+| **Backend** | Django 5.1, Django REST Framework 3.15, Python 3.14 | Robust, batteries-included REST API with built-in ORM, admin & security |
+| **Auth** | SimpleJWT | JSON Web Token authentication with refresh token support |
+| **Filtering** | `django-filter` | Declarative URL query parameters for backend search & filtering |
+| **Database** | Neon PostgreSQL | High-performance serverless PostgreSQL |
+| **Deployment** | Gunicorn + Railway / Vercel | Production WSGI app server & static CDN host |
 
 ---
 
-## How It Works
-
-```
-1. Student signs up → completes onboarding wizard (exam scores, budget, stream, location)
-2. Scoring engine runs → ranks all colleges against the student's profile
-3. Dashboard shows → top matches, exam countdowns, readiness score, daily priorities
-4. Student explores → search, filter, compare colleges, view on map
-5. Student saves → bookmark colleges as Dream / Target / Safety
-```
-
-The core scoring logic lives in [`collegeIntelligence.ts`](./frontend/src/utils/collegeIntelligence.ts) — it calculates match scores based on eligibility against cutoffs, budget fit (penalizes colleges exceeding the student's budget), and stream alignment.
-
----
-
-## Running Locally
+## ⚡ Running Locally
 
 ### Prerequisites
+- **Python 3.10+** (`python --version`)
+- **Node.js 18+** (`node -v`)
+- **Git** (`git --version`)
 
-| Tool | Version | Check |
-|------|---------|-------|
-| Node.js | 18+ | `node -v` |
-| npm | 8+ | `npm -v` |
-| Git | Any | `git --version` |
-
-You'll also need a free [Neon](https://neon.tech) PostgreSQL database (takes 30 seconds to set up).
-
-### Setup
+### 1. Setup Backend (Django)
 
 ```bash
-# Clone and install all workspaces
-git clone https://github.com/Aryan-del-07/studzens.git
+# Navigate to project root
 cd studzens
+
+# Create and activate virtual environment
+python -m venv .venv
+.\.venv\Scripts\activate   # Windows (or source .venv/bin/activate on Linux/Mac)
+
+# Install Python dependencies
+pip install -r backend/requirements.txt
+
+# Run migrations against database
+python backend/manage.py migrate
+
+# Seed sample data (colleges, exams, programs, admin user)
+python backend/seed.py
+
+# Start Django development server
+python backend/manage.py runserver
+# API running at http://localhost:8000/api/
+# Admin running at http://localhost:8000/admin/
+```
+
+### 2. Setup Frontend (React)
+
+```bash
+# Install frontend dependencies
 npm install
 
-# Set up environment variables
-# database/.env and backend/.env both need:
-# DATABASE_URL="postgres://user:password@ep-xxxx.aws.neon.tech/neondb?sslmode=require"
-
-# Initialize the database
-cd database
-npx prisma generate
-npx prisma db push
-npm run db:seed        # Seeds 100+ colleges and 50+ exams
-cd ..
-
-# Start everything
+# Start Vite development server
 npm run dev
-# Frontend → http://localhost:5173
-# Backend  → http://localhost:3000
+# Frontend running at http://localhost:5173
 ```
 
 ---
 
-## Current Status
+## 📚 API Overview
 
-### ✅ Complete (Milestone 1)
-- Full React SPA with 13 pages, 4 contexts, and protected routing
-- College scoring engine with Safe/Reach/Backup classification
-- Express backend with Prisma ORM and Neon PostgreSQL
-- 100+ colleges and 50+ exams seeded with real data
-- Interactive MapLibre GL map with state-wise density
-- Career explorer, exam hub, side-by-side compare
-- Mobile responsive layout
-- Deployed on Railway (frontend + backend)
-
-### 🔄 In Progress (Milestone 2)
-- Connecting frontend to live backend API (currently using mock data on the frontend)
-- JWT-based authentication (replacing mock auth context)
-- Server-side college search with pagination and filtering
-- Bookmark sync to database
-
-### 🔮 Planned
-- AI counselor chatbot (Gemini integration)
-- "What-if" simulator — raise your score by X, see how many new colleges open up
-- Exam score trend analysis against historical cutoffs
-- Personalized deadline notifications
-
-> Full roadmap → [`docs/ROADMAP.md`](./docs/ROADMAP.md)
+| Endpoint | Method | Description | Auth Required |
+|---|---|---|---|
+| `/api/health/` | GET | Health check status | No |
+| `/api/auth/register/` | POST | Register a new user | No |
+| `/api/auth/login/` | POST | Login and obtain JWT tokens | No |
+| `/api/auth/refresh/` | POST | Refresh JWT access token | No |
+| `/api/auth/me/` | GET, PATCH | Retrieve/update user profile | Yes |
+| `/api/colleges/` | GET | List/search/filter colleges | No |
+| `/api/colleges/stats/` | GET | Real-time aggregate college metrics | No |
+| `/api/exams/` | GET | List entrance exams | No |
+| `/api/reviews/` | GET, POST | Read or submit college reviews | POST: Yes |
+| `/api/bookmarks/` | GET, POST, DELETE | Manage saved college bookmarks | Yes |
+| `/admin/` | GET, POST | Django Admin Portal | Staff/Admin |
 
 ---
 
-## Screenshots
-
-> Screenshots coming soon. Key screens to capture:
-> 1. Landing page hero
-> 2. Dashboard with match recommendations
-> 3. College profile page (programmes, placements, facilities tabs)
-> 4. Side-by-side compare view
-> 5. Interactive map
-> 6. Exam Hub
-> 7. Mobile responsive layout
-
----
-
-## Documentation
-
-All documentation lives in [`docs/`](./docs/):
-
-| Document | Covers |
-|----------|--------|
-| [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | System diagram, package graph, design decisions |
-| [`FRONTEND_ARCHITECTURE.md`](./docs/FRONTEND_ARCHITECTURE.md) | Component hierarchy, routing, styling |
-| [`BACKEND_ARCHITECTURE.md`](./docs/BACKEND_ARCHITECTURE.md) | Express routes, middleware, API reference |
-| [`DATABASE_ARCHITECTURE.md`](./docs/DATABASE_ARCHITECTURE.md) | Prisma schema, ER diagram, all models |
-| [`DEPLOYMENT_ARCHITECTURE.md`](./docs/DEPLOYMENT_ARCHITECTURE.md) | Railway setup, env vars, deployment flow |
-| [`STATE_MANAGEMENT.md`](./docs/STATE_MANAGEMENT.md) | React contexts and custom hooks |
-| [`ROADMAP.md`](./docs/ROADMAP.md) | What's done and what's next |
-| [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md) | How to contribute |
-
----
-
-## Contributing
-
-1. Fork → `git clone` → `npm install`
-2. Create a branch: `git checkout -b feature/your-feature`
-3. Make changes, build: `npm run build --workspace=@studzens/frontend`
-4. Commit: `git commit -m "feat: your feature description"`
-5. Push and open a Pull Request
-
-Full guide → [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md)
-
----
-
-## License
+## 📄 License
 
 MIT — use it freely, just give credit.
