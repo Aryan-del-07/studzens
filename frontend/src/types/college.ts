@@ -110,6 +110,7 @@ export interface College {
  streams: Stream[];
  subjects: Subject[];
  programs: string[];
+ placements?: any[];
  vibe: string;
  boardComfort: number;
  website: string;

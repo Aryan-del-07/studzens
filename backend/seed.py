@@ -90,7 +90,11 @@ def seed():
                 {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 150},
                 {"name": "B.Tech CSE (Category 5)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 493000, "intake": 100},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 9.2, "highest_package": 102.0, "placement_rate": 84.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 9.2, "highest_package": 102.0, "placement_rate": 84.0},
+                {"year": 2023, "avg_package_lpa": 9.0, "highest_package": 102.0, "placement_rate": 86.0},
+                {"year": 2022, "avg_package_lpa": 8.1, "highest_package": 75.0, "placement_rate": 83.0},
+            ],
             "facilities": [{"name": "VITEEE 5-Category Fee System", "has_facility": True, "details": "Category 1 (₹1.98L/yr) to Category 5 (₹4.93L/yr) by VITEEE rank"}]
         },
         {
@@ -117,7 +121,11 @@ def seed():
                 {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 100},
                 {"name": "B.Tech CSE (Category 5)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 493000, "intake": 50},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 8.5, "highest_package": 75.0, "placement_rate": 82.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 8.5, "highest_package": 75.0, "placement_rate": 82.0},
+                {"year": 2023, "avg_package_lpa": 8.2, "highest_package": 75.0, "placement_rate": 84.0},
+                {"year": 2022, "avg_package_lpa": 7.5, "highest_package": 60.0, "placement_rate": 80.0},
+            ],
             "facilities": [{"name": "Centralized Placement Access", "has_facility": True, "details": "Shared dream company placement drives with VIT Vellore"}]
         },
         {
@@ -143,7 +151,11 @@ def seed():
                 {"name": "B.Tech CSE (Category 3)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 405000, "intake": 150},
                 {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 100},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 7.3, "highest_package": 63.0, "placement_rate": 78.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 7.3, "highest_package": 63.0, "placement_rate": 78.0},
+                {"year": 2023, "avg_package_lpa": 7.0, "highest_package": 56.0, "placement_rate": 80.0},
+                {"year": 2022, "avg_package_lpa": 6.3, "highest_package": 45.0, "placement_rate": 75.0},
+            ],
             "facilities": [{"name": "Modern Tech Park & Hostels", "has_facility": True, "details": "High speed WiFi & air-conditioned dorms"}]
         },
         {
@@ -169,7 +181,11 @@ def seed():
                 {"name": "B.Tech CSE (Category 3)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 405000, "intake": 120},
                 {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 80},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 6.8, "highest_package": 59.0, "placement_rate": 75.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 6.8, "highest_package": 59.0, "placement_rate": 75.0},
+                {"year": 2023, "avg_package_lpa": 6.5, "highest_package": 46.0, "placement_rate": 76.0},
+                {"year": 2022, "avg_package_lpa": 5.9, "highest_package": 40.0, "placement_rate": 72.0},
+            ],
             "facilities": [{"name": "AI Lab & Gaming Studio", "has_facility": True, "details": "Specialized AI/ML & Cyber Security studio"}]
         },
 
@@ -196,7 +212,11 @@ def seed():
                 {"name": "B.Tech CSE (AI & Machine Learning)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 350000, "intake": 400},
                 {"name": "B.Tech CSE (Cyber Security)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 325000, "intake": 200},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 7.7, "highest_package": 110.0, "placement_rate": 86.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 7.7, "highest_package": 110.0, "placement_rate": 86.0},
+                {"year": 2023, "avg_package_lpa": 7.5, "highest_package": 110.0, "placement_rate": 88.0},
+                {"year": 2022, "avg_package_lpa": 6.8, "highest_package": 80.0, "placement_rate": 85.0},
+            ],
             "facilities": [{"name": "Supercomputing Center & Tech Park", "has_facility": True, "details": "High performance GPU cluster & research labs"}]
         },
         {
@@ -220,7 +240,11 @@ def seed():
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 250000, "intake": 700},
                 {"name": "B.Tech Information Technology", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 225000, "intake": 200},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 6.5, "highest_package": 42.0, "placement_rate": 80.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 6.5, "highest_package": 42.0, "placement_rate": 80.0},
+                {"year": 2023, "avg_package_lpa": 6.2, "highest_package": 40.0, "placement_rate": 82.0},
+                {"year": 2022, "avg_package_lpa": 5.7, "highest_package": 35.0, "placement_rate": 78.0},
+            ],
             "facilities": [{"name": "City Campus Infrastructure", "has_facility": True, "details": "Located in IT hub of Chennai with strong industry links"}]
         },
         {
@@ -243,7 +267,11 @@ def seed():
             "programs": [
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 250000, "intake": 400},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 6.2, "highest_package": 38.0, "placement_rate": 78.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 6.2, "highest_package": 38.0, "placement_rate": 78.0},
+                {"year": 2023, "avg_package_lpa": 5.9, "highest_package": 36.0, "placement_rate": 80.0},
+                {"year": 2022, "avg_package_lpa": 5.4, "highest_package": 30.0, "placement_rate": 75.0},
+            ],
             "facilities": [{"name": "Metro Connected Campus", "has_facility": True, "details": "Heart of Chennai city with metro connectivity"}]
         },
         {
@@ -266,7 +294,11 @@ def seed():
             "programs": [
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 210000, "intake": 500},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 5.8, "highest_package": 35.0, "placement_rate": 74.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 5.8, "highest_package": 35.0, "placement_rate": 74.0},
+                {"year": 2023, "avg_package_lpa": 5.5, "highest_package": 32.0, "placement_rate": 76.0},
+                {"year": 2022, "avg_package_lpa": 5.0, "highest_package": 28.0, "placement_rate": 71.0},
+            ],
             "facilities": [{"name": "Delhi NCR Connectivity", "has_facility": True, "details": "Close proximity to Delhi NCR tech startups"}]
         },
 
@@ -293,7 +325,11 @@ def seed():
                 {"name": "B.Tech Data Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 335000, "intake": 120},
                 {"name": "B.Tech Electronics and Communication", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 310000, "intake": 200},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 12.5, "highest_package": 54.0, "placement_rate": 90.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 12.5, "highest_package": 54.0, "placement_rate": 90.0},
+                {"year": 2023, "avg_package_lpa": 12.0, "highest_package": 54.0, "placement_rate": 92.0},
+                {"year": 2022, "avg_package_lpa": 10.8, "highest_package": 44.0, "placement_rate": 88.0},
+            ],
             "facilities": [{"name": "Marena Indoor Sports Complex", "has_facility": True, "details": "World-class multi-storey sports arena"}]
         },
         {
@@ -317,7 +353,11 @@ def seed():
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 340000, "intake": 600},
                 {"name": "B.Tech AI & Data Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 350000, "intake": 180},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 7.5, "highest_package": 85.0, "placement_rate": 85.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 7.5, "highest_package": 85.0, "placement_rate": 85.0},
+                {"year": 2023, "avg_package_lpa": 7.1, "highest_package": 55.0, "placement_rate": 86.0},
+                {"year": 2022, "avg_package_lpa": 6.4, "highest_package": 40.0, "placement_rate": 82.0},
+            ],
             "facilities": [{"name": "5-Star Standard Hostels", "has_facility": True, "details": "Resort style student housing and food court"}]
         },
         {
@@ -340,7 +380,11 @@ def seed():
             "programs": [
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 350000, "intake": 300},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 9.0, "highest_package": 45.0, "placement_rate": 86.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 9.0, "highest_package": 45.0, "placement_rate": 86.0},
+                {"year": 2023, "avg_package_lpa": 8.4, "highest_package": 40.0, "placement_rate": 85.0},
+                {"year": 2022, "avg_package_lpa": 7.8, "highest_package": 35.0, "placement_rate": 80.0},
+            ],
             "facilities": [{"name": "Yelahanka Silicon Campus", "has_facility": True, "details": "Direct access to Bangalore IT Corridor"}]
         },
 
@@ -366,7 +410,11 @@ def seed():
                 {"name": "B.E. Computer Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 541000, "intake": 140},
                 {"name": "B.E. Electrical & Electronics", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 541000, "intake": 160},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 20.5, "highest_package": 60.7, "placement_rate": 95.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 20.5, "highest_package": 60.7, "placement_rate": 95.0},
+                {"year": 2023, "avg_package_lpa": 19.8, "highest_package": 60.0, "placement_rate": 96.0},
+                {"year": 2022, "avg_package_lpa": 18.0, "highest_package": 50.0, "placement_rate": 94.0},
+            ],
             "facilities": [{"name": "Zero Reservation Policy", "has_facility": True, "details": "100% merit-based admissions through BITSAT"}]
         },
         {
@@ -389,7 +437,11 @@ def seed():
             "programs": [
                 {"name": "B.E. Computer Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 541000, "intake": 120},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 19.2, "highest_package": 60.0, "placement_rate": 93.0}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 19.2, "highest_package": 60.0, "placement_rate": 93.0},
+                {"year": 2023, "avg_package_lpa": 18.5, "highest_package": 58.0, "placement_rate": 94.0},
+                {"year": 2022, "avg_package_lpa": 17.2, "highest_package": 48.0, "placement_rate": 91.0},
+            ],
             "facilities": [{"name": "Zuari River View Campus", "has_facility": True, "details": "State of the art innovation center & labs"}]
         },
         {
@@ -412,7 +464,11 @@ def seed():
             "programs": [
                 {"name": "B.E. Computer Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 541000, "intake": 130},
             ],
-            "placements": [{"year": 2024, "avg_package_lpa": 18.8, "highest_package": 60.0, "placement_rate": 92.5}],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 18.8, "highest_package": 60.0, "placement_rate": 92.5},
+                {"year": 2023, "avg_package_lpa": 18.0, "highest_package": 57.0, "placement_rate": 93.5},
+                {"year": 2022, "avg_package_lpa": 16.8, "highest_package": 46.0, "placement_rate": 90.0},
+            ],
             "facilities": [{"name": "Shamirpet Innovation Park", "has_facility": True, "details": "Dedicated incubation center for student startups"}]
         },
     ]

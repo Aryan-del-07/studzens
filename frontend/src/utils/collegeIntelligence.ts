@@ -26,9 +26,10 @@ export interface SectorAnalysis {
 }
 
 export interface PlacementTrend {
- year: number;
- avgPackageLpa: number;
- highestPackageLpa: number;
+  year: number;
+  avgPackageLpa: number;
+  highestPackageLpa: number;
+  placementRate?: number;
 }
 
 export interface SalaryRangeSpread {
@@ -232,13 +233,22 @@ export function getIntelligenceForCollege(college: College): CollegeIntelligence
  ];
  }
 
- // 6. Placement Trends
- const baseYear = 2023;
- const placementTrends: PlacementTrend[] = [
- { year: baseYear, avgPackageLpa: Math.round(avgPackageLpa * 0.9 * 10) / 10, highestPackageLpa: Math.round(avgPackageLpa * 2.8) },
- { year: baseYear + 1, avgPackageLpa: Math.round(avgPackageLpa * 0.95 * 10) / 10, highestPackageLpa: Math.round(avgPackageLpa * 3.1) },
- { year: baseYear + 2, avgPackageLpa: avgPackageLpa, highestPackageLpa: Math.round(avgPackageLpa * 3.5) }
- ];
+  // 6. Placement Trends (Prefer actual backend placements array if present)
+  let placementTrends: PlacementTrend[];
+  if (college.placements && Array.isArray(college.placements) && college.placements.length > 0) {
+    placementTrends = college.placements.map((p: any) => ({
+      year: p.year,
+      avgPackageLpa: p.avg_package_lpa ?? p.avgPackageLpa ?? 0,
+      highestPackageLpa: p.highest_package ?? p.highestPackageLpa ?? 0,
+      placementRate: p.placement_rate ?? p.placementRate ?? 80
+    })).sort((a: any, b: any) => a.year - b.year);
+  } else {
+    placementTrends = [
+      { year: 2022, avgPackageLpa: Math.round(avgPackageLpa * 0.9 * 10) / 10, highestPackageLpa: Math.round(avgPackageLpa * 2.8), placementRate: 80 },
+      { year: 2023, avgPackageLpa: Math.round(avgPackageLpa * 0.95 * 10) / 10, highestPackageLpa: Math.round(avgPackageLpa * 3.1), placementRate: 83 },
+      { year: 2024, avgPackageLpa: avgPackageLpa, highestPackageLpa: Math.round(avgPackageLpa * 3.5), placementRate: 85 }
+    ];
+  }
 
  // 7. Salary Spread
  let salarySpread: SalaryRangeSpread[];
