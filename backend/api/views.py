@@ -118,6 +118,25 @@ class CollegeViewSet(viewsets.ReadOnlyModelViewSet):
             return CollegeDetailSerializer
         return CollegeListSerializer
 
+    @action(detail=False, methods=['get'])
+    def stats(self, request):
+        """GET /api/colleges/stats/ — Overall system aggregate metrics."""
+        from django.db.models import Avg, Count
+        total_colleges = College.objects.count()
+        avg_package = College.objects.aggregate(Avg('avg_package_lpa'))['avg_package_lpa__avg'] or 0
+        total_exams = Exam.objects.count()
+
+        tier_counts = dict(
+            College.objects.values('tier').annotate(count=Count('id')).values_list('tier', 'count')
+        )
+
+        return Response({
+            'total_colleges': total_colleges,
+            'avg_package_lpa': round(avg_package, 2),
+            'total_exams': total_exams,
+            'tier_distribution': tier_counts,
+        })
+
 
 # ---------------------------------------------------------------------------
 # Exam ViewSet
