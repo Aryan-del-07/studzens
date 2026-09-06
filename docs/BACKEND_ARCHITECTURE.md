@@ -1,119 +1,56 @@
-# Studzens — Backend Architecture
+# Studzens Django Backend Architecture
 
 ## Overview
-
-The backend is a lightweight **Express 4** REST API written in **TypeScript 6**, running on **Node 22**. It acts as a thin data-access layer over the Prisma ORM, which connects to a **Neon PostgreSQL** database.
-
-> **Note:** The frontend currently uses static mock data. The backend is live and ready for integration — it will progressively replace mock data as the project matures.
-
----
-
-## Tech Stack
-
-| Tool | Version | Purpose |
-|---|---|---|
-| Node.js | 22 | Runtime |
-| TypeScript | 6 | Static typing |
-| Express | 4 | HTTP framework |
-| Prisma | 7 | ORM + query builder |
-| `@prisma/adapter-pg` | 7 | Prisma → `pg` driver adapter |
-| `pg` | 8 | PostgreSQL client |
-| `helmet` | 8 | HTTP security headers |
-| `cors` | 2 | Cross-origin resource sharing |
-| `dotenv` | 16 | Environment variable loading |
-| `zod` | 3 | Request body validation |
-| `tsx` | 4 | TypeScript watch runner (dev only) |
-
----
+Studzens backend is built using **Django 5.1** and **Django REST Framework (DRF)**, connected to a **Neon PostgreSQL** cloud database.
 
 ## Directory Structure
-
 ```
 backend/
-├── src/
-│   ├── index.ts          ← Express app setup + route registration
-│   ├── db.ts             ← Prisma Client singleton
-│   └── routes/
-│       ├── colleges.ts   ← /api/colleges
-│       ├── users.ts      ← /api/users
-│       └── reviews.ts    ← /api/reviews
-├── dist/                 ← Compiled JS output (tsc)
-├── tsconfig.json
-└── package.json          ← @studzens/backend
+├── api/
+│   ├── admin.py        # Custom Django Admin registrations
+│   ├── apps.py         # Django app config
+│   ├── migrations/     # Django ORM DB migrations
+│   ├── models.py       # User, Profile, College, Program, Placement, Review, Exam, CollegeExam, Bookmark, Facility
+│   ├── serializers.py  # DRF serializers for API serialization and validation
+│   ├── urls.py         # DRF routing for auth, health, colleges, exams, reviews, bookmarks
+│   └── views.py        # DRF ViewSets & JWT Auth API views
+├── studzens/
+│   ├── __init__.py
+│   ├── settings.py     # Django settings (Neon DB, SimpleJWT, CORS, django-filter)
+│   ├── urls.py         # Root URLconf
+│   └── wsgi.py         # Gunicorn WSGI production entrypoint
+├── manage.py           # Django CLI utility
+├── Procfile            # Deployment process definition (gunicorn studzens.wsgi)
+├── requirements.txt    # Python dependencies
+├── runtime.txt         # Python runtime version (3.14)
+└── seed.py             # Initial database seed script
 ```
 
----
-
-## Middleware Stack (in order)
-
-```
-Request
-  → helmet()          ← Adds X-Frame-Options, CSP, HSTS, etc.
-  → cors()            ← Allows cross-origin requests from the frontend
-  → express.json()    ← Parses JSON request bodies
-  → Route handlers
-Response
-```
-
----
+## Key Technologies
+- **Framework**: Django 5.1 & Django REST Framework 3.15
+- **Database**: PostgreSQL (Neon Serverless) via `psycopg` (v3)
+- **Auth**: `djangorestframework-simplejwt` (JSON Web Tokens)
+- **CORS**: `django-cors-headers`
+- **Filtering**: `django-filter`
+- **Production Server**: Gunicorn
 
 ## API Endpoints
+| Endpoint | Method | Description | Auth Required |
+| --- | --- | --- | --- |
+| `/api/health/` | GET | Health check status | No |
+| `/api/auth/register/` | POST | Register new user | No |
+| `/api/auth/login/` | POST | Login and receive JWT access/refresh tokens | No |
+| `/api/auth/refresh/` | POST | Refresh expired access token | No |
+| `/api/auth/me/` | GET, PATCH | Get / update user profile | Yes |
+| `/api/colleges/` | GET, POST | List/Filter colleges, create college | GET: No, POST: Admin |
+| `/api/colleges/{id}/` | GET, PUT, DELETE | College details | GET: No, Mod: Admin |
+| `/api/exams/` | GET | List available entrance exams | No |
+| `/api/reviews/` | GET, POST | College reviews | POST: Yes |
+| `/api/bookmarks/` | GET, POST, DELETE | User saved college bookmarks | Yes |
+| `/admin/` | GET, POST | Django Admin Portal | Staff/Admin |
 
-### Health
-
-| Method | Path | Response |
-|---|---|---|
-| `GET` | `/api/health` | `{ status: "ok", message: "..." }` |
-
-### Colleges
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/colleges` | Returns all colleges from the database |
-
-### Users
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/users` | Returns all users |
-| `POST` | `/api/users` | Creates a new user |
-
-### Reviews
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/reviews` | Returns all reviews |
-| `POST` | `/api/reviews` | Submits a new review |
-
----
-
-## Database Connection (`db.ts`)
-
-A **singleton** Prisma Client is exported so that the entire application shares one connection pool:
-
-```typescript
-// src/db.ts
-import { PrismaClient } from '@studzens/database';
-export const prisma = new PrismaClient();
+## Database Seeding
+To populate seed data:
+```bash
+python backend/seed.py
 ```
-
-The `DATABASE_URL` is loaded from the environment via `dotenv`.
-
----
-
-## Scripts
-
-```sh
-npm run dev    # tsx watch src/index.ts  (hot-reload on file change)
-npm run build  # tsc → dist/
-npm run start  # node dist/index.js  (production)
-```
-
----
-
-## Environment Variables
-
-| Variable | Required | Description |
-|---|---|---|
-| `DATABASE_URL` | ✅ | Full Neon/Postgres connection string |
-| `PORT` | Optional | HTTP port (defaults to `3000`) |

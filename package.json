@@ -2,12 +2,10 @@
   "name": "studzens-workspace",
   "private": true,
   "workspaces": [
-    "frontend",
-    "backend",
-    "database"
+    "frontend"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present"
+    "dev": "npm run dev --workspace=@studzens/frontend",
+    "build": "npm run build --workspace=@studzens/frontend"
   }
 }
