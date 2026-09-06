@@ -172,7 +172,7 @@ const DEFAULT_ATTRIBUTIONS = [
  */
 export function getIntelligenceForCollege(college: College): CollegeIntelligence {
  const { primaryCategory, tier, city, ownership, avgPackageLpa } = college;
- const isGov = ownership === 'Government';
+ const isGov = (ownership as string) === 'Government';
  const isTier1 = tier === 'Tier 1';
  const isTier2 = tier === 'Tier 2';
 
