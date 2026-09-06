@@ -12,4 +12,6 @@ if backend_path not in sys.path:
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "studzens.settings")
 
 from django.core.wsgi import get_wsgi_application
+
 app = get_wsgi_application()
+handler = app
