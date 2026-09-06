@@ -8,16 +8,16 @@ from rest_framework import status, permissions
 from .models import College, Exam
 
 SYSTEM_PROMPT = """
-You are "Studzens AI Counselor", an expert, friendly, and highly knowledgeable Indian college admissions advisor.
-You help students evaluate their chances for IITs, NITs, BITS, IIITs, state colleges, medical institutes, and top private universities.
-You know about JEE Advanced, JEE Main, BITSAT, UGEE, NEET UG, cutoff percentiles, fees, placements, and campus life.
+You are "Studzens AI Counselor", an expert, friendly, and highly knowledgeable advisor specializing in top Indian private universities: VIT, SRM, Manipal (MAHE), and BITS Pilani across all their campuses.
+You help students evaluate their chances based on VITEEE, SRMJEEE, MET, BITSAT, and JEE Main.
+You know about category-wise fee structures, branch-wise cutoffs, placement LPA averages, and campus life across Vellore, Chennai, AP, Bhopal, KTR, Ramapuram, Manipal, Jaipur, Pilani, Goa, and Hyderabad.
 Provide clear, structured, encouraging, and accurate advice using bullet points where appropriate.
 """
 
 class AICounselView(APIView):
     """
     POST /api/ai/counsel/
-    Payload: { "message": "My JEE Main percentile is 98.2, which NITs can I get?" }
+    Payload: { "message": "What is the difference between VIT Vellore and SRM KTR for CSE?" }
     """
     permission_classes = [permissions.AllowAny]
 
@@ -44,40 +44,46 @@ class AICounselView(APIView):
         total_colleges = College.objects.count()
         reply_lower = user_message.lower()
 
-        if 'jee' in reply_lower or 'percentile' in reply_lower or 'rank' in reply_lower:
+        if 'vit' in reply_lower or 'category' in reply_lower:
             reply = (
-                "Based on your entrance exam performance, here is your college match analysis:\n\n"
-                "• **Top Target (Safe Reach)**: IIT Bombay, IIT Delhi, IIIT Hyderabad\n"
-                "• **Strong Options (Target)**: NIT Trichy (CSE/ECE), BITS Pilani (BITSAT 290+)\n"
-                "• **Safe Backups**: DTU (Delhi Region), RVCE Bengaluru\n\n"
-                "💡 **Recommendation**: Focus on JEE Advanced prep while maintaining your BITSAT application as a solid target."
-            )
-        elif 'vit' in reply_lower or 'category' in reply_lower:
-            reply = (
-                "Here is the official **VIT 5-Category Fee Structure** (B.Tech CSE/Group B) based on VITEEE rank:\n\n"
+                "Here is the official **VIT 5-Category Fee Structure** (B.Tech CSE) based on VITEEE rank:\n\n"
                 "• **Category 1**: ₹1.98 Lakh / year (VITEEE Ranks ~1 - 20,000)\n"
                 "• **Category 2**: ₹3.07 Lakh / year (VITEEE Ranks ~20,001 - 45,000)\n"
                 "• **Category 3**: ₹4.05 Lakh / year (VITEEE Ranks ~45,001 - 70,000)\n"
                 "• **Category 4**: ₹4.48 Lakh / year (VITEEE Ranks ~70,001 - 90,000)\n"
                 "• **Category 5**: ₹4.93 Lakh / year (VITEEE Ranks ~90,001+)\n\n"
-                "💡 **Note**: Centralized placements apply across Vellore & Chennai campuses regardless of your fee category!"
+                "💡 **Note**: Centralized placements apply across Vellore & Chennai campuses!"
             )
-        elif 'fee' in reply_lower or 'budget' in reply_lower:
+        elif 'srm' in reply_lower:
             reply = (
-                "Here is the fee breakdown for top institutions indexed on Studzens:\n\n"
-                "• **Government (IITs/NITs/DTU)**: ₹1.45 Lakh – ₹2.25 Lakh / year\n"
-                "• **Semi-Government (IIIT Hyderabad)**: ₹4.0 Lakh / year\n"
-                "• **VIT (Category 1 to 5)**: ₹1.98 Lakh – ₹4.93 Lakh / year\n"
-                "• **Private (BITS Pilani / Manipal)**: ₹3.5 Lakh – ₹5.5 Lakh / year\n\n"
-                "Many NITs and IITs offer 100% tuition fee waivers for SC/ST students and families with income under ₹1L/year."
+                "Here is the breakdown for **SRM IST Campuses** via SRMJEEE:\n\n"
+                "• **SRM Kattankulathur (KTR Main)**: NIRF #18 | Avg ₹7.7 LPA | Highest ₹1.1 Cr | Fee ~₹3.0L - ₹3.5L/yr\n"
+                "• **SRM Ramapuram**: Avg ₹6.5 LPA | Fee ~₹2.5L/yr\n"
+                "• **SRM Vadapalani**: City Campus | Avg ₹6.2 LPA | Fee ~₹2.5L/yr\n"
+                "• **SRM NCR Modinagar**: Delhi NCR hub | Avg ₹5.8 LPA | Fee ~₹2.1L/yr"
+            )
+        elif 'manipal' in reply_lower or 'met' in reply_lower or 'mit' in reply_lower:
+            reply = (
+                "Here is the breakdown for **Manipal (MAHE) Campuses** via MET:\n\n"
+                "• **MIT Manipal (Main Campus)**: NIRF #61 | Avg ₹12.5 LPA | Highest ₹54 LPA | Fee ~₹3.35L/yr\n"
+                "• **MAHE Bengaluru**: Yelahanka IT Corridor | Avg ₹9.0 LPA | Fee ~₹3.5L/yr\n"
+                "• **Manipal University Jaipur (MUJ)**: Resort-style campus | Avg ₹7.5 LPA | Highest ₹85 LPA | Fee ~₹3.4L/yr"
+            )
+        elif 'bits' in reply_lower or 'bitsat' in reply_lower:
+            reply = (
+                "Here is the breakdown for **BITS Pilani Campuses** via BITSAT:\n\n"
+                "• **BITS Pilani (Main)**: NIRF #25 | Avg ₹20.5 LPA | Highest ₹60.7 LPA | Fee ~₹5.41L/yr\n"
+                "• **BITS Goa**: Avg ₹19.2 LPA | Highest ₹60 LPA | Fee ~₹5.41L/yr\n"
+                "• **BITS Hyderabad**: Avg ₹18.8 LPA | Highest ₹60 LPA | Fee ~₹5.41L/yr\n\n"
+                "💡 **Key Feature**: Zero reservation policy — 100% merit based on BITSAT score."
             )
         else:
             reply = (
-                f"Hello! I am your Studzens AI College Advisor. I have indexed {total_colleges} top Indian institutions.\n\n"
+                f"Hello! I am your Studzens AI Private University Counselor. I have indexed {total_colleges} campuses across VIT, SRM, Manipal, and BITS.\n\n"
                 "Ask me anything about:\n"
-                "1. **Cutoffs & Eligibility** for JEE Main, JEE Advanced, BITSAT, NEET\n"
-                "2. **Fee Structures & Scholarships**\n"
-                "3. **Average Placement LPA & Top Recruiters**"
+                "1. **VITEEE / SRMJEEE / MET / BITSAT Cutoffs & Ranks**\n"
+                "2. **Category 1 to 5 Fee Slabs**\n"
+                "3. **Campus Placement Comparison (Vellore vs KTR vs MIT Manipal vs Pilani)**"
             )
 
         return Response({'reply': reply, 'provider': 'Studzens AI Engine'})
