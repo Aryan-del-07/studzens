@@ -28,6 +28,7 @@
 import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { api } from '../services/api';
 
 // ------------------------------------------------------------------------------
 // TYPE DEFINITIONS
@@ -91,12 +92,15 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
  * The timestamp is recorded in ISO format for consistent sorting later.
  */
  const saveCollege = (collegeId: string, fit: FitType = 'Uncategorized') => {
- setSavedColleges(prev => {
- // Check if already saved to avoid duplicates
- if (prev.some(c => c.collegeId === collegeId)) return prev;
- // Return a new array with the new college appended
- return [...prev, { collegeId, fit, savedAt: new Date().toISOString() }];
- });
+   setSavedColleges(prev => {
+     if (prev.some(c => c.collegeId === collegeId)) return prev;
+     return [...prev, { collegeId, fit, savedAt: new Date().toISOString() }];
+   });
+
+   if (localStorage.getItem('access_token')) {
+     const categoryMap: Record<string, string> = { Dream: 'Dream', Target: 'Target', Safe: 'Safety', Uncategorized: 'Target' };
+     api.bookmarks.add(collegeId, categoryMap[fit] || 'Target').catch(() => {});
+   }
  };
 
  /**

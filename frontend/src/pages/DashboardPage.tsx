@@ -47,15 +47,25 @@ type CollegeMatch = {
  reasons: string[];
 };
 
-export default function DashboardPage() {
- const { profile } = useStudentProfile();
- const { savedColleges } = useBookmarks();
- const { user } = useAuth();
- const { notifications, unreadCount, addNotification, markAsRead, markAllAsRead, clearAll } = useNotifications();
- const navigate = useNavigate();
+import { api } from '../services/api';
 
- // Track toggled priorities locally
- const [completedPriorities, setCompletedPriorities] = useState<Record<string, boolean>>({});
+export default function DashboardPage() {
+  const { profile } = useStudentProfile();
+  const { savedColleges } = useBookmarks();
+  const { user } = useAuth();
+  const { notifications, unreadCount, addNotification, markAsRead, markAllAsRead, clearAll } = useNotifications();
+  const navigate = useNavigate();
+
+  const [statsData, setStatsData] = useState<{ total_colleges: number; avg_package_lpa: number; total_exams: number } | null>(null);
+  const [liveColleges, setLiveColleges] = useState<any[]>([]);
+
+  useEffect(() => {
+    api.colleges.stats().then(res => setStatsData(res)).catch(() => {});
+    api.colleges.list().then(res => setLiveColleges(res.results || res as any)).catch(() => {});
+  }, []);
+
+  // Track toggled priorities locally
+  const [completedPriorities, setCompletedPriorities] = useState<Record<string, boolean>>({});
 
  // Compute active priorities based on profile
  const priorities = useMemo(() => {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
 
@@ -30,13 +30,38 @@ import { colleges } from '../api/mocks/colleges';
 import { getIntelligenceForCollege, type StudentReview, type VoiceQuestion } from '../utils/collegeIntelligence';
 import { useBookmarks } from '../contexts/BookmarkContext';
 
-export default function CollegeProfilePage() {
- const { id } = useParams<{ id: string }>();
- const college = colleges.find(c => c.id === id);
- const { isSaved, saveCollege, removeCollege } = useBookmarks();
+import { api } from '../services/api';
 
- // Fetch deterministic intelligence layer safely
- const intelligence = college ? getIntelligenceForCollege(college) : null;
+export default function CollegeProfilePage() {
+  const { id } = useParams<{ id: string }>();
+  const [apiCollege, setApiCollege] = useState<any>(null);
+
+  useEffect(() => {
+    if (id) {
+      api.colleges.get(id).then(res => setApiCollege(res)).catch(() => {});
+    }
+  }, [id]);
+
+  const mockCollege = colleges.find(c => c.id === id);
+  const college = apiCollege ? {
+    ...apiCollege,
+    shortName: apiCollege.short_name || apiCollege.name,
+    annualFeeLpa: apiCollege.annual_fee_lpa || 0,
+    avgPackageLpa: apiCollege.avg_package_lpa || 0,
+    nirfRank: apiCollege.nirf_rank || 0,
+    establishedYear: apiCollege.established_year || 2000,
+    campusSize: apiCollege.campus_size || 'N/A',
+    facultyCount: apiCollege.faculty_count || 100,
+    entranceExams: apiCollege.exams?.map((e: any) => e.name) || ['JEE Main'],
+    programs: apiCollege.programs || [],
+    placements: apiCollege.placements || [],
+    facilities: apiCollege.facilities || [],
+  } : mockCollege;
+
+  const { isSaved, saveCollege, removeCollege } = useBookmarks();
+
+  // Fetch deterministic intelligence layer safely
+  const intelligence = college ? getIntelligenceForCollege(college) : null;
 
  // Compute similar colleges for quick comparisons
  const similarColleges = useMemo(() => {
@@ -372,10 +397,10 @@ export default function CollegeProfilePage() {
  <BookOpen className="text-black"size={22} /> Academic Programs & Intake
  </h2>
  <div className="grid sm:grid-cols-2 gap-4">
- {college.programs.map((program, idx) => (
+ {college.programs.map((program: any, idx: number) => (
  <div key={idx} className="p-4 rounded-xl bg-[#F6F7FB] border border-[#E3E8EF] flex items-center justify-between font-sans">
- <span className="font-bold text-[#425466]">{program}</span>
- <span className="text-xs font-medium bg-white px-2.5 py-1 rounded-md border border-[#E3E8EF] text-[#697386]">B.Tech / UG</span>
+ <span className="font-bold text-[#425466]">{typeof program === 'string' ? program : (program.name || 'Program')}</span>
+ <span className="text-xs font-medium bg-white px-2.5 py-1 rounded-md border border-[#E3E8EF] text-[#697386]">{typeof program === 'string' ? 'B.Tech / UG' : (program.type || 'B.Tech')}</span>
  </div>
  ))}
  </div>
@@ -391,9 +416,9 @@ export default function CollegeProfilePage() {
  <div className="text-sm text-[#4338CA] leading-relaxed font-sans">
  <strong className="block mb-1">Entrance Exams Accepted:</strong>
  <div className="flex flex-wrap gap-2 mt-1">
- {college.entranceExams.map((ex, i) => (
+ {college.entranceExams.map((ex: any, i: number) => (
  <span key={i} className="bg-white border border-slate-300 text-black px-2 py-0.5 rounded-md font-bold text-xs">
- {ex}
+ {typeof ex === 'string' ? ex : (ex.name || 'Exam')}
  </span>
  ))}
  </div>

@@ -1,49 +1,48 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, Filter, MapPin, Building2, Wallet, Bookmark, BookmarkCheck, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { colleges } from '../api/mocks/colleges';
-import { useSearch } from '../hooks/useSearch';
+import { api } from '../services/api';
 import { useBookmarks } from '../contexts/BookmarkContext';
 
-type TabType = 'All' | 'Private';
+type TabType = 'All' | 'Private' | 'Government';
 type SortType = 'relevance' | 'lowest-fees' | 'highest-fees';
 
-
-/**
- * SearchPage.tsx
- *
- * WHAT THIS FILE DOES:
- * Lets students search and filter colleges by name, state, stream,
- * fees, and type. Shows results as a grid of college cards.
- *
- * WHY IT EXISTS:
- * Finding the right college is the core use case of the app.
- * This page provides powerful filtering to narrow down options.
- *
- * KEY CONCEPTS:
- * - `useSearch`: Hook that manages search query and focus state
- * - `getFilteredColleges`: Applies all active filters to the college list
- * - Debounced search: Filters update smoothly as the user types
- * - Bookmark toggle: Students can save colleges for later comparison
- */
 export default function SearchPage() {
- const { query, setQuery, results } = useSearch({
- data: colleges,
- searchKeys: ['name', 'city', 'state', 'entranceExams'],
- debounceMs: 200
- });
+  const [query, setQuery] = useState('');
+  const [collegesList, setCollegesList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { isSaved, saveCollege, removeCollege } = useBookmarks();
+  const [activeTab, setActiveTab] = useState<TabType>('All');
+  const [sortBy, setSortBy] = useState<SortType>('relevance');
 
- const { isSaved, saveCollege, removeCollege } = useBookmarks();
- const [activeTab, setActiveTab] = useState<TabType>('All');
- const [sortBy, setSortBy] = useState<SortType>('relevance');
+  useEffect(() => {
+    const fetchColleges = async () => {
+      setLoading(true);
+      try {
+        const params: Record<string, string> = {};
+        if (query) params.search = query;
+        if (activeTab === 'Private') params.ownership = 'PRIVATE';
+        if (activeTab === 'Government') params.ownership = 'GOVERNMENT';
+        if (sortBy === 'lowest-fees') params.ordering = 'annual_fee_lpa';
+        if (sortBy === 'highest-fees') params.ordering = '-annual_fee_lpa';
 
- const filteredResults = useMemo(() => {
- let finalResults = results;
- if (activeTab !== 'All') finalResults = finalResults.filter(c => c.ownership === activeTab);
- if (sortBy === 'lowest-fees') finalResults = [...finalResults].sort((a, b) => a.annualFeeLpa - b.annualFeeLpa);
- if (sortBy === 'highest-fees') finalResults = [...finalResults].sort((a, b) => b.annualFeeLpa - a.annualFeeLpa);
- return finalResults;
- }, [results, activeTab, sortBy]);
+        const data = await api.colleges.list(params);
+        setCollegesList(data.results || data as any);
+      } catch {
+        // fallback
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      fetchColleges();
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [query, activeTab, sortBy]);
+
+  const filteredResults = collegesList;
 
  return (
  <div className="bg-[#F6F7FB] min-h-screen pb-20">
@@ -146,18 +145,13 @@ export default function SearchPage() {
  <p className="text-[#697386] text-sm line-clamp-1">{college.vibe}</p>
 
  <div className="flex flex-wrap gap-2 items-center">
- <span className="flex items-center gap-1 text-sm font-semibold text-[#0A2540] bg-slate-50 px-2.5 py-1.5 rounded-lg border border-[#E3E8EF]">
- <Wallet size={13} className="text-black"/>
- ₹{college.annualFeeLpa}L / yr
- </span>
- {college.entranceExams.slice(0, 3).map(exam => (
- <span key={exam} className="sz-chip">{exam}</span>
- ))}
- {college.entranceExams.length > 3 && (
- <span className="text-xs text-[#9DA6B4] font-medium">
- +{college.entranceExams.length - 3} more
- </span>
- )}
+  <span className="flex items-center gap-1 text-sm font-semibold text-[#0A2540] bg-slate-50 px-2.5 py-1.5 rounded-lg border border-[#E3E8EF]">
+  <Wallet size={13} className="text-black"/>
+  ₹{college.annual_fee_lpa ?? college.annualFeeLpa ?? 0}L / yr
+  </span>
+  <span className="text-xs text-[#697386] font-medium bg-slate-50 px-2.5 py-1.5 rounded-lg border border-[#E3E8EF]">
+    Avg: ₹{college.avg_package_lpa ?? college.avgPackageLpa ?? 0} LPA
+  </span>
  <div className="flex-1"/>
  <Link
  to={`/college/${college.id}`}

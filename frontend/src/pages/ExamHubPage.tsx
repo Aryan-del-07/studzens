@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { 
 
 /**
@@ -33,13 +33,36 @@ import {
  getCalendarEvents
 } from '../utils/examCommandCenter';
 
+import { api } from '../services/api';
+
 export default function ExamHubPage() {
- const { profile, trackExam, untrackExam } = useStudentProfile();
- 
- // Dual-view switcher
- const [activeView, setActiveView] = useState<'tracker' | 'all'>('tracker');
- const [query, setQuery] = useState('');
- const [categoryFilter, setCategoryFilter] = useState<string>('All');
+  const { profile, trackExam, untrackExam } = useStudentProfile();
+  
+  const [apiExams, setApiExams] = useState<any[]>([]);
+
+  useEffect(() => {
+    api.exams.list().then(res => {
+      if (res.results) setApiExams(res.results);
+      else if (Array.isArray(res)) setApiExams(res);
+    }).catch(() => {});
+  }, []);
+
+  const examsData = apiExams.length > 0 ? apiExams.map(e => ({
+    id: e.id,
+    name: e.name,
+    fullName: e.full_name || e.name,
+    category: e.level || 'National',
+    level: e.level || 'National',
+    registrationDeadline: '2026-05-15',
+    examDate: '2026-06-01',
+    description: `Entrance examination for ${e.full_name || e.name}`,
+    officialWebsite: 'https://jeemain.nta.ac.in',
+  })) : exams;
+
+  // Dual-view switcher
+  const [activeView, setActiveView] = useState<'tracker' | 'all'>('tracker');
+  const [query, setQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<string>('All');
 
  // Track toggled priorities locally
  const [completedPriorities, setCompletedPriorities] = useState<Record<string, boolean>>({});

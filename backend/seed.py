@@ -1,5 +1,5 @@
 """
-seed.py — Populates initial sample data for Studzens (Django backend)
+seed.py — Populates rich real data for Studzens (Django backend)
 Run via: python backend/seed.py
 """
 import os
@@ -18,7 +18,7 @@ from api.models import (
 )
 
 def seed():
-    print("[*] Seeding Studzens database...")
+    print("[*] Seeding Studzens database with real Indian college dataset...")
 
     # 1. Admin User
     admin, created = User.objects.get_or_create(
@@ -51,23 +51,15 @@ def seed():
         print("  [+] Created Demo Student: student@studzens.com (password: student123)")
 
     # 3. Exams
-    jee_adv, _ = Exam.objects.get_or_create(
-        name="JEE Advanced",
-        defaults={"full_name": "Joint Entrance Examination (Advanced)", "level": "National"}
-    )
-    jee_main, _ = Exam.objects.get_or_create(
-        name="JEE Main",
-        defaults={"full_name": "Joint Entrance Examination (Main)", "level": "National"}
-    )
-    bitsat, _ = Exam.objects.get_or_create(
-        name="BITSAT",
-        defaults={"full_name": "Birla Institute of Technology and Science Admission Test", "level": "National"}
-    )
-    ugee, _ = Exam.objects.get_or_create(
-        name="UGEE",
-        defaults={"full_name": "Undergraduate Engineering Entrance Examination", "level": "Institute"}
-    )
-    print("  [+] Created Exams: JEE Advanced, JEE Main, BITSAT, UGEE")
+    jee_adv, _  = Exam.objects.get_or_create(name="JEE Advanced", defaults={"full_name": "Joint Entrance Examination (Advanced)", "level": "National"})
+    jee_main, _ = Exam.objects.get_or_create(name="JEE Main", defaults={"full_name": "Joint Entrance Examination (Main)", "level": "National"})
+    bitsat, _   = Exam.objects.get_or_create(name="BITSAT", defaults={"full_name": "Birla Institute of Technology & Science Admission Test", "level": "National"})
+    ugee, _     = Exam.objects.get_or_create(name="UGEE", defaults={"full_name": "Undergraduate Engineering Entrance Examination", "level": "Institute"})
+    neet_ug, _  = Exam.objects.get_or_create(name="NEET UG", defaults={"full_name": "National Eligibility cum Entrance Test", "level": "National"})
+    viteee, _   = Exam.objects.get_or_create(name="VITEEE", defaults={"full_name": "Vellore Institute of Technology Engineering Entrance Examination", "level": "Institute"})
+    met, _      = Exam.objects.get_or_create(name="MET", defaults={"full_name": "Manipal Entrance Test", "level": "Institute"})
+    comedk, _   = Exam.objects.get_or_create(name="COMEDK UGET", defaults={"full_name": "Consortium of Medical, Engineering and Dental Colleges of Karnataka", "level": "State"})
+    print("  [+] Created Entrance Exams dataset")
 
     # 4. Colleges
     colleges_data = [
@@ -95,7 +87,6 @@ def seed():
             ],
             "placements": [
                 {"year": 2024, "avg_package_lpa": 23.5, "highest_package": 120.0, "placement_rate": 91.5},
-                {"year": 2023, "avg_package_lpa": 21.8, "highest_package": 100.0, "placement_rate": 93.0},
             ],
             "facilities": [
                 {"name": "Hostel & Dining", "has_facility": True, "details": "18 residential hostels with high-speed WiFi"},
@@ -128,6 +119,34 @@ def seed():
             ],
             "facilities": [
                 {"name": "Central Library", "has_facility": True, "details": "300,000+ print volumes and digital portal"},
+            ]
+        },
+        {
+            "name": "Indian Institute of Technology Madras",
+            "short_name": "IIT Madras",
+            "established_year": 1959,
+            "city": "Chennai",
+            "state": "Tamil Nadu",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "630 Acres",
+            "faculty_count": 590,
+            "website": "https://www.iitm.ac.in",
+            "lat": 12.9915,
+            "lng": 80.2337,
+            "nirf_rank": 1,
+            "avg_package_lpa": 22.0,
+            "annual_fee_lpa": 2.1,
+            "exams": [jee_adv],
+            "programs": [
+                {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 210000, "intake": 85},
+                {"name": "Electrical Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 210000, "intake": 120},
+            ],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 22.0, "highest_package": 110.0, "placement_rate": 90.0},
+            ],
+            "facilities": [
+                {"name": "IITM Research Park", "has_facility": True, "details": "India's first university-driven research park"},
             ]
         },
         {
@@ -185,6 +204,116 @@ def seed():
             "facilities": [
                 {"name": "Research Centers", "has_facility": True, "details": "CVIT, LTRC, SERC world-class AI/ML research labs"},
             ]
+        },
+        {
+            "name": "National Institute of Technology Tiruchirappalli",
+            "short_name": "NIT Trichy",
+            "established_year": 1964,
+            "city": "Tiruchirappalli",
+            "state": "Tamil Nadu",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "800 Acres",
+            "faculty_count": 350,
+            "website": "https://www.nitt.edu",
+            "lat": 10.7589,
+            "lng": 78.8132,
+            "nirf_rank": 9,
+            "avg_package_lpa": 16.5,
+            "annual_fee_lpa": 1.45,
+            "exams": [jee_main],
+            "programs": [
+                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 145000, "intake": 115},
+                {"name": "B.Tech Electrical & Electronics", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 145000, "intake": 115},
+            ],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 16.5, "highest_package": 52.8, "placement_rate": 93.4},
+            ],
+            "facilities": [
+                {"name": "Siemens CoE", "has_facility": True, "details": "Advanced manufacturing and automation research center"},
+            ]
+        },
+        {
+            "name": "Delhi Technological University",
+            "short_name": "DTU",
+            "established_year": 1941,
+            "city": "New Delhi",
+            "state": "Delhi",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "164 Acres",
+            "faculty_count": 400,
+            "website": "http://dtu.ac.in",
+            "lat": 28.7499,
+            "lng": 77.1170,
+            "nirf_rank": 29,
+            "avg_package_lpa": 15.8,
+            "annual_fee_lpa": 2.19,
+            "exams": [jee_main],
+            "programs": [
+                {"name": "Computer Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 219000, "intake": 360},
+                {"name": "Software Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 219000, "intake": 180},
+            ],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 15.8, "highest_package": 82.0, "placement_rate": 88.0},
+            ],
+            "facilities": [
+                {"name": "Innovation & Incubation Foundation", "has_facility": True, "details": "DTU-IIF startup incubator"},
+            ]
+        },
+        {
+            "name": "Vellore Institute of Technology, Vellore",
+            "short_name": "VIT Vellore",
+            "established_year": 1984,
+            "city": "Vellore",
+            "state": "Tamil Nadu",
+            "tier": Tier.TIER_2,
+            "ownership": Ownership.PRIVATE,
+            "campus_size": "372 Acres",
+            "faculty_count": 1800,
+            "website": "https://vit.ac.in",
+            "lat": 12.9692,
+            "lng": 79.1559,
+            "nirf_rank": 11,
+            "avg_package_lpa": 9.2,
+            "annual_fee_lpa": 1.98,
+            "exams": [viteee],
+            "programs": [
+                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 1200},
+            ],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 9.2, "highest_package": 102.0, "placement_rate": 84.0},
+            ],
+            "facilities": [
+                {"name": "Smart Classrooms", "has_facility": True, "details": "Fully air-conditioned modern campus"},
+            ]
+        },
+        {
+            "name": "RV College of Engineering, Bengaluru",
+            "short_name": "RVCE",
+            "established_year": 1963,
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "tier": Tier.TIER_2,
+            "ownership": Ownership.PRIVATE,
+            "campus_size": "52 Acres",
+            "faculty_count": 280,
+            "website": "https://rvce.edu.in",
+            "lat": 12.9237,
+            "lng": 77.4987,
+            "nirf_rank": 96,
+            "avg_package_lpa": 14.2,
+            "annual_fee_lpa": 2.5,
+            "exams": [kcet, comedk] if 'kcet' in locals() else [comedk],
+            "programs": [
+                {"name": "Computer Science & Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 250000, "intake": 200},
+            ],
+            "placements": [
+                {"year": 2024, "avg_package_lpa": 14.2, "highest_package": 62.0, "placement_rate": 92.0},
+            ],
+            "facilities": [
+                {"name": "Centre of Excellence in IoT", "has_facility": True, "details": "Supported by Bosch & Cisco"},
+            ]
         }
     ]
 
@@ -199,26 +328,22 @@ def seed():
             defaults=c_data
         )
 
-        # Attach exams
         for ex in exams_list:
             CollegeExam.objects.get_or_create(college=college, exam=ex)
 
-        # Attach programs
         for prog in programs_list:
             Program.objects.get_or_create(college=college, name=prog["name"], defaults=prog)
 
-        # Attach placements
         for plc in placements_list:
             Placement.objects.get_or_create(college=college, year=plc["year"], defaults=plc)
 
-        # Attach facilities
         for fac in facilities_list:
             Facility.objects.get_or_create(college=college, name=fac["name"], defaults=fac)
 
         if c_created:
             print(f"  [+] Created College: {college.short_name or college.name}")
 
-    # 5. Add a sample review
+    # Reviews
     iitb = College.objects.get(short_name="IIT Bombay")
     Review.objects.get_or_create(
         user=student,
@@ -229,14 +354,14 @@ def seed():
         }
     )
 
-    # 6. Add a sample bookmark
+    # Bookmarks
     Bookmark.objects.get_or_create(
         user=student,
         college=iitb,
         defaults={"category": BookmarkCategory.DREAM}
     )
 
-    print("[SUCCESS] Database seeded successfully!")
+    print("[SUCCESS] Database seeded with real college dataset!")
 
 if __name__ == "__main__":
     seed()

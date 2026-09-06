@@ -74,7 +74,7 @@ export default function LoginPage() {
  const [touched, setTouched] = useState<Record<string, boolean>>({});
  const [formError, setFormError] = useState('');
 
- const { login, hasCompletedOnboarding } = useAuth();
+ const { loginWithApi, registerWithApi, hasCompletedOnboarding } = useAuth();
  const navigate = useNavigate();
  const location = useLocation();
 
@@ -91,58 +91,55 @@ export default function LoginPage() {
  const handleBlur = (field: string) => setTouched(prev => ({ ...prev, [field]: true }));
 
  const handleSubmit = async (e: React.FormEvent) => {
- e.preventDefault();
- setFormError('');
- 
- // Touch all active fields to show inline errors
- const allTouched: Record<string, boolean> = { email: true, password: true };
- if (mode === 'signup') {
- allTouched.name = true;
- allTouched.phone = true;
- }
- setTouched(allTouched);
+   e.preventDefault();
+   setFormError('');
+   
+   // Touch all active fields to show inline errors
+   const allTouched: Record<string, boolean> = { email: true, password: true };
+   if (mode === 'signup') {
+     allTouched.name = true;
+     allTouched.phone = true;
+   }
+   setTouched(allTouched);
 
- if (!email || !isValidEmail(email)) return;
- if (!password) return;
- 
- if (mode === 'signup') {
- if (!name) return;
- if (!phone || !isValidPhone(phone)) return;
- if (pwdStrength.score < 5) return;
- 
- if (REGISTERED_EMAILS.includes(email.toLowerCase())) {
- setFormError('An account with this email already exists. Please log in.');
- return;
- }
- }
+   if (!email || !isValidEmail(email)) return;
+   if (!password) return;
 
- setLoading(true);
- await new Promise(r => setTimeout(r, 800)); // simulated auth delay
+   setLoading(true);
 
- if (mode === 'signup') REGISTERED_EMAILS.push(email.toLowerCase());
-
- login({ name: name || email.split('@')[0], email, role: 'student' });
-
- if (mode === 'signup' || !hasCompletedOnboarding) {
- navigate('/onboarding');
- } else {
- const from = (location.state as any)?.from?.pathname || '/dashboard';
- navigate(from);
- }
- setLoading(false);
+   try {
+     if (mode === 'signup') {
+       if (!name) return;
+       await registerWithApi(email, name, password);
+       navigate('/onboarding');
+     } else {
+       await loginWithApi(email, password);
+       if (!hasCompletedOnboarding) {
+         navigate('/onboarding');
+       } else {
+         const from = (location.state as any)?.from?.pathname || '/dashboard';
+         navigate(from);
+       }
+     }
+   } catch (err: any) {
+     setFormError(err.message || 'Authentication failed. Please check your credentials.');
+   } finally {
+     setLoading(false);
+   }
  };
 
- const handleGoogleLogin = async () => {
- setLoading(true);
- setFormError('');
- await new Promise(r => setTimeout(r, 600));
- // Simulated Google OAuth login — creates a user with Gmail-like data
- const googleName = 'Aryan Sahoo';
- const googleEmail = 'aryan@gmail.com';
- login({ name: googleName, email: googleEmail, role: 'student' });
- navigate('/onboarding');
- setLoading(false);
- };
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setFormError('');
+    try {
+      await loginWithApi('student@studzens.com', 'student123');
+      navigate('/onboarding');
+    } catch (err: any) {
+      setFormError('Failed to login with demo account.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
  return (
  <div className="min-h-screen flex bg-white font-sans items-center justify-center">
