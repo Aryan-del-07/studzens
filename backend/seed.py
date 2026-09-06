@@ -1,5 +1,5 @@
 """
-seed.py — Populates rich real data for Studzens (Django backend)
+seed.py — Populates rich real Indian college dataset for Studzens (Django backend)
 Run via: python backend/seed.py
 """
 import os
@@ -18,7 +18,7 @@ from api.models import (
 )
 
 def seed():
-    print("[*] Seeding Studzens database with real Indian college dataset...")
+    print("[*] Seeding Studzens database with expanded real Indian college dataset...")
 
     # 1. Admin User
     admin, created = User.objects.get_or_create(
@@ -50,7 +50,7 @@ def seed():
         Profile.objects.get_or_create(user=student, city="Bengaluru", state="Karnataka", target_stream="B.Tech CS", target_year=2026)
         print("  [+] Created Demo Student: student@studzens.com (password: student123)")
 
-    # 3. Exams
+    # 3. Entrance Exams
     jee_adv, _  = Exam.objects.get_or_create(name="JEE Advanced", defaults={"full_name": "Joint Entrance Examination (Advanced)", "level": "National"})
     jee_main, _ = Exam.objects.get_or_create(name="JEE Main", defaults={"full_name": "Joint Entrance Examination (Main)", "level": "National"})
     bitsat, _   = Exam.objects.get_or_create(name="BITSAT", defaults={"full_name": "Birla Institute of Technology & Science Admission Test", "level": "National"})
@@ -61,8 +61,9 @@ def seed():
     comedk, _   = Exam.objects.get_or_create(name="COMEDK UGET", defaults={"full_name": "Consortium of Medical, Engineering and Dental Colleges of Karnataka", "level": "State"})
     print("  [+] Created Entrance Exams dataset")
 
-    # 4. Colleges
+    # 4. Colleges Dataset
     colleges_data = [
+        # IITs
         {
             "name": "Indian Institute of Technology Bombay",
             "short_name": "IIT Bombay",
@@ -83,15 +84,9 @@ def seed():
             "programs": [
                 {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 220000, "intake": 140},
                 {"name": "Electrical Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 220000, "intake": 160},
-                {"name": "Mechanical Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 220000, "intake": 180},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 23.5, "highest_package": 120.0, "placement_rate": 91.5},
-            ],
-            "facilities": [
-                {"name": "Hostel & Dining", "has_facility": True, "details": "18 residential hostels with high-speed WiFi"},
-                {"name": "Sports Complex", "has_facility": True, "details": "Olympic size swimming pool, athletics track, gym"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 23.5, "highest_package": 120.0, "placement_rate": 91.5}],
+            "facilities": [{"name": "Hostel & Dining", "has_facility": True, "details": "18 residential hostels"}]
         },
         {
             "name": "Indian Institute of Technology Delhi",
@@ -114,12 +109,8 @@ def seed():
                 {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 225000, "intake": 99},
                 {"name": "Artificial Intelligence & Data Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 225000, "intake": 40},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 24.1, "highest_package": 130.0, "placement_rate": 92.0},
-            ],
-            "facilities": [
-                {"name": "Central Library", "has_facility": True, "details": "300,000+ print volumes and digital portal"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 24.1, "highest_package": 130.0, "placement_rate": 92.0}],
+            "facilities": [{"name": "Central Library", "has_facility": True, "details": "300,000+ volumes"}]
         },
         {
             "name": "Indian Institute of Technology Madras",
@@ -140,15 +131,57 @@ def seed():
             "exams": [jee_adv],
             "programs": [
                 {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 210000, "intake": 85},
-                {"name": "Electrical Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 210000, "intake": 120},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 22.0, "highest_package": 110.0, "placement_rate": 90.0},
-            ],
-            "facilities": [
-                {"name": "IITM Research Park", "has_facility": True, "details": "India's first university-driven research park"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 22.0, "highest_package": 110.0, "placement_rate": 90.0}],
+            "facilities": [{"name": "IITM Research Park", "has_facility": True, "details": "Pioneering university research park"}]
         },
+        {
+            "name": "Indian Institute of Technology Kharagpur",
+            "short_name": "IIT Kharagpur",
+            "established_year": 1951,
+            "city": "Kharagpur",
+            "state": "West Bengal",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "2100 Acres",
+            "faculty_count": 720,
+            "website": "https://www.iitkgp.ac.in",
+            "lat": 22.3193,
+            "lng": 87.3099,
+            "nirf_rank": 6,
+            "avg_package_lpa": 21.2,
+            "annual_fee_lpa": 2.15,
+            "exams": [jee_adv],
+            "programs": [
+                {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 215000, "intake": 110},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 21.2, "highest_package": 105.0, "placement_rate": 89.5}],
+            "facilities": [{"name": "Nehru Museum & Central Library", "has_facility": True, "details": "Largest academic campus in India"}]
+        },
+        {
+            "name": "Indian Institute of Technology Kanpur",
+            "short_name": "IIT Kanpur",
+            "established_year": 1959,
+            "city": "Kanpur",
+            "state": "Uttar Pradesh",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "1055 Acres",
+            "faculty_count": 550,
+            "website": "https://www.iitk.ac.in",
+            "lat": 26.5123,
+            "lng": 80.2329,
+            "nirf_rank": 4,
+            "avg_package_lpa": 23.1,
+            "annual_fee_lpa": 2.2,
+            "exams": [jee_adv],
+            "programs": [
+                {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 220000, "intake": 115},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 23.1, "highest_package": 115.0, "placement_rate": 91.0}],
+            "facilities": [{"name": "Airstrip & Flight Lab", "has_facility": True, "details": "Own 1000m flight runway and aircraft"}]
+        },
+        # BITS Campuses
         {
             "name": "Birla Institute of Technology and Science, Pilani",
             "short_name": "BITS Pilani",
@@ -168,15 +201,34 @@ def seed():
             "exams": [bitsat],
             "programs": [
                 {"name": "B.E. Computer Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 550000, "intake": 200},
-                {"name": "B.E. Electronics & Communication", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 550000, "intake": 180},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 20.8, "highest_package": 60.0, "placement_rate": 89.0},
-            ],
-            "facilities": [
-                {"name": "Practice School System", "has_facility": True, "details": "Mandatory 6-month industry internship"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 20.8, "highest_package": 60.0, "placement_rate": 89.0}],
+            "facilities": [{"name": "Practice School System", "has_facility": True, "details": "6-month corporate internship"}]
         },
+        {
+            "name": "BITS Pilani, K K Birla Goa Campus",
+            "short_name": "BITS Goa",
+            "established_year": 2004,
+            "city": "Zuarinagar",
+            "state": "Goa",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.PRIVATE,
+            "campus_size": "180 Acres",
+            "faculty_count": 220,
+            "website": "https://www.bits-pilani.ac.in/goa/",
+            "lat": 15.3905,
+            "lng": 73.8770,
+            "nirf_rank": 27,
+            "avg_package_lpa": 19.5,
+            "annual_fee_lpa": 5.5,
+            "exams": [bitsat],
+            "programs": [
+                {"name": "B.E. Computer Science", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 550000, "intake": 160},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 19.5, "highest_package": 54.0, "placement_rate": 88.0}],
+            "facilities": [{"name": "Coastal Research Hub", "has_facility": True, "details": "Supercomputing facility & oceanography lab"}]
+        },
+        # IIITs
         {
             "name": "International Institute of Information Technology, Hyderabad",
             "short_name": "IIIT Hyderabad",
@@ -196,15 +248,34 @@ def seed():
             "exams": [jee_main, ugee],
             "programs": [
                 {"name": "B.Tech Computer Science & Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 400000, "intake": 150},
-                {"name": "B.Tech Electronics & Communication", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 400000, "intake": 90},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 30.2, "highest_package": 102.0, "placement_rate": 98.0},
-            ],
-            "facilities": [
-                {"name": "Research Centers", "has_facility": True, "details": "CVIT, LTRC, SERC world-class AI/ML research labs"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 30.2, "highest_package": 102.0, "placement_rate": 98.0}],
+            "facilities": [{"name": "Research Centers", "has_facility": True, "details": "CVIT, LTRC, SERC world-class AI/ML research labs"}]
         },
+        {
+            "name": "International Institute of Information Technology, Bangalore",
+            "short_name": "IIIT Bangalore",
+            "established_year": 1999,
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.SEMI_GOVERNMENT,
+            "campus_size": "9 Acres",
+            "faculty_count": 85,
+            "website": "https://www.iiitb.ac.in",
+            "lat": 12.8449,
+            "lng": 77.6632,
+            "nirf_rank": 74,
+            "avg_package_lpa": 27.5,
+            "annual_fee_lpa": 3.8,
+            "exams": [jee_main],
+            "programs": [
+                {"name": "iMTech Computer Science", "type": ProgramType.MTECH, "duration": 5, "annual_fee": 380000, "intake": 120},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 27.5, "highest_package": 80.0, "placement_rate": 96.0}],
+            "facilities": [{"name": "Electronic City Tech Hub", "has_facility": True, "details": "Proximity to 200+ global tech giants"}]
+        },
+        # NITs
         {
             "name": "National Institute of Technology Tiruchirappalli",
             "short_name": "NIT Trichy",
@@ -224,15 +295,34 @@ def seed():
             "exams": [jee_main],
             "programs": [
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 145000, "intake": 115},
-                {"name": "B.Tech Electrical & Electronics", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 145000, "intake": 115},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 16.5, "highest_package": 52.8, "placement_rate": 93.4},
-            ],
-            "facilities": [
-                {"name": "Siemens CoE", "has_facility": True, "details": "Advanced manufacturing and automation research center"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 16.5, "highest_package": 52.8, "placement_rate": 93.4}],
+            "facilities": [{"name": "Siemens CoE", "has_facility": True, "details": "Advanced manufacturing research center"}]
         },
+        {
+            "name": "National Institute of Technology Karnataka, Surathkal",
+            "short_name": "NIT Surathkal",
+            "established_year": 1960,
+            "city": "Mangaluru",
+            "state": "Karnataka",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "295 Acres",
+            "faculty_count": 320,
+            "website": "https://www.nitk.ac.in",
+            "lat": 13.0108,
+            "lng": 74.7943,
+            "nirf_rank": 12,
+            "avg_package_lpa": 15.9,
+            "annual_fee_lpa": 1.45,
+            "exams": [jee_main],
+            "programs": [
+                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 145000, "intake": 110},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 15.9, "highest_package": 54.5, "placement_rate": 92.8}],
+            "facilities": [{"name": "Private Beach & Lighthouse", "has_facility": True, "details": "Only Indian university campus with a private beach"}]
+        },
+        # Delhi State Universities
         {
             "name": "Delhi Technological University",
             "short_name": "DTU",
@@ -252,15 +342,58 @@ def seed():
             "exams": [jee_main],
             "programs": [
                 {"name": "Computer Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 219000, "intake": 360},
-                {"name": "Software Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 219000, "intake": 180},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 15.8, "highest_package": 82.0, "placement_rate": 88.0},
-            ],
-            "facilities": [
-                {"name": "Innovation & Incubation Foundation", "has_facility": True, "details": "DTU-IIF startup incubator"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 15.8, "highest_package": 82.0, "placement_rate": 88.0}],
+            "facilities": [{"name": "Innovation Foundation", "has_facility": True, "details": "DTU-IIF startup incubator"}]
         },
+        {
+            "name": "Netaji Subhas University of Technology",
+            "short_name": "NSUT",
+            "established_year": 1983,
+            "city": "New Delhi",
+            "state": "Delhi",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "145 Acres",
+            "faculty_count": 310,
+            "website": "http://nsut.ac.in",
+            "lat": 28.6074,
+            "lng": 77.0371,
+            "nirf_rank": 60,
+            "avg_package_lpa": 15.2,
+            "annual_fee_lpa": 2.19,
+            "exams": [jee_main],
+            "programs": [
+                {"name": "Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 219000, "intake": 300},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 15.2, "highest_package": 64.0, "placement_rate": 87.0}],
+            "facilities": [{"name": "Incubation Center", "has_facility": True, "details": "TBI-NSUT venture studio"}]
+        },
+        # Medical
+        {
+            "name": "All India Institute of Medical Sciences, New Delhi",
+            "short_name": "AIIMS New Delhi",
+            "established_year": 1956,
+            "city": "New Delhi",
+            "state": "Delhi",
+            "tier": Tier.TIER_1,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "115 Acres",
+            "faculty_count": 800,
+            "website": "https://www.aiims.edu",
+            "lat": 28.5672,
+            "lng": 77.2100,
+            "nirf_rank": 1,
+            "avg_package_lpa": 18.0,
+            "annual_fee_lpa": 0.02,
+            "exams": [neet_ug],
+            "programs": [
+                {"name": "MBBS", "type": ProgramType.MBBS, "duration": 5, "annual_fee": 1628, "intake": 125},
+            ],
+            "placements": [{"year": 2024, "avg_package_lpa": 18.0, "highest_package": 35.0, "placement_rate": 100.0}],
+            "facilities": [{"name": "Apex Trauma Center", "has_facility": True, "details": "Premier medical research hospital in South Asia"}]
+        },
+        # Top Private & State Institutions
         {
             "name": "Vellore Institute of Technology, Vellore",
             "short_name": "VIT Vellore",
@@ -281,12 +414,31 @@ def seed():
             "programs": [
                 {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 1200},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 9.2, "highest_package": 102.0, "placement_rate": 84.0},
+            "placements": [{"year": 2024, "avg_package_lpa": 9.2, "highest_package": 102.0, "placement_rate": 84.0}],
+            "facilities": [{"name": "Smart Classrooms", "has_facility": True, "details": "Fully air-conditioned campus"}]
+        },
+        {
+            "name": "COEP Technological University, Pune",
+            "short_name": "COEP Pune",
+            "established_year": 1854,
+            "city": "Pune",
+            "state": "Maharashtra",
+            "tier": Tier.TIER_2,
+            "ownership": Ownership.GOVERNMENT,
+            "campus_size": "36 Acres",
+            "faculty_count": 220,
+            "website": "https://www.coep.org.in",
+            "lat": 18.5293,
+            "lng": 73.8565,
+            "nirf_rank": 73,
+            "avg_package_lpa": 11.5,
+            "annual_fee_lpa": 1.15,
+            "exams": [jee_main],
+            "programs": [
+                {"name": "B.Tech Computer Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 115000, "intake": 120},
             ],
-            "facilities": [
-                {"name": "Smart Classrooms", "has_facility": True, "details": "Fully air-conditioned modern campus"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 11.5, "highest_package": 50.5, "placement_rate": 91.0}],
+            "facilities": [{"name": "Boat Club", "has_facility": True, "details": "Historic Mula river boat club"}]
         },
         {
             "name": "RV College of Engineering, Bengaluru",
@@ -304,16 +456,12 @@ def seed():
             "nirf_rank": 96,
             "avg_package_lpa": 14.2,
             "annual_fee_lpa": 2.5,
-            "exams": [kcet, comedk] if 'kcet' in locals() else [comedk],
+            "exams": [comedk],
             "programs": [
                 {"name": "Computer Science & Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 250000, "intake": 200},
             ],
-            "placements": [
-                {"year": 2024, "avg_package_lpa": 14.2, "highest_package": 62.0, "placement_rate": 92.0},
-            ],
-            "facilities": [
-                {"name": "Centre of Excellence in IoT", "has_facility": True, "details": "Supported by Bosch & Cisco"},
-            ]
+            "placements": [{"year": 2024, "avg_package_lpa": 14.2, "highest_package": 62.0, "placement_rate": 92.0}],
+            "facilities": [{"name": "Centre of Excellence in IoT", "has_facility": True, "details": "Supported by Bosch"}]
         }
     ]
 
@@ -361,7 +509,7 @@ def seed():
         defaults={"category": BookmarkCategory.DREAM}
     )
 
-    print("[SUCCESS] Database seeded with real college dataset!")
+    print(f"[SUCCESS] Database seeded with {College.objects.count()} real Indian colleges!")
 
 if __name__ == "__main__":
     seed()
