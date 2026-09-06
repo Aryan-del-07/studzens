@@ -30,6 +30,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Search, GitCompareArrows, User, Menu, X, GraduationCap, LayoutDashboard, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import AICounselorWidget from '../ai/AICounselorWidget';
 
 /**
  * PageShell is the main layout component for the Stuzen app.
@@ -140,6 +141,9 @@ export default function PageShell() {
  <main className="w-full flex-grow">
  <Outlet />
  </main>
+
+ {/* AI Counselor Floating Widget */}
+ {!hideNav && <AICounselorWidget />}
 
  {/* ------------------------------------------------------------------------------
  MOBILE BOTTOM NAVIGATION BAR

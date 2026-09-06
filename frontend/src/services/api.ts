@@ -82,6 +82,12 @@ export const api = {
         body: JSON.stringify({ email, password }),
       }),
 
+    googleLogin: (email: string, name: string) =>
+      request<{ access: string; refresh: string; user: any }>('/auth/google/', {
+        method: 'POST',
+        body: JSON.stringify({ email, name }),
+      }),
+
     register: (email: string, name: string, password: string) =>
       request<{ id: string; email: string; name: string }>('/auth/register/', {
         method: 'POST',
@@ -147,6 +153,15 @@ export const api = {
       request<any>('/reviews/', {
         method: 'POST',
         body: JSON.stringify({ college: collegeId, rating, content }),
+      }),
+  },
+
+  // AI Counseling (Gemini / Vertex AI)
+  ai: {
+    counsel: (message: string) =>
+      request<{ reply: string; provider: string }>('/ai/counsel/', {
+        method: 'POST',
+        body: JSON.stringify({ message }),
       }),
   },
 };

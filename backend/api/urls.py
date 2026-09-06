@@ -10,11 +10,14 @@ from .views import (
     RegisterView,
     CustomTokenObtainPairView,
     MeView,
+    GoogleAuthView,
     CollegeViewSet,
     ExamViewSet,
     ReviewViewSet,
     BookmarkViewSet,
 )
+
+from .ai_views import AICounselView
 
 # DRF router auto-generates list/detail URLs for ViewSets
 router = DefaultRouter()
@@ -33,10 +36,16 @@ urlpatterns = [
     path('auth/register/', RegisterView.as_view(),              name='auth-register-slash'),
     path('auth/login',    CustomTokenObtainPairView.as_view(),   name='auth-login'),
     path('auth/login/',   CustomTokenObtainPairView.as_view(),   name='auth-login-slash'),
+    path('auth/google',   GoogleAuthView.as_view(),              name='auth-google'),
+    path('auth/google/',  GoogleAuthView.as_view(),              name='auth-google-slash'),
     path('auth/refresh',  TokenRefreshView.as_view(),            name='auth-refresh'),
     path('auth/refresh/', TokenRefreshView.as_view(),           name='auth-refresh-slash'),
     path('auth/me',       MeView.as_view(),                      name='auth-me'),
     path('auth/me/',      MeView.as_view(),                      name='auth-me-slash'),
+
+    # AI Counseling
+    path('ai/counsel',    AICounselView.as_view(),               name='ai-counsel'),
+    path('ai/counsel/',   AICounselView.as_view(),               name='ai-counsel-slash'),
 
     # Resources (router-generated)
     path('', include(router.urls)),

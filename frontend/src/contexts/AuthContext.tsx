@@ -27,6 +27,7 @@ interface AuthContextType {
   isLoading: boolean;
   hasCompletedOnboarding: boolean;
   loginWithApi: (email: string, password: string) => Promise<void>;
+  googleLoginWithApi: (email: string, name: string) => Promise<void>;
   registerWithApi: (email: string, name: string, password: string) => Promise<void>;
   logout: () => void;
   completeOnboarding: () => void;
@@ -79,6 +80,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await refreshUser();
   };
 
+  const googleLoginWithApi = async (email: string, name: string) => {
+    const res = await api.auth.googleLogin(email, name);
+    localStorage.setItem('access_token', res.access);
+    localStorage.setItem('refresh_token', res.refresh);
+    await refreshUser();
+  };
+
   const registerWithApi = async (email: string, name: string, password: string) => {
     await api.auth.register(email, name, password);
     await loginWithApi(email, password);
@@ -103,6 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isLoading,
         hasCompletedOnboarding: onboardingDone,
         loginWithApi,
+        googleLoginWithApi,
         registerWithApi,
         logout,
         completeOnboarding,

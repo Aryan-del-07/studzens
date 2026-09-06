@@ -17,6 +17,8 @@ const ProfilePage = React.lazy(() => import('../pages/ProfilePage'));
 const ComparePage = React.lazy(() => import('../pages/ComparePage'));
 const MapPage = React.lazy(() => import('../pages/MapPage'));
 
+const AdminDashboardPage = React.lazy(() => import('../pages/AdminDashboardPage'));
+
 const NotFoundPage = React.lazy(() => import('../pages/NotFoundPage'));
 
 const CollegeProfileRoute = () => {
@@ -55,6 +57,7 @@ export default function App() {
  <Route element={<ProtectedRoute />}>
  <Route path="/onboarding"element={<OnboardingPage />} />
  <Route path="/dashboard"element={<DashboardPage />} />
+ <Route path="/admin-dashboard"element={<AdminDashboardPage />} />
  <Route path="/for-you"element={<ForYouPage />} />
  <Route path="/profile"element={<ProfilePage />} />
  <Route path="/compare"element={<ComparePage />} />

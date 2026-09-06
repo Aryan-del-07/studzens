@@ -72,6 +72,43 @@ class MeView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
+class GoogleAuthView(APIView):
+    """POST /api/auth/google/ — Accepts Google login to generate SimpleJWT tokens."""
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        name  = request.data.get('name', 'Google User')
+        if not email:
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        from .models import Role, Profile
+        user, created = User.objects.get_or_create(
+            email=email,
+            defaults={'name': name, 'role': Role.STUDENT}
+        )
+        if created:
+            user.set_unusable_password()
+            user.save()
+            Profile.objects.get_or_create(user=user)
+
+        from rest_framework_simplejwt.tokens import RefreshToken
+        refresh = RefreshToken.for_user(user)
+        refresh['name'] = user.name
+        refresh['role'] = user.role
+
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+            'user': {
+                'id': str(user.id),
+                'email': user.email,
+                'name': user.name,
+                'role': user.role,
+            }
+        })
+
+
 # ---------------------------------------------------------------------------
 # College Filters
 # ---------------------------------------------------------------------------
