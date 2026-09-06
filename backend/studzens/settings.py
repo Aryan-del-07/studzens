@@ -71,9 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'studzens.wsgi.application'
 
-from urllib.parse import urlparse
-
-db_url = urlparse(config('DATABASE_URL'))
+DEFAULT_DB_URL = "postgresql://neondb_owner:npg_1cE8KsGyIWwv@ep-nameless-lab-az1lc0dm.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+raw_db_url = config('DATABASE_URL', default=DEFAULT_DB_URL)
+db_url = urlparse(raw_db_url)
 
 DATABASES = {
     'default': {

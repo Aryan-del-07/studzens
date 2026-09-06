@@ -62,7 +62,14 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    const message = errorData.detail || errorData.message || (typeof errorData === 'object' ? JSON.stringify(errorData) : 'Request failed');
+    let message = errorData.detail || errorData.error || errorData.message;
+    if (!message) {
+      if (typeof errorData === 'object' && Object.keys(errorData).length > 0) {
+        message = JSON.stringify(errorData);
+      } else {
+        message = 'Invalid email or password. Please check your credentials.';
+      }
+    }
     throw new ApiError(response.status, message, errorData);
   }
 
