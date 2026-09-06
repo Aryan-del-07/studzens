@@ -35,6 +35,36 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = 'email'
+
+    def validate(self, attrs):
+        email_or_username = attrs.get('email') or attrs.get('username')
+        password = attrs.get('password')
+
+        if email_or_username and password:
+            from django.contrib.auth import get_user_model, authenticate
+            User = get_user_model()
+            
+            user = authenticate(request=self.context.get('request'), username=email_or_username, password=password)
+            if not user:
+                try:
+                    user_obj = User.objects.get(email__iexact=email_or_username)
+                    if user_obj.check_password(password):
+                        user = user_obj
+                except User.DoesNotExist:
+                    pass
+
+            if user:
+                if not user.is_active:
+                    raise serializers.ValidationError('User account is disabled.')
+                refresh = self.get_token(user)
+                return {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }
+
+        raise serializers.ValidationError('Invalid email or password. Please check your credentials.')
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)

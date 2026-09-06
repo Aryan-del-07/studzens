@@ -25,7 +25,7 @@ def seed():
     Exam.objects.all().delete()
 
     # 2. Admin User
-    admin, created = User.objects.get_or_create(
+    admin, _ = User.objects.get_or_create(
         email="admin@studzens.com",
         defaults={
             "name": "Admin User",
@@ -34,25 +34,27 @@ def seed():
             "is_superuser": True,
         }
     )
-    if created:
-        admin.set_password("admin123")
-        admin.save()
-        Profile.objects.get_or_create(user=admin, city="New Delhi", state="Delhi", target_stream="Computer Science")
-        print("  [+] Created Superuser: admin@studzens.com (password: admin123)")
+    admin.role = Role.ADMIN
+    admin.is_staff = True
+    admin.is_superuser = True
+    admin.set_password("admin123")
+    admin.save()
+    Profile.objects.get_or_create(user=admin, city="New Delhi", state="Delhi", target_stream="Computer Science")
+    print("  [+] Admin Superuser active: admin@studzens.com (password: admin123)")
 
     # 3. Demo Student User
-    student, created = User.objects.get_or_create(
+    student, _ = User.objects.get_or_create(
         email="student@studzens.com",
         defaults={
             "name": "Aarav Sharma",
             "role": Role.STUDENT,
         }
     )
-    if created:
-        student.set_password("student123")
-        student.save()
-        Profile.objects.get_or_create(user=student, city="Bengaluru", state="Karnataka", target_stream="B.Tech CS", target_year=2026)
-        print("  [+] Created Demo Student: student@studzens.com (password: student123)")
+    student.role = Role.STUDENT
+    student.set_password("student123")
+    student.save()
+    Profile.objects.get_or_create(user=student, city="Bengaluru", state="Karnataka", target_stream="B.Tech CS", target_year=2026)
+    print("  [+] Demo Student active: student@studzens.com (password: student123)")
 
     # 4. Entrance Exams
     viteee, _  = Exam.objects.get_or_create(name="VITEEE", defaults={"full_name": "Vellore Institute of Technology Engineering Entrance Examination", "level": "Institute"})

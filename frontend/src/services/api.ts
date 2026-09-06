@@ -86,7 +86,7 @@ export const api = {
     login: (email: string, password: string) =>
       request<{ access: string; refresh: string }>('/auth/login/', {
         method: 'POST',
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, username: email, password }),
       }),
 
     googleLogin: (email: string, name: string) =>
