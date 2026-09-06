@@ -412,10 +412,14 @@ def seed():
             "annual_fee_lpa": 1.98,
             "exams": [viteee],
             "programs": [
-                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 1200},
+                {"name": "B.Tech CSE (Category 1)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 400},
+                {"name": "B.Tech CSE (Category 2)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 307000, "intake": 350},
+                {"name": "B.Tech CSE (Category 3)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 405000, "intake": 250},
+                {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 150},
+                {"name": "B.Tech CSE (Category 5)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 493000, "intake": 100},
             ],
             "placements": [{"year": 2024, "avg_package_lpa": 9.2, "highest_package": 102.0, "placement_rate": 84.0}],
-            "facilities": [{"name": "Smart Classrooms", "has_facility": True, "details": "Fully air-conditioned campus"}]
+            "facilities": [{"name": "VITEEE 5-Category Fee Structure", "has_facility": True, "details": "Category 1 (₹1.98L/yr) to Category 5 (₹4.93L/yr) allocated by VITEEE rank"}]
         },
         {
             "name": "Vellore Institute of Technology, Chennai",
@@ -435,10 +439,14 @@ def seed():
             "annual_fee_lpa": 1.98,
             "exams": [viteee],
             "programs": [
-                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 900},
+                {"name": "B.Tech CSE (Category 1)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 300},
+                {"name": "B.Tech CSE (Category 2)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 307000, "intake": 250},
+                {"name": "B.Tech CSE (Category 3)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 405000, "intake": 200},
+                {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 100},
+                {"name": "B.Tech CSE (Category 5)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 493000, "intake": 50},
             ],
             "placements": [{"year": 2024, "avg_package_lpa": 8.5, "highest_package": 75.0, "placement_rate": 82.0}],
-            "facilities": [{"name": "Central Library & Labs", "has_facility": True, "details": "State of the art IT & AI infrastructure"}]
+            "facilities": [{"name": "VITEEE 5-Category Fee Structure", "has_facility": True, "details": "Category 1 (₹1.98L/yr) to Category 5 (₹4.93L/yr) allocated by VITEEE rank"}]
         },
         {
             "name": "Vellore Institute of Technology, AP (Amaravati)",
@@ -458,10 +466,13 @@ def seed():
             "annual_fee_lpa": 1.98,
             "exams": [viteee],
             "programs": [
-                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 800},
+                {"name": "B.Tech CSE (Category 1)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 300},
+                {"name": "B.Tech CSE (Category 2)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 307000, "intake": 250},
+                {"name": "B.Tech CSE (Category 3)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 405000, "intake": 150},
+                {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 100},
             ],
             "placements": [{"year": 2024, "avg_package_lpa": 7.3, "highest_package": 63.0, "placement_rate": 78.0}],
-            "facilities": [{"name": "Student Activity Center", "has_facility": True, "details": "Modern residential & sports amenities"}]
+            "facilities": [{"name": "VITEEE Fee Slabs", "has_facility": True, "details": "Category 1 (₹1.98L/yr) to Category 4 (₹4.48L/yr) allocated by VITEEE rank"}]
         },
         {
             "name": "Vellore Institute of Technology, Bhopal",
@@ -481,10 +492,13 @@ def seed():
             "annual_fee_lpa": 1.98,
             "exams": [viteee],
             "programs": [
-                {"name": "B.Tech Computer Science and Engineering", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 750},
+                {"name": "B.Tech CSE (Category 1)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 198000, "intake": 300},
+                {"name": "B.Tech CSE (Category 2)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 307000, "intake": 250},
+                {"name": "B.Tech CSE (Category 3)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 405000, "intake": 120},
+                {"name": "B.Tech CSE (Category 4)", "type": ProgramType.BTECH, "duration": 4, "annual_fee": 448000, "intake": 80},
             ],
             "placements": [{"year": 2024, "avg_package_lpa": 6.8, "highest_package": 59.0, "placement_rate": 75.0}],
-            "facilities": [{"name": "AI Lab & Hackspace", "has_facility": True, "details": "Specialized AI/ML learning environment"}]
+            "facilities": [{"name": "VITEEE Fee Slabs", "has_facility": True, "details": "Category 1 (₹1.98L/yr) to Category 4 (₹4.48L/yr) allocated by VITEEE rank"}]
         },
         {
             "name": "COEP Technological University, Pune",

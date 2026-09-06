@@ -52,12 +52,23 @@ class AICounselView(APIView):
                 "• **Safe Backups**: DTU (Delhi Region), RVCE Bengaluru\n\n"
                 "💡 **Recommendation**: Focus on JEE Advanced prep while maintaining your BITSAT application as a solid target."
             )
+        elif 'vit' in reply_lower or 'category' in reply_lower:
+            reply = (
+                "Here is the official **VIT 5-Category Fee Structure** (B.Tech CSE/Group B) based on VITEEE rank:\n\n"
+                "• **Category 1**: ₹1.98 Lakh / year (VITEEE Ranks ~1 - 20,000)\n"
+                "• **Category 2**: ₹3.07 Lakh / year (VITEEE Ranks ~20,001 - 45,000)\n"
+                "• **Category 3**: ₹4.05 Lakh / year (VITEEE Ranks ~45,001 - 70,000)\n"
+                "• **Category 4**: ₹4.48 Lakh / year (VITEEE Ranks ~70,001 - 90,000)\n"
+                "• **Category 5**: ₹4.93 Lakh / year (VITEEE Ranks ~90,001+)\n\n"
+                "💡 **Note**: Centralized placements apply across Vellore & Chennai campuses regardless of your fee category!"
+            )
         elif 'fee' in reply_lower or 'budget' in reply_lower:
             reply = (
                 "Here is the fee breakdown for top institutions indexed on Studzens:\n\n"
                 "• **Government (IITs/NITs/DTU)**: ₹1.45 Lakh – ₹2.25 Lakh / year\n"
                 "• **Semi-Government (IIIT Hyderabad)**: ₹4.0 Lakh / year\n"
-                "• **Private (BITS Pilani / VIT)**: ₹1.98 Lakh – ₹5.5 Lakh / year\n\n"
+                "• **VIT (Category 1 to 5)**: ₹1.98 Lakh – ₹4.93 Lakh / year\n"
+                "• **Private (BITS Pilani / Manipal)**: ₹3.5 Lakh – ₹5.5 Lakh / year\n\n"
                 "Many NITs and IITs offer 100% tuition fee waivers for SC/ST students and families with income under ₹1L/year."
             )
         else:
