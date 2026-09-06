@@ -74,7 +74,7 @@ export default function LoginPage() {
  const [touched, setTouched] = useState<Record<string, boolean>>({});
  const [formError, setFormError] = useState('');
 
- const { loginWithApi, registerWithApi, hasCompletedOnboarding } = useAuth();
+ const { loginWithApi, googleLoginWithApi, registerWithApi, hasCompletedOnboarding } = useAuth();
  const navigate = useNavigate();
  const location = useLocation();
 
@@ -132,10 +132,15 @@ export default function LoginPage() {
     setLoading(true);
     setFormError('');
     try {
-      await loginWithApi('student@studzens.com', 'student123');
-      navigate('/onboarding');
+      await googleLoginWithApi('student@studzens.com', 'Aarav Sharma');
+      if (!hasCompletedOnboarding) {
+        navigate('/onboarding');
+      } else {
+        const from = (location.state as any)?.from?.pathname || '/dashboard';
+        navigate(from);
+      }
     } catch (err: any) {
-      setFormError('Failed to login with demo account.');
+      setFormError(err.message || 'Google sign-in failed. Please try again.');
     } finally {
       setLoading(false);
     }

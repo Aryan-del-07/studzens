@@ -57,10 +57,20 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             if user:
                 if not user.is_active:
                     raise serializers.ValidationError('User account is disabled.')
+                
+                from .models import Profile
+                Profile.objects.get_or_create(user=user)
+
                 refresh = self.get_token(user)
                 return {
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
+                    'user': {
+                        'id': str(user.id),
+                        'email': user.email,
+                        'name': user.name,
+                        'role': user.role,
+                    }
                 }
 
         raise serializers.ValidationError('Invalid email or password. Please check your credentials.')
@@ -93,12 +103,18 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
     """Full user detail including nested profile."""
-    profile = ProfileSerializer()
+    profile = ProfileSerializer(required=False, allow_null=True)
 
     class Meta:
         model = User
         fields = ('id', 'email', 'name', 'role', 'created_at', 'profile')
         read_only_fields = ('id', 'email', 'created_at')
+
+    def to_representation(self, instance):
+        from .models import Profile
+        if not hasattr(instance, 'profile') or instance.profile is None:
+            Profile.objects.get_or_create(user=instance)
+        return super().to_representation(instance)
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', {})
@@ -108,6 +124,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
         instance.save()
         # Update profile fields
         if profile_data:
+            from .models import Profile
             profile, _ = Profile.objects.get_or_create(user=instance)
             for attr, value in profile_data.items():
                 setattr(profile, attr, value)
