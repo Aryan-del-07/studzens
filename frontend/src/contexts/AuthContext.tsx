@@ -26,8 +26,8 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   hasCompletedOnboarding: boolean;
-  loginWithApi: (email: string, password: string) => Promise<void>;
-  googleLoginWithApi: (email: string, name: string) => Promise<void>;
+  loginWithApi: (email: string, password: string) => Promise<AuthUser>;
+  googleLoginWithApi: (email: string, name: string) => Promise<AuthUser>;
   registerWithApi: (email: string, name: string, password: string) => Promise<void>;
   logout: () => void;
   completeOnboarding: () => void;
@@ -73,18 +73,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refreshUser();
   }, []);
 
-  const loginWithApi = async (email: string, password: string) => {
+  const loginWithApi = async (email: string, password: string): Promise<AuthUser> => {
     const tokens = await api.auth.login(email, password);
     localStorage.setItem('access_token', tokens.access);
     localStorage.setItem('refresh_token', tokens.refresh);
     await refreshUser();
+    // Return the user from the token payload directly so callers don't race state
+    const role = tokens.user?.role === 'ADMIN' ? 'admin' : 'student';
+    return {
+      id: tokens.user?.id ?? '',
+      name: tokens.user?.name ?? '',
+      email: tokens.user?.email ?? email,
+      role: role as AuthUser['role'],
+    };
   };
 
-  const googleLoginWithApi = async (email: string, name: string) => {
+  const googleLoginWithApi = async (email: string, name: string): Promise<AuthUser> => {
     const res = await api.auth.googleLogin(email, name);
     localStorage.setItem('access_token', res.access);
     localStorage.setItem('refresh_token', res.refresh);
     await refreshUser();
+    const role = res.user?.role === 'ADMIN' ? 'admin' : 'student';
+    return {
+      id: res.user?.id ?? '',
+      name: res.user?.name ?? name,
+      email: res.user?.email ?? email,
+      role: role as AuthUser['role'],
+    };
   };
 
   const registerWithApi = async (email: string, name: string, password: string) => {

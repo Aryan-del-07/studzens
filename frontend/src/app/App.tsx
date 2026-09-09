@@ -53,16 +53,19 @@ export default function App() {
  <Route path="/careers"element={<CareerExplorerPage />} />
  <Route path="/login"element={<LoginPage />} />
 
- {/* Protected Routes */}
+ {/* Protected Routes — any logged-in user */}
  <Route element={<ProtectedRoute />}>
  <Route path="/onboarding"element={<OnboardingPage />} />
  <Route path="/dashboard"element={<DashboardPage />} />
- <Route path="/admin-dashboard"element={<AdminDashboardPage />} />
  <Route path="/for-you"element={<ForYouPage />} />
  <Route path="/profile"element={<ProfilePage />} />
  <Route path="/compare"element={<ComparePage />} />
  <Route path="/map"element={<MapPage />} />
+ </Route>
 
+ {/* Admin-only Routes */}
+ <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+ <Route path="/admin-dashboard"element={<AdminDashboardPage />} />
  </Route>
 
  {/* Wildcard 404 Route */}

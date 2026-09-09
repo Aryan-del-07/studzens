@@ -74,7 +74,7 @@ export default function LoginPage() {
  const [touched, setTouched] = useState<Record<string, boolean>>({});
  const [formError, setFormError] = useState('');
 
- const { loginWithApi, googleLoginWithApi, registerWithApi, hasCompletedOnboarding } = useAuth();
+ const { loginWithApi, googleLoginWithApi, registerWithApi, hasCompletedOnboarding, user } = useAuth();
  const navigate = useNavigate();
  const location = useLocation();
 
@@ -113,13 +113,8 @@ export default function LoginPage() {
        await registerWithApi(email, name, password);
        navigate('/onboarding');
      } else {
-       await loginWithApi(email, password);
-       if (!hasCompletedOnboarding) {
-         navigate('/onboarding');
-       } else {
-         const from = (location.state as any)?.from?.pathname || '/dashboard';
-         navigate(from);
-       }
+       const loggedInUser = await loginWithApi(email, password);
+       redirectAfterLogin(loggedInUser);
      }
    } catch (err: any) {
      setFormError(err.message || 'Authentication failed. Please check your credentials.');
@@ -128,17 +123,29 @@ export default function LoginPage() {
    }
  };
 
+  /**
+   * Role-aware redirect — called after loginWithApi / googleLoginWithApi resolves.
+   * `user` in context is already refreshed at this point.
+   */
+  const redirectAfterLogin = (currentUser: typeof user) => {
+    if (currentUser?.role === 'admin') {
+      navigate('/admin-dashboard', { replace: true });
+      return;
+    }
+    if (!hasCompletedOnboarding) {
+      navigate('/onboarding');
+    } else {
+      const from = (location.state as any)?.from?.pathname || '/dashboard';
+      navigate(from);
+    }
+  };
+
   const handleGoogleLogin = async () => {
     setLoading(true);
     setFormError('');
     try {
-      await googleLoginWithApi('student@studzens.com', 'Aarav Sharma');
-      if (!hasCompletedOnboarding) {
-        navigate('/onboarding');
-      } else {
-        const from = (location.state as any)?.from?.pathname || '/dashboard';
-        navigate(from);
-      }
+      const loggedInUser = await googleLoginWithApi('student@studzens.com', 'Aarav Sharma');
+      redirectAfterLogin(loggedInUser);
     } catch (err: any) {
       setFormError(err.message || 'Google sign-in failed. Please try again.');
     } finally {
